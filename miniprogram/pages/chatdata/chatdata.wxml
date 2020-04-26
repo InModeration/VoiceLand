@@ -1,0 +1,4 @@
+<!--miniprogram/pages/chatdata/chatdata.wxml-->
+<view class="container">
+<button type="primary" bindtap="getCollection">获取</button>
+</view>

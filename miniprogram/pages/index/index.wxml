@@ -1,0 +1,72 @@
+<!--index.wxml-->
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <view class="title">
+    <text>发现</text>
+    <image class="my-mini-icon" mode="aspectFit" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view class="search flex-wrp">
+      <view class="search-left flex-item">
+          <image src="{{search_url}}"></image>
+          <input placeholder="" placeholder-class="search-placeholder"/>
+      </view>
+      <!-- <view class="search-right flex-item" bindtap="upper">
+          <image src="../../assets/images/lighting.png"></image>
+      </view> -->
+  </view>
+
+    <block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+        <view class="feed-item">
+          <view class="feed-item-box">
+              <view class="feed-source">
+                  <a class="">
+                      <view class="avatar">
+                          <image src="{{item.feed_source_img}}"></image>
+                      </view>
+                      <text>{{item.feed_source_name}}</text>
+                  </a>
+                  <!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
+              </view>
+              <view class="feed-content">
+                  <view class="question" qid="{{question_id}}" bindtap="bindQueTap">
+                      <a class="question-link">
+                          <text>{{item.question}}</text>
+                      </a>
+                  </view>
+                  <!-- <view class="answer-body">
+                      <view bindtap="bindItemTap">
+                          <text class="answer-txt" aid="{{answer_id}}">{{item.answer_ctnt}}</text>
+                      </view>
+                      <view class="answer-actions" bindtap="bindItemTap">
+                          <view class="like dot">
+                              <a>{{item.good_num}} 赞同 </a>
+                          </view>
+                          <view class="comments dot">
+                              <a>{{item.comment_num}} 评论 </a>
+                          </view>
+                          <view class="follow-it">
+                              <a>关注问题</a>
+                          </view>
+                      </view>
+                  </view> -->
+              </view>
+              <view class="feed-display">
+                <image src="{{like_url}}"></image>
+                <text>{{item.good_num}}</text>
+                <image src="{{comment_url}}"></image>
+                <text>{{item.comment_num}}</text>
+                <image class="float-right" src="{{more_url}}"></image>
+              </view>
+          
+          
+          </view>
+        </view>
+    </block>
+    <view class="bottom-input-area">
+      <view class="bottom-input-box">
+        <image mode="aspectFit" src="{{comment_url}}" class="bottom-message"></image>
+        <input class="bottom-input" placeholder="记录今天的趣事..." placeholder-class="instruction-placeholder"></input>
+        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+      </view>
+    </view>
+
+</scroll-view>
