@@ -118,7 +118,35 @@ Page({
                         duration: 2000
                   })
             }, 3000)
+      },
+
+      /**
+       * 跳转到用户个人页面
+       */
+      toPersonal: function () {
+            wx.navigateTo({
+                  url: '../personal/personal',
+                  success: (res) => {
+                        console.log(res)
+                  },
+                  fail: (err) => {
+                        console.log(err)
+                  }
+            })
+      },
+
+      /**
+       * 动态详情页
+       */
+      toDetail: function () {
+            wx.navigateTo({
+                  url: '../topic/topic',
+                  success: (res) => {
+                        console.log(res)
+                  },
+                  fail: (err) => {
+                        console.log(err)
+                  }
+            })
       }
-
-
 })

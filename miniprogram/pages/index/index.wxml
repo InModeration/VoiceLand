@@ -20,14 +20,14 @@
               <view class="feed-source">
                   <a class="">
                       <view class="avatar">
-                          <image src="{{item.feed_source_img}}"></image>
+                          <image src="{{userInfo.avatarUrl}}" bindtap="toPersonal"></image>
                       </view>
-                      <text>{{item.feed_source_name}}</text>
+                      <text bindtap="toPersonal">{{item.feed_source_name}}</text>
                   </a>
                   <!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
               </view>
               <view class="feed-content">
-                  <view class="question" qid="{{question_id}}" bindtap="bindQueTap">
+                  <view class="question" qid="{{question_id}}" bindtap="toDetail">
                       <a class="question-link">
                           <text>{{item.question}}</text>
                       </a>

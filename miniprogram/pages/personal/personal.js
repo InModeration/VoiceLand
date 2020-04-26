@@ -80,11 +80,29 @@ Page({
       },
 
       /**
-       * 下拉刷新
-       */
-      onPullDownRefresh: function() {
-
+      * 动态详情页
+      */
+      toDetail: function () {
+            wx.navigateTo({
+                  url: '../topic/topic',
+                  success: (res) => {
+                        console.log(res)
+                  },
+                  fail: (err) => {
+                        console.log(err)
+                  }
+            })
       },
-
+      displayNickname: function (e) {
+            var scrollTop = e.detail.scrollTop
+            if (scrollTop >= 150)
+                  wx.setNavigationBarTitle({
+                        title: this.data.userInfo.nickName,
+                  })
+            else
+                  wx.setNavigationBarTitle({
+                        title: '',
+                  })
+      }
 
 })

@@ -1,53 +1,57 @@
 <!--miniprogram/pages/personal/personal.wxml-->
-<scroll-view class="container" scroll-y="true">
-      <view class="user-box" style="background-image: url({{backgroundImage}})">
-            <view class="avatar">
-                  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-            </view>
-
-            <view>
-                  <text class="user-nickname">{{userInfo.nickName}}</text>
-            </view>
-
-            <view class="user-info">
-                  <text>{{userInfo.gender == '1' ? '男' : '女'}}</text>
-                  <text space="nbsp">{{userInfo.country}} {{userInfo.province}}</text>
-                  <text>id</text>
-            </view>
-
-            <view class="user-motto">
-                  <text>个性签名</text>
-            </view>
-
-      </view>
-
-      <view class="personal-box">
-            <view class="total">
-                  <text>250条心声</text>
-            </view>
-
-            <view class="sayings">
-                  <block wx:for="[1]">
-                        <view class="saying">
-                              <view class="date">
-                                    <text class="day">26</text>
-                                    <text class="month">4月</text>
-                              </view>
-                              <view class="saying-content">
-                                    <text>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</text>
-                                    <view class="saying-operation">
-                                          <image class="like" src="{{like_url}}"></image>
-                                          <text class="like_number">10</text>
-                                          <image class="comment" src="{{comment_url}}"></image>
-                                          <text class="comment_number">2</text>
-                                          <image class="more" src="{{more_url}}"></image>
-                                    </view>
-                                    <view class="line"></view>
-                              </view>
+<scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname">
+      <view>
+            <view class="user-box" style="background-image: url({{backgroundImage}})">
+                  <view class="likeAndAvatar">
+                        <view class="avatar">
+                              <image src="{{userInfo.avatarUrl}}" background-size="cover" class="avatar"></image>
                         </view>
-                  </block>
+
+                        <view class="follow">关心</view>
+                  </view>
+
+                  <view>
+                        <text class="user-nickname">{{userInfo.nickName}}</text>
+                  </view>
+
+                  <view class="user-info">
+                        <text>{{userInfo.gender == '1' ? '男' : '女'}}</text>
+                        <text space="nbsp">{{userInfo.country}} {{userInfo.province}}</text>
+                        <text>id</text>
+                  </view>
+
+                  <view class="user-motto">
+                        <text>个性签名</text>
+                  </view>
+
+            </view>
+
+            <view class="personal-box">
+                  <view class="total">
+                        <text>250条心声</text>
+                  </view>
+
+                  <view class="sayings">
+                        <block wx:for="[1, 2, 3]">
+                              <view class="saying">
+                                    <view class="date">
+                                          <text class="day">26</text>
+                                          <text class="month">4月</text>
+                                    </view>
+                                    <view class="saying-content">
+                                          <text bindtap="toDetail">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</text>
+                                          <view class="saying-operation">
+                                                <image class="like" src="{{like_url}}"></image>
+                                                <text class="like_number">10</text>
+                                                <image class="comment" src="{{comment_url}}"></image>
+                                                <text class="comment_number">2</text>
+                                                <image class="more" src="{{more_url}}"></image>
+                                          </view>
+                                          <view class="line"></view>
+                                    </view>
+                              </view>
+                        </block>
+                  </view>
             </view>
       </view>
-
-
 </scroll-view>
