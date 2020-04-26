@@ -1,0 +1,112 @@
+<!--question.wxml-->
+<view class="container">
+    <view class="question-wrp">
+        <view class="question-item">
+            <!-- <view class="que-tag">
+                <text class="tag">阅读</text>
+                <text class="tag">电子书</text>
+                <text class="tag">Kindle</text>
+                <text class="tag">书籍</text>
+                <text class="tag">文学</text>
+            </view> -->
+            <!-- <view class="que-title">
+                选择 Kindle 而不是纸质书的原因是什么？
+            </view>
+            <view class="que-content">
+                WEB前端*不靠谱天气预报员*想做代码小仙女
+            </view> -->
+            <view class="topic-userinfo">
+              <image src="{{mainuser.icon_path}}" class=""></image>
+              <text>{{mainuser.username}}</text>
+            </view>
+
+            <view class="topic-content-box">
+              <view class="topic-content">
+                <text>{{topic_content}}</text>
+              </view>
+              <view class="topic-operations">
+                <image src="{{like_url}}"></image>
+                <text>{{like_num}}</text>
+                <image src="{{comment_url}}"></image>
+                <text>{{comment_num}}</text>
+              </view>
+            </view>
+
+            <!-- <view class="que-follow">
+                <view class="left">
+                    <view class="watch">
+                        <image src="../../images/eye.png"></image>
+                        <text>3316</text>
+                    </view>
+                    <view class="comment">
+                        <image src="../../images/comment2.png"></image>
+                        <text>27</text>
+                    </view>
+                </view>
+                <view class="right">
+                    关注
+                </view>
+            </view> -->
+        </view>
+        <!-- <view class="que-operate flex-wrp">
+            <view class="invite flex-item">
+                <image src="../../images/invite.png"></image>
+                <text>邀请回答</text>
+            </view>
+            <view class="write flex-item">
+                <image src="../../images/write.png"></image>
+                <text>写回答</text>
+            </view>
+        </view> -->
+      <view class="topic-tip">
+        <text>{{comment_num}}条评论</text>
+      </view>
+    </view>
+
+
+
+    <view class="answer-feed">
+        <view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+          <view bindtap="bindItemTap" class="feed-item">
+            <view class="topic-content-box">
+                <view class="topic-source">
+                    <a class="" bindTap="">
+                        <view class="topic-avatar">
+                            <image src="{{item.commenter_icon}}"></image>
+
+                            <view class="topic-commenter-time">
+                              <text>{{item.commenter}}</text>
+                              <view class="topic-comment-time">
+                                1小时前
+                              </view>
+                            </view>
+
+                            <view class="topic-avatar-more">
+                              <image src="{{more_url}}"></image>
+                            </view>
+                        </view>
+                    </a>
+                </view>
+                <view class="feed-content">
+                    <view class="answer-body">
+                        <view class="topic-comment-content">
+                            <text>{{item.content}}</text>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="topic-comment-reply-wrapper">
+                  <view class="topic-comment-reply-box">
+                    <view wx:for="{{item.replies}}" wx:for-item="rep_item">
+                      <view class="topic-comment-reply-line">
+                        <a class="topic-comment-reply-name" bindTap="">{{rep_item.replier}}</a> <text> 回复 </text> <a class="topic-comment-reply-name" bindTap="">{{rep_item.repliee}}</a> <text>: {{rep_item.content}}</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+            </view>
+          </view>
+        </view>
+    </view>
+</view>
+
