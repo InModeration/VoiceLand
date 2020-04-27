@@ -1,7 +1,7 @@
 {
       "pages": [
-            "pages/chatlist/chatlist",
             "pages/index/index",
+            "pages/comment/comment",
             "pages/topic/topic",
             "pages/personal/personal",
             "pages/userConsole/userConsole",
