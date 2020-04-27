@@ -35,7 +35,7 @@ Page({
       like_num: topic_data.like_num,
       comment_num: topic_data.comment_num
     });
-    console.log(this.data.comments);
+    console.log(this.data.comments[1].replies.length);
   },
   tapName: function(event){
     console.log(event)

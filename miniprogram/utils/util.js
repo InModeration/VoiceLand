@@ -25,6 +25,7 @@ var index_next = require('../data/data_index_next.js')
 var discovery = require('../data/data_discovery.js')
 var discovery_next = require('../data/data_discovery_next.js')
 var topic_detail = require('../data/data_topic_detail.js')
+var comment_detail = require('../data/data_comment_detail.js')
 
 function getData(url){
   return new Promise(function(resolve, reject){
@@ -70,12 +71,18 @@ function getTopicDetail(){
   return topic_detail.topic_detail;
 }
 
+function getCommentDetail(){
+  return comment_detail.comment_detail;
+}
+
 module.exports.getData = getData;
 module.exports.getData2 = getData2;
 module.exports.getNext = getNext;
 module.exports.getDiscovery = getDiscovery;
 module.exports.discoveryNext = discoveryNext;
 module.exports.topicDetail = getTopicDetail;
+module.exports.getCommentDetail = getCommentDetail;
+
 
 
 

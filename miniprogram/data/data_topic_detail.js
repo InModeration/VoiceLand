@@ -41,18 +41,7 @@ var topic_datail = {
       like_num: 0,
       time: "1小时前",
       content: "难道不明白纸质书更贵啊！！！ 若觉得kindle更贵，我觉得要么阅读量太少，那确实没有买kindle的必要。要么买的都是盗版的纸质书？我不清楚不加以评论。。。 另外，用kindle看小说的..",
-      replies: [
-        {
-          replier: "Asichurter",
-          repliee: "Rebecca",
-          content: "请所有参加过任何抗疫相关志愿活动及服务的同学加入群：943499561，有关信息将在群内发布，谢谢。"
-        },
-        {
-          replier: "Rebecca",
-          repliee: "Asichurter",
-          content: "哦，真该死，这都第十周了吗"
-        }
-      ]
+      replies: []
     },
     {
       comment_id: 0,

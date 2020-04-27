@@ -1,2 +1,69 @@
-<!--pages/comment/comment.wxml-->
-<text>pages/comment/comment.wxml</text>
+<view class="container">
+    <view class="question-wrp">
+        <view class="question-item">
+            <view class="topic-avatar">
+                <image src="{{commenter.icon_path}}"></image>
+
+                <view class="topic-commenter-time">
+                    <text>{{commenter.username}}</text>
+                    <view class="comment-time">
+                    {{time}}
+                    </view>
+                </view>
+
+                <view class="comment-avatar-like">
+                    <image src="{{like_url}}"></image>
+                    <text>{{like_num}}</text>
+                </view>
+            </view>
+
+            <view class="topic-content-box">
+              <view class="topic-content">
+                <text>{{content}}</text>
+              </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="answer-feed">
+        <view wx:for="{{replies}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+          <view bindtap="bindItemTap" class="feed-item">
+            <view class="topic-content-box">
+                <view class="topic-source">
+                    <a class="" bindTap="">
+                        <view class="topic-avatar">
+                            <image src="{{item.replier_icon}}"></image>
+
+                            <view class="topic-commenter-time">
+                              <text>{{item.replier}}</text>
+                              <view class="comment-time">
+                                {{item.time}}
+                              </view>
+                            </view>
+
+                            <view class="comment-avatar-like">
+                                <image src="{{like_url}}"></image>
+                                <text>{{item.like_num}}</text>
+                            </view>
+                        </view>
+                    </a>
+                </view>
+                <view class="feed-content">
+                    <view class="answer-body">
+                        <view class="comment-content">
+                            <text>回复   </text><a bindTap="" id="{{item.repliee_id}}">{{item.repliee}}</a><text class="" selectable="false" space="false" decode="false">   : {{item.content}}</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+          </view>
+        </view>
+    </view>
+    <view class="bottom-input-area">
+      <view class="bottom-input-box">
+        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
+        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+      </view>
+    </view>
+</view>
+

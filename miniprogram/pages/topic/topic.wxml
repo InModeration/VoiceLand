@@ -58,7 +58,7 @@
                     </view>
                 </view>
 
-                <view class="topic-comment-reply-wrapper">
+                <view wx:if="{{item.replies.length > 0}}"  class="topic-comment-reply-wrapper">
                   <view class="topic-comment-reply-box">
                     <view wx:for="{{item.replies}}" wx:for-item="rep_item">
                       <view class="topic-comment-reply-line">
