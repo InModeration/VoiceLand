@@ -10,6 +10,7 @@ var topic_datail = {
     username: "Asichurter"
   },
   topic_content: "还有一个小时，好无聊啊 快点下班 周日上班让人迷茫 还有这会只要连着上五天不是六天啊",
+  topic_time: "2小时前",
   comments: [
     {
       comment_id: 0,

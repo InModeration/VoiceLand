@@ -2,22 +2,10 @@
 <view class="container">
     <view class="question-wrp">
         <view class="question-item">
-            <!-- <view class="que-tag">
-                <text class="tag">阅读</text>
-                <text class="tag">电子书</text>
-                <text class="tag">Kindle</text>
-                <text class="tag">书籍</text>
-                <text class="tag">文学</text>
-            </view> -->
-            <!-- <view class="que-title">
-                选择 Kindle 而不是纸质书的原因是什么？
-            </view>
-            <view class="que-content">
-                WEB前端*不靠谱天气预报员*想做代码小仙女
-            </view> -->
             <view class="topic-userinfo">
               <image src="{{mainuser.icon_path}}" class=""></image>
-              <text>{{mainuser.username}}</text>
+              <text class="topic-userinfo-name">{{mainuser.username}}</text>
+              <text class="topic-time">{{topic_time}}</text> 
             </view>
 
             <view class="topic-content-box">
@@ -25,10 +13,12 @@
                 <text>{{topic_content}}</text>
               </view>
               <view class="topic-operations">
-                <image src="{{like_url}}"></image>
+                <image class="icon-image" src="{{like_url}}"></image>
                 <text>{{like_num}}</text>
-                <image src="{{comment_url}}"></image>
+                <image class="icon-image" src="{{comment_url}}"></image>
                 <text>{{comment_num}}</text>
+                <image class="topic-operations-more" src="{{more_url}}" bindTap="" />
+                  
               </view>
             </view>
 
@@ -107,6 +97,12 @@
             </view>
           </view>
         </view>
+    </view>
+    <view class="bottom-input-area">
+      <view class="bottom-input-box">
+        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
+        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+      </view>
     </view>
 </view>
 
