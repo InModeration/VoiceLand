@@ -1,5 +1,6 @@
 {
       "pages": [
+            "pages/chatlist/chatlist",
             "pages/comment/comment",
             "pages/topic/topic",
             "pages/index/index",

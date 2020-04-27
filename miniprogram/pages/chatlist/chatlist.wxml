@@ -1,2 +1,33 @@
 <!--miniprogram/pages/chatlist/chatlist.wxml-->
-<text>miniprogram/pages/chatlist/chatlist.wxml</text>
+<scroll-view scroll-y="true" scroll-x="false" bindscroll="test" style="height: {{height}}">
+      <view stytle=" overflow-x: hidden; overflow-y: auto;">
+            <view class="message__list">
+                  <side-slip wx:for="{{messages}}" wx:for-index="id" data-id="{{id}}" bind:delete="delete" style="display: {{hidden[id]}}">
+                        <view class="item" bindtap="chatClick" id="{{id}}">
+                              <view class="item-left">
+                                    <image src="{{item.url}}" class="image" />
+                              </view>
+                              <view class="item-middle">
+                                    <view class="title-box">
+                                          <text class="title">{{item.title}}</text>
+                                    </view>
+                                    <view class="message-box">
+                                          <text class="message">{{item.message}}</text>
+                                    </view>
+                              </view>
+                              <view class="item_right">
+                                    <view>
+                                          <text class="time">{{item.time}}</text>
+                                    </view>
+                                    <view class="mark" wx:if="{{item.count>0}}">
+                                          <view class="text">
+                                                <text>{{item.count}}</text>
+                                          </view>
+                                    </view>
+                              </view>
+                        </view>
+                        <view class="line"></view>
+                  </side-slip>
+            </view>
+      </view>
+</scroll-view>
