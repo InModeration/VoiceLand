@@ -1,4 +1,3 @@
-<!--question.wxml-->
 <view class="container">
     <view class="question-wrp">
         <view class="question-item">
@@ -21,33 +20,7 @@
                   
               </view>
             </view>
-
-            <!-- <view class="que-follow">
-                <view class="left">
-                    <view class="watch">
-                        <image src="../../images/eye.png"></image>
-                        <text>3316</text>
-                    </view>
-                    <view class="comment">
-                        <image src="../../images/comment2.png"></image>
-                        <text>27</text>
-                    </view>
-                </view>
-                <view class="right">
-                    关注
-                </view>
-            </view> -->
         </view>
-        <!-- <view class="que-operate flex-wrp">
-            <view class="invite flex-item">
-                <image src="../../images/invite.png"></image>
-                <text>邀请回答</text>
-            </view>
-            <view class="write flex-item">
-                <image src="../../images/write.png"></image>
-                <text>写回答</text>
-            </view>
-        </view> -->
       <view class="topic-tip">
         <text>{{comment_num}}条评论</text>
       </view>

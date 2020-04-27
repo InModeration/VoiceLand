@@ -311,13 +311,6 @@
   margin-left: 35rpx;
 }
 
-.bottom-input-box .bottom-camera{
-  /* display: inline-flex;
-  float: right;
-  vertical-align: middle; */
-  /* margin: 10rpx 20rpx 10rpx 0; */
-}
-
 .instruction-placeholder{
   color: #cecece;
 }
