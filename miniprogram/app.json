@@ -1,5 +1,6 @@
 {
       "pages": [
+            "pages/setting/setting",
             "pages/index/index",
             "pages/editinfo/editinfo",
             "pages/chatlist/chatlist",

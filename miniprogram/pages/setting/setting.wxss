@@ -1,0 +1,77 @@
+/* pages/setting/setting.wxss */
+
+.setting-container {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+.setting-userinfo{
+    display: block;
+    width: 90%;
+    margin: 20rpx 20rpx 20rpx 20rpx;
+    padding-bottom: 40rpx;
+    border-bottom: 2rpx solid #f4f4f4;
+}
+
+.setting-userinfo .setting-userinfo-icon{
+    display: inline-block;
+    vertical-align: middle;
+    height: 120rpx;
+    width: 120rpx;
+    border-radius: 120rpx;
+}
+
+.setting-userinfo .setting-userinfo-text{
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5%;
+    background: #fff;
+    width: 70%;
+}
+
+.setting-userinfo .setting-userinfo-text .setting-userinfo-name{
+    font-size: 36rpx;
+    color: black;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+}
+
+.setting-userinfo .setting-userinfo-text .setting-userinfo-tip{
+    font-size: 28rpx;
+    color: #ccc;
+}
+
+.setting-userinfo .setting-userinfo-set{
+    height: 28rpx;
+    width: 28rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.setting-line{
+    display: block;
+    width: 90%;
+    margin: 20rpx 20rpx 20rpx 20rpx;
+    padding-bottom: 40rpx;
+    border-bottom: 2rpx solid #f4f4f4;
+}
+
+.setting-line .setting-line-label{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 32rpx;
+    color: black;
+    width: 93%;
+}
+
+.setting-line .setting-line-set{
+    height: 28rpx;
+    width: 28rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
