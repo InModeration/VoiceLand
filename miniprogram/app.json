@@ -1,8 +1,8 @@
 {
       "pages": [
-            "pages/personalAll/persoanlAll",
-            "pages/setting/setting",
             "pages/index/index",
+            "pages/personalAll/personalAll",
+            "pages/setting/setting",
             "pages/editinfo/editinfo",
             "pages/chatlist/chatlist",
             "pages/comment/comment",

@@ -148,5 +148,14 @@ Page({
                         console.log(err)
                   }
             })
+      },
+
+      /**
+       * 跳转至个人主页
+       */
+      toPersonalAll: function () {
+            wx.navigateTo({
+                  url: '../personalAll/personalAll',
+            })
       }
 })

@@ -1,4 +1,4 @@
-<!--miniprogram/pages/personalAll/persoanlAll.wxml-->
+<!--miniprogram/pages/personalAll/personalAll.wxml-->
 <view class="container">
 
       <view class="info-box" bindtap="toPersonal">
