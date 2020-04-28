@@ -1,6 +1,6 @@
 <!--pages/setting/setting.wxml-->
 <view class="setting-container">
-    <view class="setting-userinfo">
+    <view class="setting-userinfo" bindtap="toEdit">
         <image class="setting-userinfo-icon" src="{{icon}}" mode="aspectFit" bindTap="" />
         <view class="setting-userinfo-text">
             <text class="setting-userinfo-name">{{username}}</text>

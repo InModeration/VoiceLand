@@ -1,0 +1,56 @@
+<!--miniprogram/pages/personalAll/persoanlAll.wxml-->
+<view class="container">
+
+      <view class="info-box" bindtap="toPersonal">
+            <view class="avatar">
+                  <image src="{{userInfo.avatarUrl}}" background-size="cover" class="avatar"></image>
+            </view>
+            <view class="info">
+                  <text class="user-nickname">{{userInfo.nickName}}</text>
+                  <view class="text-box">
+                        <text>{{userInfo.gender == '1' ? '男' : '女'}}</text>
+                        <text space="nbsp">{{userInfo.country}} {{userInfo.province}}</text>
+                        <text>id</text>
+                  </view>
+            </view>
+            <view class="info-navigate">
+                  <image class="navigate" src="{{navigate}}"></image>
+            </view>
+      </view>
+
+      <view class="join-box">
+            <view>
+                  <text class="join-title">加入天数</text>
+                  <text class="join-item">250</text>
+            </view>
+            <view>
+                  <text class="join-title">我关心谁</text>
+                  <text class="join-item">128</text>
+            </view>
+            <view>
+                  <text class="join-title">谁关心我</text>
+                  <text class="join-item">2</text>
+            </view>
+      </view>
+
+      <view class="function-box">
+            <view class="function-item">
+                  <image class="icon" src="{{vip}}"></image>
+                  <text>会员中心</text>
+                  <image class="navigate" src="{{navigate}}"></image>
+            </view>
+            <view class="line"></view>
+            <view class="function-item">
+                  <image class="icon" src="{{service}}"></image>
+                  <text>专属客服</text>
+                  <image class="navigate" src="{{navigate}}"></image>
+            </view>
+            <view class="line"></view>
+            <view class="function-item" bindtap="toSetting">
+                  <image class="icon" src="{{setting}}"></image>
+                  <text>设置</text>
+                  <image class="navigate" src="{{navigate}}"></image>
+            </view>
+            <view class="line"></view>
+      </view>
+</view>

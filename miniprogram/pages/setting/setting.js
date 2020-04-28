@@ -69,5 +69,14 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 跳转至编辑个人信息页面
+   */
+  toEdit: function () {
+        wx.navigateTo({
+              url: '../editinfo/editinfo',
+        })
   }
 })

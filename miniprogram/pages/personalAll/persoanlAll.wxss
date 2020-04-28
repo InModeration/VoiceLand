@@ -1,0 +1,114 @@
+/* miniprogram/pages/personalAll/persoanlAll.wxss */
+.container {
+      background: white;
+      height: 100%;
+}
+
+.info-box {
+      width: 100%;
+      background: white;
+      padding: 50rpx 0rpx 0rpx 50rpx;
+      display: flex;
+}
+
+.avatar {
+      display: inline-block;
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 80rpx;
+}
+
+.user-nickname {
+      font-size: 50rpx;
+      color: black;
+      font-weight: 600;
+      margin: 30rpx;
+      letter-spacing: 5rpx;
+}
+
+.info {
+      width: 500rpx;
+}
+
+.text-box {
+      font-size: 20rpx;
+      margin: 20rpx 30rpx 0rpx 5rpx;
+}
+
+.text-box text {
+      padding: 5rpx 10rpx 5rpx 10rpx;
+      background: hsla(0, 11%, 75%, 0.233);
+      margin-left: 20rpx;
+      border-radius: 20rpx;
+}
+
+.join-box {
+      width: 80%;
+      height: 100rpx;
+      margin-top: 50rpx;
+      padding: 30rpx;
+      border-radius: 30rpx;
+      background: rgba(169, 169, 169, 0.233);
+      display: flex;
+      flex-direction: row;
+}
+
+.join-box view {
+      width: 30%;
+      margin-left: 3%;
+      font-size: 25rpx;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+}
+
+.join-title {
+      color: darkgray;
+      font-size: 20rpx;
+      font-weight: 600;
+}
+
+.join-item {
+      margin: 20rpx;
+      font-size: 30rpx;
+      font-weight: 600;
+}
+
+.function-box {
+      direction: flex;
+      flex-direction: column;
+      margin-top: 50rpx;
+      width: 88%;
+}
+
+.navigate {
+      width: 20rpx;
+      height: 30rpx;
+}
+
+.info-navigate {
+      margin: 45rpx;
+}
+
+.icon {
+      width: 40rpx;
+      height: 40rpx;
+}
+
+.function-item {
+      font-size: 32rpx;
+      margin-top: 50rpx;
+      display: flex;
+}
+
+.function-item text {
+      margin-left: 20rpx;
+      width: 90%;
+}
+
+.line {
+      height: 2rpx;
+      width: 100%;
+      background: rgba(169, 169, 169, 0.13);
+      margin-top: 35rpx;
+}
