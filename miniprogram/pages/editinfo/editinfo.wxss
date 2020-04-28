@@ -1,0 +1,95 @@
+/* pages/editinfo/editinfo.wxss */
+
+.editinfo-container {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /*padding: 200rpx 0;*/
+    box-sizing: border-box;
+    /* background: #F0F4F3; */
+  }
+
+.editinfo-cover-picture{
+    height: 400rpx;
+    width: 90%;
+    padding-left: 20rpx;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    border-radius: 30rpx;
+}
+
+.editinfo-cover-wrapper{
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .editinfo-avatar{
+    
+} */
+
+.editinfo-avatar-icon{
+    height: 135rpx;
+    width: 135rpx;
+    border-radius: 135rpx;
+}
+
+.editinfo-editcover{
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+    height: 50rpx;
+    width: 130rpx;
+    float: right;
+    background-color: #333;
+    opacity:0.5;
+    border-radius: 10rpx;
+}
+
+.editinfo-editcover text{
+    padding: 10rpx;
+    font-size: 28rpx;
+    color: #ddd;
+    opacity:0.8;
+}
+
+.editinfo-line{
+    display: block;
+    width: 95%;
+    margin: 25rpx 0rpx 25rpx 60rpx;
+    /* height: 90rpx; */
+}
+
+.editinfo-line .editinfo-line-label{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 30rpx;
+    color: black;
+}
+
+.editinfo-line .editinfo-line-input{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10%;
+    width: 70%;
+    color: #aaa;
+    font-size: 30rpx;
+}
+
+.editinfo-line .editinfo-line-set{
+    display: inline-block;
+    vertical-align: middle;
+    height: 30rpx;
+    width: 30rpx;
+    margin-left: 10rpx;
+}
+
+.editinfo-savebutton{
+    width: 85%;
+    position: fixed;
+    bottom: 30rpx;
+    /* height: 30rpx; */
+}

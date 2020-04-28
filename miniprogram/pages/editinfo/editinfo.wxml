@@ -1,0 +1,51 @@
+<!--pages/editinfo/editinfo.wxml-->
+<view class="editinfo-container">
+    <view class="editinfo-cover-picture" style="background-image: url({{background}})">
+        <view class="editinfo-cover-wrapper">
+            <view class="editinfo-avatar">
+                <image class="editinfo-avatar-icon" src="{{icon}}" mode="aspectFit" bindTap="" />
+            </view>
+        </view>
+          
+        <view class="editinfo-editcover">
+           <text>编辑封面</text>
+        </view>
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">昵称</text>
+        <text class="editinfo-line-input">{{username}}</text>
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">签名</text>
+        <text class="editinfo-line-input">{{motto}}</text>
+        <!-- <textarea class="editinfo-line-input">{{motto}}</textarea> -->
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">性别</text>
+        <text class="editinfo-line-input">{{sex}}</text>
+        <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">年龄</text>
+        <text class="editinfo-line-input">{{age}}</text>
+        <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">地区</text>
+        <text class="editinfo-line-input">{{region}}</text>
+        <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+    </view>
+
+    <view class="editinfo-line">
+        <text class="editinfo-line-label">兴趣</text>
+        <text class="editinfo-line-input">{{interest}}</text>
+        <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+    </view>
+    <button type="primary" class="editinfo-savebutton">保存信息</button>
+</view>
+  
