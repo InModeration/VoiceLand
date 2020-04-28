@@ -5,7 +5,7 @@
     <image class="my-mini-icon" mode="aspectFit" src="{{userInfo.avatarUrl}}"></image>
   </view>
   <view class="search flex-wrp">
-      <view class="search-left flex-item">
+      <view class="search-left flex-item search-box">
           <image src="{{search_url}}"></image>
           <input placeholder="" placeholder-class="search-placeholder"/>
       </view>

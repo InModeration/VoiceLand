@@ -1,10 +1,10 @@
 {
       "pages": [
+            "pages/index/index",
             "pages/editinfo/editinfo",
             "pages/chatlist/chatlist",
             "pages/comment/comment",
             "pages/topic/topic",
-            "pages/index/index",
             "pages/personal/personal",
             "pages/userConsole/userConsole",
             "pages/storageConsole/storageConsole",
