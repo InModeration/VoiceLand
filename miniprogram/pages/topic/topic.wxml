@@ -60,13 +60,23 @@
 
                 <view wx:if="{{item.replies.length > 0}}"  class="topic-comment-reply-wrapper">
                   <view class="topic-comment-reply-box">
-                    <view wx:for="{{item.replies}}" wx:for-item="rep_item">
-                      <view class="topic-comment-reply-line">
+                    <view wx:for="{{item.replies}}" wx:for-item="rep_item" wx:for-index="rep_idx">
+                      <!-- 控制显示的回复数量为3条 -->
+                      <view wx:if="{{rep_idx <= 2}}">
+                        <view class="topic-comment-reply-line">
                         <a class="topic-comment-reply-name" bindTap="">{{rep_item.replier}}</a> <text> 回复 </text> <a class="topic-comment-reply-name" bindTap="">{{rep_item.repliee}}</a> <text>: {{rep_item.content}}</text>
+                        </view>
                       </view>
                     </view>
+                  
+                  <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
+                  <view wx:if="{{item.replies.length >= 3}}">
+                    <a id="{{item.comment_id}}" class="topic-comment-reference">查看全部{{item.replies.length}}条回复</a>
+                  </view>
+                    
                   </view>
                 </view>
+
             </view>
           </view>
         </view>

@@ -31,6 +31,18 @@ var topic_datail = {
           replier: "Rebecca",
           repliee: "Asichurter",
           content: "哦，真该死，这都第十周了吗"
+        },
+        {
+          reply_id: 2,
+          replier: "Asichurter",
+          repliee: "Rebecca",
+          content: "ohhhhhhhhhhh"
+        },
+        {
+          reply_id: 3,
+          replier: "Rebecca",
+          repliee: "Asichurter",
+          content: "哈哈哈哈哈哈哈哈哈哈"
         }
       ]
     },

@@ -315,6 +315,12 @@
   color: #cecece;
 }
 
+.topic-comment-reference{
+  font-size: 24rpx;
+  color: #88aadd;
+  padding-left: 20rpx;
+}
+
 
 
 
