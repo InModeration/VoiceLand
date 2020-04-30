@@ -35,17 +35,18 @@
                 <view class="topic-source">
                     <a class="" bindTap="">
                         <view class="topic-avatar">
-                            <image src="{{item.commenter_icon}}"></image>
+                            <image src="{{item.avatar}}"></image>
 
                             <view class="topic-commenter-time">
-                              <text>{{item.commenter}}</text>
+                              <text>{{item.name}}</text>
                               <view class="topic-comment-time">
                                 1小时前
                               </view>
                             </view>
 
                             <view class="topic-avatar-more">
-                              <image src="{{more_url}}"></image>
+                              <image src="{{like_url}}"></image>
+                              <text>{{item.comment_like_num}}</text>
                             </view>
                         </view>
                     </a>
@@ -53,7 +54,7 @@
                 <view class="feed-content">
                     <view class="answer-body">
                         <view class="topic-comment-content">
-                            <text>{{item.content}}</text>
+                            <text>{{item.comment_content}}</text>
                         </view>
                     </view>
                 </view>

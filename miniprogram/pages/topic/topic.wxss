@@ -241,14 +241,23 @@
 }
 
 .topic-avatar-more{
-  /* display: inline-flex; */
+  /* display: inline-block; */
   float: right;
+  margin-top: 10rpx;
 }
 
 .topic-avatar-more image{
   /* padding-left: 200rpx; */
-  height: 35rpx;
-  width: 35rpx;
+  height: 30rpx;
+  width: 30rpx;
+  vertical-align: middle;
+}
+
+.topic-avatar-more text{
+  font-size: 25rpx;
+  color: #ccc;
+  padding-left: 5rpx;
+  vertical-align: middle;
 }
 
 .topic-comment-reply-box{

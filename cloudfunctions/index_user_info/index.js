@@ -20,16 +20,23 @@ exports.main = async (event, context) => {
   var $ = db.command.aggregate;
   return await db.collection('topic').aggregate()
     .lookup({
-          from: "avatar",
+          from: "user",
           localField: "mainuser_id",
-          foreignField: "user",
-          as: "avatarpath"
+          foreignField: "_id",
+          as: "userinfo"
     })
     .replaceRoot({
-      newRoot: $.mergeObjects([ $.arrayElemAt(['$avatarpath', 0]), '$$ROOT' ])
+      newRoot: $.mergeObjects([ $.arrayElemAt(['$userinfo', 0]), '$$ROOT' ])
     })
     .project({
-      avatarpath: 0
+      avatar: true,
+      comment_num: true,
+      content: true,
+      like_num: true,
+      mainuser_id: true,
+      name: true,
+      pictures: true,
+      _id: true
     })
     .end({
       success:res=>{
@@ -39,22 +46,4 @@ exports.main = async (event, context) => {
         return err;
       }
     })
-  // return {
-  //   msg: "云函数调用成功！"
-  // }
 }
-
-// db.collection('topic').aggregate()
-//     .lookup({
-//           from: "avatar",
-//           localField: "mainuser_id",
-//           foreignField: "user"
-//     })
-//     .end()
-//     .then(res=>{
-//           that.setData({
-//                 feed: res.data,
-//                 feed_length: res.data.length
-//           })
-//     })
-//     .catch(err=>console.log(err))

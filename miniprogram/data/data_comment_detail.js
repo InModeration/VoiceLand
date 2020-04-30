@@ -55,3 +55,44 @@ var comment_datail = {
 }
 
 module.exports.comment_detail = comment_datail
+
+// {
+//   "topic_id": "ApeUUJCw5AKbIurbi9PRZQcV6bdkYEvgksEjuPQ0w0kht3Ll",
+//   "main_user_id": "KnGTfXz9d33f2XXbjep1IuisBz2RlHNuOAoIQgwy5vDUpzKF",
+//   "pictures": [],
+//   "content": "  同学们，教育厅已明确高校开始开学，学生返校起始时间。1、目前，川大正在上报开学计划，近日将公布返校时间；2、大家以我通知的返校时间为准，不要提前返校。学校会大致按照先毕业年级，再参与重大课题研究与临床需要医学生，最后其它年级的顺序，安排同学们返校。持续时间大致在半个月左右，请大家不要着急。3、大家先做好返校的思想准备和调整作息。4、大家如果有具体的困难和特殊情况，请大家及时向我反馈哈",
+//   "time": "2小时前",
+//   "replies": [
+//     {
+//       "reply_id": 0,
+//       "replier": "Asichurter",
+//       "replier_id": 0,
+//       "repliee": "Rebecca",
+//       "repliee_id": 1,
+//       "content": "请所有参加过任何抗疫相关志愿活动及服务的同学加入群：943499561，有关信息将在群内发布，谢谢。",
+//       "time": "半小时前",
+//       "like_num": 1
+//     },
+//     {
+//       "reply_id": 1,
+//       "replier": "Rebecca",
+//       "replier_id": 0,
+//       "repliee": "Asichurter",
+//       "repliee_id": 1,
+//       "content": "哦，真该死，这都第十周了吗",
+//       "time": "刚刚",
+//       "like_num": 2
+//     },
+//     {
+//       "reply_id": 2,
+//       "replier": "MagicalHC",
+//       "replier_id": 0,
+//       "repliee": "Asichurter",
+//       "repliee_id": 1,
+//       "content": "黑咖速速赶到！！",
+//       "time": "1个小时前",
+//       "like_num": 2
+//     }
+//   ],
+//   "like_num": 7
+// }

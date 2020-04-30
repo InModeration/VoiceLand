@@ -22,7 +22,7 @@
                       <view class="avatar">
                           <image src="{{item.avatar}}" bindtap="toPersonal"></image>
                       </view>
-                      <text bindtap="toPersonal">{{item.mainuser_name}}</text>
+                      <text bindtap="toPersonal">{{item.name}}</text>
                   </a>
                   <!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
               </view>
@@ -51,7 +51,7 @@
               </view>
               <view class="feed-display">
                 <image src="{{like_url}}"></image>
-                <text>{{item.good_num}}</text>
+                <text>{{item.like_num}}</text>
                 <image src="{{comment_url}}"></image>
                 <text>{{item.comment_num}}</text>
                 <image class="float-right" src="{{more_url}}"></image>

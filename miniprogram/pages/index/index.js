@@ -34,11 +34,12 @@ Page({
                   })
             })
             wx.cloud.callFunction({
-                  name: "index_avatar",
+                  name: "index_user_info",
                   data: {
                         user_id: "Asichurter"
                   },
                   success: res=>{
+                        console.log(res);
                         that.setData({
                               feed: res.result.list,
                               feed_length: res.result.list.length
@@ -46,7 +47,7 @@ Page({
                   }
             });
             //调用应用实例的方法获取全局数据
-            this.getData();
+            // this.getData();
             // const db = wx.cloud.database({
             //       env:'voice-land-qcrwm'
             // });
