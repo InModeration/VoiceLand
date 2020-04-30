@@ -37,7 +37,14 @@ Page({
     });
     console.log(this.data.comments[1].replies.length);
   },
+
   tapName: function(event){
     console.log(event)
+  },
+
+  moreReplies: function(e){
+    wx.navigateTo({
+      url: '../comment/comment',
+    })
   }
 })

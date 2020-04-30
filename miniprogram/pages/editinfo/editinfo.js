@@ -15,19 +15,48 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var user_info = util.getUserInfo();
-    var insterest_join = user_info.interest.join(' ')
-    this.setData({
-      username: user_info.username,
-      icon: user_info.icon,
-      motto: user_info.motto,
-      background: user_info.background,
-      sex: user_info.sex,
-      age: user_info.age,
-      region: user_info.region,
-      interest: insterest_join
+    var that = this;
+    const db = wx.cloud.database({
+      env:'voice-land-qcrwm'
     });
-    console.log(this.data);
+    db.collection('user').where({
+      _id: "qEQ96BVjrG5not08GiSt3Xy511BFiNzj1DvCyj9TknAeqQFH"
+    }).get({
+      success: res=>{
+        var data = res.data[0];
+        console.log(data._id);
+        db.collection('avatar').where({
+          user: data._id
+        }).get({
+          success: res=>{
+            that.setData({
+              avatar: res.data[0].avatar
+            });
+          },
+          fail: res=>{
+            console.log(res);
+          }
+        });
+        that.setData(res.data[0]);
+      },
+      fail: res=>{
+        console.log('fail');
+        console.log(res);
+      }
+    });
+    // var user_info = util.getUserInfo();
+    // var insterest_join = user_info.interest.join(' ')
+    // this.setData({
+    //   username: user_info.username,
+    //   icon: user_info.icon,
+    //   motto: user_info.motto,
+    //   background: user_info.background,
+    //   sex: user_info.sex,
+    //   age: user_info.age,
+    //   region: user_info.region,
+    //   interest: insterest_join
+    // });
+    // console.log(this.data);
   },
 
   /**

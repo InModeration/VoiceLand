@@ -24,7 +24,7 @@ Page({
             })
       },
       onLoad: function() {
-            var that = this
+            var that = this;
             //调用应用实例的方法获取全局数据
             app.getUserInfo(function(userInfo) {
                   console.log(userInfo)
@@ -33,8 +33,77 @@ Page({
                         userInfo: userInfo,
                   })
             })
+            wx.cloud.callFunction({
+                  name: "index_avatar",
+                  data: {
+                        user_id: "Asichurter"
+                  },
+                  success: res=>{
+                        that.setData({
+                              feed: res.result.list,
+                              feed_length: res.result.list.length
+                        });
+                  }
+            });
             //调用应用实例的方法获取全局数据
             this.getData();
+            // const db = wx.cloud.database({
+            //       env:'voice-land-qcrwm'
+            // });
+
+            // db.collection('topic').aggregate()
+            //       .lookup({
+            //             from: "avatar",
+            //             localField: "mainuser_id",
+            //             foreignField: "user"
+            //       })
+            //       .end()
+            //       .then(res=>{
+            //             that.setData({
+            //                   feed: res.data,
+            //                   feed_length: res.data.length
+            //             })
+            //       })
+            //       .catch(err=>console.log(err))
+
+            // db.collection('topic').get({
+            //       success: res=>{
+            //             // console.log('success');
+            //             // console.log(res);
+
+
+            //             that.setData({
+            //                   feed: res.data,
+            //                   feed_length: res.data.length
+            //             });
+
+            //             // 对每个话题都获取一次用户头像并设置
+            //             // for (var i=0; i < res.data.length; i++){
+            //             //       // console.log(i);
+            //             //       db.collection('avatar').where({
+            //             //             user: res.data[i].mainuser_id
+            //             //       }).get({
+            //             //             success: inner_res=>{
+            //             //                   console.log(i+" success");
+            //             //                   var topics = that.data.feed;
+            //             //                   topics[i].avatar = inner_res.data[0].avatar;
+            //             //                   console.log(topics[i]);
+            //             //                   that.setData({
+            //             //                         feed: topics
+            //             //                   });
+            //             //             },
+            //             //             fail: res=>{
+            //             //                   console.log('fail to load avatar in index');
+            //             //             }
+            //             //       })
+            //             // }
+            //       },
+            //       fail: res=>{
+            //             console.log('fail');
+            //             console.log(res);
+            //       }
+            // });
+            // this.getData()
       },
       upper: function() {
             // wx.showNavigationBarLoading()

@@ -4,7 +4,7 @@
             <view class="user-box" style="background-image: url({{backgroundImage}})">
                   <view class="likeAndAvatar">
                         <view class="avatar">
-                              <image src="{{userInfo.avatarUrl}}" background-size="cover" class="avatar"></image>
+                              <image src="{{userInfo.avatarUrl}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
                         </view>
 
                         <view class="follow">关心</view>

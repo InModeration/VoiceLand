@@ -1,9 +1,9 @@
 <!--pages/editinfo/editinfo.wxml-->
 <view class="editinfo-container">
-    <view class="editinfo-cover-picture" style="background-image: url({{background}})">
+    <view class="editinfo-cover-picture" style="background-image: url({{cover}})">
         <view class="editinfo-cover-wrapper">
             <view class="editinfo-avatar">
-                <image class="editinfo-avatar-icon" src="{{icon}}" mode="aspectFit" bindTap="" />
+                <image class="editinfo-avatar-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
             </view>
         </view>
           
@@ -14,7 +14,7 @@
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">昵称</text>
-        <text class="editinfo-line-input">{{username}}</text>
+        <text class="editinfo-line-input">{{name}}</text>
     </view>
 
     <view class="editinfo-line">

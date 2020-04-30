@@ -103,6 +103,12 @@ Page({
                   wx.setNavigationBarTitle({
                         title: '',
                   })
+      },
+
+      editInfo: function(e){
+            wx.navigateTo({
+              url: '../editinfo/editinfo',
+            })
       }
 
 })

@@ -321,6 +321,11 @@
   padding-left: 20rpx;
 }
 
+.bottom-gap{
+  height: 120rpx;
+  width: 100%;
+}
+
 
 
 

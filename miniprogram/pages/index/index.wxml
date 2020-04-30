@@ -20,16 +20,16 @@
               <view class="feed-source">
                   <a class="">
                       <view class="avatar">
-                          <image src="{{userInfo.avatarUrl}}" bindtap="toPersonal"></image>
+                          <image src="{{item.avatar}}" bindtap="toPersonal"></image>
                       </view>
-                      <text bindtap="toPersonal">{{item.feed_source_name}}</text>
+                      <text bindtap="toPersonal">{{item.mainuser_name}}</text>
                   </a>
                   <!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
               </view>
               <view class="feed-content">
-                  <view class="question" qid="{{question_id}}" bindtap="toDetail">
+                  <view class="question" id="{{item._id}}" bindtap="toDetail">
                       <a class="question-link">
-                          <text>{{item.question}}</text>
+                          <text>{{item.content}}</text>
                       </a>
                   </view>
                   <!-- <view class="answer-body">
@@ -61,6 +61,9 @@
           </view>
         </view>
     </block>
+
+    <view class="bottom-gap"></view>
+
     <view class="bottom-input-area">
       <view class="bottom-input-box">
         <image mode="aspectFit" src="{{comment_url}}" class="bottom-message"></image>

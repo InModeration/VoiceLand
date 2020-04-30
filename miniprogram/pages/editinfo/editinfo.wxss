@@ -39,8 +39,7 @@
 }
 
 .editinfo-editcover{
-    margin-right: 20rpx;
-    margin-bottom: 20rpx;
+    margin: 0 20rpx 20rpx 20rpx;
     height: 50rpx;
     width: 130rpx;
     float: right;
@@ -50,10 +49,13 @@
 }
 
 .editinfo-editcover text{
-    padding: 10rpx;
+    width: 130rpx;
     font-size: 28rpx;
     color: #ddd;
     opacity:0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .editinfo-line{

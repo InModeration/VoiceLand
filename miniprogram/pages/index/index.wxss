@@ -126,3 +126,8 @@
 .search-box {
         border: 1px solid black;
 }
+
+.bottom-gap{
+  height: 50rpx;
+  width: 100%;
+}
