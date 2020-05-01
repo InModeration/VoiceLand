@@ -1,4 +1,7 @@
 
 {
-  "navigationBarTitleText": "VoiceLand"
+  "navigationBarTitleText": "VoiceLand",
+  "usingComponents": {
+        "slide-toggle": "/components/slide-toggle/slide-toggle"
+  }
 }

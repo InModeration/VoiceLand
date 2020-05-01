@@ -1,0 +1,10 @@
+/* miniprogram/components/slide-toggle/slide-toggle.wxss */
+.box {
+      border-radius: 20rpx 20rpx 0rpx 0rpx;
+      border: 1px solid black;
+      height: 800rpx;
+}
+
+input {
+      padding: 30rpx;
+}
