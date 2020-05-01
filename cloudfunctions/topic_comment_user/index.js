@@ -3,6 +3,8 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 
+var NOT_EXIST_TAG = '__NOTEXIST__';
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   let { userInfo, topic_id} = event;
@@ -62,7 +64,6 @@ exports.main = async (event, context) => {
       like_num: 1,
       replier_id: 1,
       repliee_id: 1,
-      sort_key: 1,
       time: 1
     })    // 查找replier
     .lookup({
@@ -79,7 +80,7 @@ exports.main = async (event, context) => {
     })
     .project({
       replier: '$name',
-      repliee: 1,
+      repliee: 1, 
       comment_content: 1,
       comment_like_num: 1,
       comment_time: 1,
@@ -90,8 +91,7 @@ exports.main = async (event, context) => {
       like_num: 1,
       replier_id: 1,
       repliee_id: 1,
-      sort_key: 1,
-      time: 1
+      time: $.ifNull(['$time', NOT_EXIST_TAG]),
     })
     .lookup({
       from: "user",
@@ -102,25 +102,47 @@ exports.main = async (event, context) => {
     .replaceRoot({
       newRoot: $.mergeObjects([ $.arrayElemAt(['$commenter', 0]), '$$ROOT' ])
     })
-    .project({
-      commenter: 0,
-      age: 0,
-      cover: 0,
-      interest: 0,
-      joinTime: 0,
-      motto: 0,
-      password: 0,
-      region: 0,
-      sex: 0
+    .sort({           // 第一次排序按照回复时间排序，此时回复还没有合并，相当于回复内部进行了一次排序
+      time: 1
     })
-    // .group({
-    //   _id: {
-    //     comment_id: '$comment_id',
-    //     comment_like_num: '$comment_like_num',
-    //     comment_time: '$comment_time',
-    //     comment_content: "$comment_content",
-    //   }
-    // })
+    .group({
+      _id:{
+        comment_id: '$comment_id',
+        comment_like_num: '$comment_like_num',
+        comment_time: '$comment_time',
+        comment_content: "$comment_content",
+        main_user_id: '$main_user_id',
+        topic_id: '$topic_id',
+        name: '$name',
+        avatar: '$avatar'
+      },
+      replies: $.push({
+        replier: '$replier',
+        replier_id: '$replier_id',
+        repliee: '$repliee',
+        repliee_id: '$repliee_id',
+        sort_key: '$sort_key',
+        content: '$content',
+        like_num: '$like_num',
+        time: '$time'
+      })
+    })
+    .project({
+      replies: $.filter({
+        input: '$replies',
+        as: 'item',
+        cond: $.neq(['$$item.time', NOT_EXIST_TAG])
+      })
+    })
+    .replaceRoot({
+      newRoot: $.mergeObjects([ '$_id', '$$ROOT' ])
+    })
+    .project({
+      _id: 0
+    })
+    .sort({
+      comment_time: 1             // 第二次排序按照评论时间排序，此时回复已经合并，由于第一次排序已经保证了回复的顺序，因此本次排序只排评论
+    })
     .end({
       success:res=>{
         return res;
@@ -129,47 +151,4 @@ exports.main = async (event, context) => {
         return err;
       }
     })
-  // return await db.collection('comment').aggregate()
-  //   .lookup({
-  //         from: "topic",
-  //         localField: "topic_id",
-  //         foreignField: "_id",
-  //         as: "comment_topic"
-  //   })
-  //   .replaceRoot({
-  //     newRoot: $.mergeObjects([ $.arrayElemAt(['$comment_topic', 0]), '$$ROOT' ])
-  //   })
-  //   .project({
-  //     comment_topic: 0
-  //   })
-  //   .lookup({
-  //     from: "user",
-  //     localField: "mainuser_id",
-  //     foreignField: "_id",
-  //     as: "comment_topic_user"
-  //   })
-  //   .replaceRoot({
-  //     newRoot: $.mergeObjects([ $.arrayElemAt(['$comment_topic_user', 0]), '$$ROOT' ])
-  //   })
-  //   .project({
-  //     comment_topic_user: 0
-  //   })
-  //   .lookup({
-  //     from: "reply",
-  //     localField: "_id",
-  //     foreignField: "comment_id",
-  //     as: "replies"
-  //   })
-  //   .unwind({
-  //     path: '$replies',
-  //     preserveNullAndEmptyArrays: true
-  //   })
-  //   .end({
-  //     success:res=>{
-  //       return res;
-  //     },
-  //     fail: err=>{
-  //       return err;
-  //     }
-  //   })
 }

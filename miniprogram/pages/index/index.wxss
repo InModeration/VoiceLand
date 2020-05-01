@@ -132,3 +132,10 @@
   width: 100%;
   background: #fff;
 }
+
+.index-content text{
+  font-size: 28rpx;
+  line-height: 40rpx;
+  font-weight: 600px;
+  line-height: 39rpx;
+}

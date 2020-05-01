@@ -2,14 +2,14 @@
     <view class="question-wrp">
         <view class="question-item">
             <view class="topic-userinfo">
-              <image src="{{mainuser.icon_path}}" class=""></image>
-              <text class="topic-userinfo-name">{{mainuser.username}}</text>
-              <text class="topic-time">{{topic_time}}</text> 
+              <image src="{{avatar}}" class=""></image>
+              <text class="topic-userinfo-name">{{name}}</text>
+              <text class="topic-time">{{time}}</text> 
             </view>
 
             <view class="topic-content-box">
               <view class="topic-content">
-                <text>{{topic_content}}</text>
+                <text>{{content}}</text>
               </view>
               <view class="topic-operations">
                 <image class="icon-image" src="{{like_url}}"></image>
@@ -38,9 +38,11 @@
                             <image src="{{item.avatar}}"></image>
 
                             <view class="topic-commenter-time">
-                              <text>{{item.name}}</text>
+                              <view class="topic-comment-commenter">
+                                {{item.name}}
+                              </view>
                               <view class="topic-comment-time">
-                                1小时前
+                                {{item.comment_time}}
                               </view>
                             </view>
 

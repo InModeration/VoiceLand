@@ -27,7 +27,7 @@ Page({
             var that = this;
             //调用应用实例的方法获取全局数据
             app.getUserInfo(function(userInfo) {
-                  console.log(userInfo)
+                  // console.log(userInfo)
                   //更新数据
                   that.setData({
                         userInfo: userInfo,
@@ -39,7 +39,7 @@ Page({
                         user_id: "Asichurter"
                   },
                   success: res=>{
-                        console.log(res);
+                        // console.log(res);
                         that.setData({
                               feed: res.result.list,
                               feed_length: res.result.list.length
@@ -208,9 +208,10 @@ Page({
       /**
        * 动态详情页
        */
-      toDetail: function () {
+      toDetail: function (e) {
+            var topic_id = e.currentTarget.id;
             wx.navigateTo({
-                  url: '../topic/topic',
+                  url: '../topic/topic?topic='+topic_id,
                   success: (res) => {
                         console.log(res)
                   },

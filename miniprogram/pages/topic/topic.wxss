@@ -208,19 +208,20 @@
 .topic-avatar .topic-commenter-time{
   display: inline-block;
   vertical-align: middle;
+  width: 82%;
 }
 
 
-.topic-avatar .topic-commenter-time text{
+.topic-avatar .topic-commenter-time .topic-comment-commenter{
+  margin-left: 15rpx;
   height: 40rpx;
   line-height: 40rpx;
-  margin: 0 0 0rpx 15rpx;
   color: #a0acac;
   font-size: 28rpx;
 }
 
 .topic-avatar .topic-comment-time{
-  margin-left: 15%;
+  margin-left: 20rpx;
   margin-bottom: 10rpx;
   font-size: 20rpx;
   color: #ddd; 
@@ -241,15 +242,14 @@
 }
 
 .topic-avatar-more{
-  /* display: inline-block; */
-  float: right;
+  display: inline-block;
   margin-top: 10rpx;
 }
 
 .topic-avatar-more image{
   /* padding-left: 200rpx; */
-  height: 30rpx;
-  width: 30rpx;
+  height: 25rpx;
+  width: 25rpx;
   vertical-align: middle;
 }
 
