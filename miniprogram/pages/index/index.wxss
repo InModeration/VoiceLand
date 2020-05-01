@@ -69,7 +69,7 @@
   height: 55rpx;
   border-radius: 55rpx;
   float: right;
-  margin-right: 15rpx;
+  margin-right: 35rpx;
   /* top: 10rpx; */
   /* vertical-align: middle; */
 }

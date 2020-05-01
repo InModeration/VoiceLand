@@ -2,7 +2,7 @@
 <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
   <view class="title">
     <text>发现</text>
-    <image class="my-mini-icon" bindtap="toPersonalAll" mode="aspectFit" src="{{userInfo.avatarUrl}}"></image>
+    <image class="my-mini-icon" bindtap="toPersonalAll" mode="aspectFit" src="{{avatar}}"  data-host="1"></image>
   </view>
   <view class="search flex-wrp">
       <view class="search-left flex-item search-box">
@@ -18,11 +18,11 @@
         <view class="feed-item">
           <view class="feed-item-box">
               <view class="feed-source">
-                  <a class="">
+                  <a class="" bindtap="toPersonal" id="{{item.mainuser_id}}" data-host="0">
                       <view class="avatar">
-                          <image src="{{item.avatar}}" bindtap="toPersonal"></image>
+                          <image src="{{item.avatar}}"></image>
                       </view>
-                      <text bindtap="toPersonal">{{item.name}}</text>
+                      <text>{{item.name}}</text>
                   </a>
                   <!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
               </view>

@@ -10,8 +10,8 @@ exports.main = async (event, context) => {
     env:'voice-land-qcrwm'
   });
 
-  return await db.collection('user').where({
-    _id: user_id
+  return await db.collection('topic').where({
+    mainuser_id: user_id
   }).get({
     success: res=>{
       return res;

@@ -18,16 +18,64 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function(options) {
-            var that = this
-            //调用应用实例的方法获取全局数据
-            app.getUserInfo(function(userInfo) {
-                  console.log(userInfo)
-                  //更新数据
-                  that.setData({
-                        userInfo: userInfo,
-                  })
+            var that = this;
+
+            var user_id = options.user;
+            var cur_user_id = options.curUser;
+            // console.log('host: '+host);
+
+            this.setData({
+                  user_id: user_id,
+                  cur_user_id: cur_user_id
+            });
+
+            wx.cloud.callFunction({
+                  name: 'userinfo',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        var data = res.result.data[0];
+                        that.setData({
+                              name: data.name,
+                              avatar: data.avatar,
+                              sex: data.sex,
+                              region: data.region,
+                              id: data._id,
+                              cover: data.cover,
+                              motto: data.motto
+                        });
+                  },
+                  fail: err=>{
+                        console.log(err);
+                  }
             })
-            console.log(app)
+
+            wx.cloud.callFunction({
+                  name: 'user_topic',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        // console.log(res);
+                        that.setData({
+                              topics: res.result.data
+                        });
+                  },
+                  fail: err=>{
+                        console.log(err);
+                  }
+            })
+
+            //调用应用实例的方法获取全局数据
+            // app.getUserInfo(function(userInfo) {
+            //       console.log(userInfo)
+            //       //更新数据
+            //       that.setData({
+            //             userInfo: userInfo,
+            //       })
+            // })
+            // console.log(app)
       },
 
       /**
@@ -84,20 +132,14 @@ Page({
       */
       toDetail: function () {
             wx.navigateTo({
-                  url: '../topic/topic',
-                  success: (res) => {
-                        console.log(res)
-                  },
-                  fail: (err) => {
-                        console.log(err)
-                  }
+                  url: '../topic/topic'
             })
       },
       displayNickname: function (e) {
             var scrollTop = e.detail.scrollTop
             if (scrollTop >= 150)
                   wx.setNavigationBarTitle({
-                        title: this.data.userInfo.nickName,
+                        title: this.data.name,
                   })
             else
                   wx.setNavigationBarTitle({
@@ -106,9 +148,11 @@ Page({
       },
 
       editInfo: function(e){
-            wx.navigateTo({
-              url: '../editinfo/editinfo',
-            })
+            if (this.data.user_id == this.data.cur_user_id){
+                  wx.navigateTo({
+                        url: '../editinfo/editinfo?user='+this.data.cur_user_id,
+                  })
+            }
       }
 
 })

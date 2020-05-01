@@ -15,35 +15,49 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var user_id = options.user;
+
     var that = this;
-    const db = wx.cloud.database({
-      env:'voice-land-qcrwm'
-    });
-    db.collection('user').where({
-      _id: "qEQ96BVjrG5not08GiSt3Xy511BFiNzj1DvCyj9TknAeqQFH"
-    }).get({
-      success: res=>{
-        var data = res.data[0];
-        console.log(data._id);
-        db.collection('avatar').where({
-          user: data._id
-        }).get({
-          success: res=>{
-            that.setData({
-              avatar: res.data[0].avatar
-            });
-          },
-          fail: res=>{
-            console.log(res);
-          }
-        });
-        that.setData(res.data[0]);
+    wx.cloud.callFunction({
+      name: 'userinfo',
+      data: {
+        user_id: user_id
       },
-      fail: res=>{
-        console.log('fail');
-        console.log(res);
+      success: res=>{
+        that.setData(res.result.data[0])
+      },
+      fail: err=>{
+        console.log(err);
       }
-    });
+    })
+    // const db = wx.cloud.database({
+    //   env:'voice-land-qcrwm'
+    // });
+    // db.collection('user').where({
+    //   _id: user_id
+    // }).get({
+    //   success: res=>{
+    //     var data = res.data[0];
+    //     console.log(data._id);
+    //     db.collection('avatar').where({
+    //       user: data._id
+    //     }).get({
+    //       success: res=>{
+    //         that.setData({
+    //           avatar: res.data[0].avatar
+    //         });
+    //       },
+    //       fail: res=>{
+    //         console.log(res);
+    //       }
+    //     });
+    //     that.setData(res.data[0]);
+    //   },
+    //   fail: res=>{
+    //     console.log('fail');
+    //     console.log(res);
+    //   }
+    // });
     // var user_info = util.getUserInfo();
     // var insterest_join = user_info.interest.join(' ')
     // this.setData({

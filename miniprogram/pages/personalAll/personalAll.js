@@ -16,15 +16,57 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function (options) {
-            var that = this
-            //调用应用实例的方法获取全局数据
-            app.getUserInfo(function (userInfo) {
-                  console.log(userInfo)
-                  //更新数据
-                  that.setData({
-                        userInfo: userInfo,
-                  })
+            var that = this;
+            this.setData({
+                  user_id: options.user
+            });
+
+            wx.cloud.callFunction({
+                  name: 'userinfo',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        var data = res.result.data[0];
+                        that.setData({
+                              name: data.name,
+                              avatar: data.avatar,
+                              sex: data.sex,
+                              region: data.region,
+                              id: data._id
+                        })
+                  }
             })
+
+            wx.cloud.callFunction({
+                  name: 'userinfo',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        // console.log(res);
+                        var jointime = new Date(res.result.data[0].joinTime);
+                        var today = new Date();
+                        var joiningday = Math.floor((today-jointime)/86400000)+1;
+
+                        that.setData({
+                              joiningDay: joiningday
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err);
+                  }
+            })
+
+            // var that = this
+            // //调用应用实例的方法获取全局数据
+            // app.getUserInfo(function (userInfo) {
+            //       console.log(userInfo)
+            //       //更新数据
+            //       that.setData({
+            //             userInfo: userInfo,
+            //       })
+            // })
       },
 
       /**
@@ -81,7 +123,7 @@ Page({
        */
       toPersonal: function () {
             wx.navigateTo({
-                  url: '../personal/personal',
+                  url: '../personal/personal?user='+this.data.user_id+'&curUser='+this.data.user_id,
             })
       },
 

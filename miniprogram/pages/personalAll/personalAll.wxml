@@ -3,14 +3,14 @@
 
       <view class="info-box" bindtap="toPersonal">
             <view class="avatar">
-                  <image src="{{userInfo.avatarUrl}}" background-size="cover" class="avatar"></image>
+                  <image src="{{avatar}}" background-size="cover" class="avatar"></image>
             </view>
             <view class="info">
-                  <text class="user-nickname">{{userInfo.nickName}}</text>
+                  <text class="user-nickname">{{name}}</text>
                   <view class="text-box">
-                        <text>{{userInfo.gender == '1' ? '男' : '女'}}</text>
-                        <text space="nbsp">{{userInfo.country}} {{userInfo.province}}</text>
-                        <text>id</text>
+                        <text>{{sex}}</text>
+                        <text space="nbsp">{{region}}</text>
+                        <!-- <text>id: {{user_id}}</text> -->
                   </view>
             </view>
             <view class="info-navigate">
@@ -21,7 +21,7 @@
       <view class="join-box">
             <view>
                   <text class="join-title">加入天数</text>
-                  <text class="join-item">250</text>
+                  <text class="join-item">{{joiningDay}}</text>
             </view>
             <view>
                   <text class="join-title">我关心谁</text>

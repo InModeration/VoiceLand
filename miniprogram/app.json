@@ -1,7 +1,7 @@
 {
       "pages": [
-            "pages/editTopic/editTopic",
             "pages/index/index",
+            "pages/editTopic/editTopic",
             "pages/editinfo/editinfo",
             "pages/personalAll/personalAll",
             "pages/setting/setting",

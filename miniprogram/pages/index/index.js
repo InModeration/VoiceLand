@@ -24,15 +24,34 @@ Page({
             })
       },
       onLoad: function() {
+            var user_id = 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9';//'KnGTfXz9d33f2XXbjep1IuisBz2RlHNuOAoIQgwy5vDUpzKF';
+            this.setData({
+                  user_id: user_id
+            });
+
             var that = this;
             //调用应用实例的方法获取全局数据
-            app.getUserInfo(function(userInfo) {
-                  // console.log(userInfo)
-                  //更新数据
-                  that.setData({
-                        userInfo: userInfo,
-                  })
-            })
+            // app.getUserInfo(function(userInfo) {
+            //       // console.log(userInfo)
+            //       //更新数据
+            //       that.setData({
+            //             userInfo: userInfo,
+            //       })
+            // })
+            wx.cloud.callFunction({
+                  name: "userinfo",
+                  data: {
+                        user_id: user_id
+                  },
+                  success: res=>{
+                        // console.log(res);
+                        that.setData({
+                              avatar: res.result.data[0].avatar
+                        });
+                  },
+                  fail: console.log
+            });
+
             wx.cloud.callFunction({
                   name: "index_user_info",
                   data: {
@@ -46,72 +65,17 @@ Page({
                         });
                   }
             });
-            //调用应用实例的方法获取全局数据
-            // this.getData();
-            // const db = wx.cloud.database({
-            //       env:'voice-land-qcrwm'
-            // });
-
-            // db.collection('topic').aggregate()
-            //       .lookup({
-            //             from: "avatar",
-            //             localField: "mainuser_id",
-            //             foreignField: "user"
-            //       })
-            //       .end()
-            //       .then(res=>{
-            //             that.setData({
-            //                   feed: res.data,
-            //                   feed_length: res.data.length
-            //             })
-            //       })
-            //       .catch(err=>console.log(err))
-
-            // db.collection('topic').get({
-            //       success: res=>{
-            //             // console.log('success');
-            //             // console.log(res);
-
-
-            //             that.setData({
-            //                   feed: res.data,
-            //                   feed_length: res.data.length
-            //             });
-
-            //             // 对每个话题都获取一次用户头像并设置
-            //             // for (var i=0; i < res.data.length; i++){
-            //             //       // console.log(i);
-            //             //       db.collection('avatar').where({
-            //             //             user: res.data[i].mainuser_id
-            //             //       }).get({
-            //             //             success: inner_res=>{
-            //             //                   console.log(i+" success");
-            //             //                   var topics = that.data.feed;
-            //             //                   topics[i].avatar = inner_res.data[0].avatar;
-            //             //                   console.log(topics[i]);
-            //             //                   that.setData({
-            //             //                         feed: topics
-            //             //                   });
-            //             //             },
-            //             //             fail: res=>{
-            //             //                   console.log('fail to load avatar in index');
-            //             //             }
-            //             //       })
-            //             // }
-            //       },
-            //       fail: res=>{
-            //             console.log('fail');
-            //             console.log(res);
-            //       }
-            // });
-            // this.getData()
       },
+
+      // 上拉事件
       upper: function() {
             // wx.showNavigationBarLoading()
             // this.refresh();
             // console.log("upper");
             // setTimeout(function(){wx.hideNavigationBarLoading();wx.stopPullDownRefresh();}, 200);
       },
+
+
       lower: function(e) {
             // wx.showNavigationBarLoading();
             // var that = this;
@@ -193,15 +157,18 @@ Page({
       /**
        * 跳转到用户个人页面
        */
-      toPersonal: function () {
+      toPersonal: function (e) {
+            var user_id = e.currentTarget.id;
+            var host = e.currentTarget.dataset.host;
+            // console.log(e);
             wx.navigateTo({
-                  url: '../personal/personal',
-                  success: (res) => {
-                        console.log(res)
-                  },
-                  fail: (err) => {
-                        console.log(err)
-                  }
+                  url: '../personal/personal?user='+user_id+'&curUser='+this.data.user_id
+                  // success: (res) => {
+                  //       console.log(res)
+                  // },
+                  // fail: (err) => {
+                  //       console.log(err)
+                  // }
             })
       },
 
@@ -211,7 +178,7 @@ Page({
       toDetail: function (e) {
             var topic_id = e.currentTarget.id;
             wx.navigateTo({
-                  url: '../topic/topic?topic='+topic_id,
+                  url: '../topic/topic?topic='+topic_id+'&user='+this.data.user_id,
                   success: (res) => {
                         console.log(res)
                   },
@@ -226,7 +193,7 @@ Page({
        */
       toPersonalAll: function () {
             wx.navigateTo({
-                  url: '../personalAll/personalAll',
+                  url: '../personalAll/personalAll?user='+this.data.user_id,
             })
       }
 })

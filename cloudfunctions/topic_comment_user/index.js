@@ -1,3 +1,8 @@
+/*
+  本云函数用于查询云数据库，根据提供的话题topic_id，将话题所有相关信息
+  收集并返回，包括：
+*/
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
