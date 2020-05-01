@@ -1,1 +1,64 @@
 /* miniprogram/pages/editTopic/editTopic.wxss */
+page {
+      position: fixed;
+}
+
+.topic-box {
+      height: 1200rpx;
+}
+
+.edit-box {
+      padding: 45rpx 45rpx 5rpx 45rpx;
+      width: 90%;
+      height: 85%;
+}
+
+.curr-all {
+      float: right;
+      margin-right: 20rpx;
+      margin-top: 5rpx;
+      font-size: 20rpx;
+      margin-left: 65%;
+      position: fixed;
+}
+
+.bottom-box {
+      position: fixed;
+      bottom: 0;
+      height: 70rpx;
+      padding-top: 29rpx;
+      width: 100%;
+      background: rgba(169, 169, 169, 0.377);
+}
+
+.bottom-box image {
+      height: 50rpx;
+      margin-left: 50rpx;
+}
+
+.pic {
+      width: 55rpx;
+}
+
+.link-loc {
+      width: 50rpx;
+}
+
+.send-pub {
+      width: 60rpx;
+}
+
+.status {
+      font-weight: 600;
+      font-size: 24rpx;
+      width: 100rpx;
+      margin-right: 30rpx;
+}
+
+.green {
+      color: green
+}
+
+.black {
+      color: black
+}

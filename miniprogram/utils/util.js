@@ -80,6 +80,23 @@ function getUserInfo(){
   return user_info.user_info;
 }
 
+/**
+ * 获取px和rpx的比率
+ * rpx = px * getRpx
+ * px = rpx / getRpx
+ */
+function getRpx() {
+      var winWidth = wx.getSystemInfoSync().windowWidth
+      return 750/winWidth
+}
+
+/**
+ * 获取[min, max]的整数
+ */
+function random (min, max) {
+      return Math.floor(Math.random() * (max - min) + min)
+}
+
 module.exports.getData = getData;
 module.exports.getData2 = getData2;
 module.exports.getNext = getNext;
@@ -88,8 +105,5 @@ module.exports.discoveryNext = discoveryNext;
 module.exports.topicDetail = getTopicDetail;
 module.exports.getCommentDetail = getCommentDetail;
 module.exports.getUserInfo = getUserInfo;
-
-
-
-
-
+module.exports.random = random;
+module.exports.getRpx = getRpx;

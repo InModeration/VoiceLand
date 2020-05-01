@@ -1,2 +1,24 @@
 <!--miniprogram/pages/editTopic/editTopic.wxml-->
-<text>miniprogram/pages/editTopic/editTopic.wxml</text>
+<view class="topic-box">
+      <textarea bindinput="getNumber" class="edit-box" placeholder="{{placeholder}}" adjust-position="true" maxlength="{{maxLength}}" bindfocus="upBottom" bindblur="downBottom" disable-default-padding="true"></textarea>
+      <view>
+            <view class="curr-all" style="bottom: {{up2}}">
+                  <text class="status {{pub?'green':'black'}}">{{pub?'公开':'仅自己可见'}}</text>
+                  <text space="nbsp">{{currLength}} / 1000</text>
+            </view>
+
+            <view class="bottom-box" style="bottom: {{up}}">
+                  <image src="{{pic}}" class="pic"></image>
+                  <image src="{{link}}" class="link-loc"></image>
+                  <block wx:if="{{pub}}">
+                        <image src="{{public}}" class="send-pub" bindtap="changeStatus"></image>
+                  </block>
+                  <block wx:else>
+                        <image src="{{private}}" class="send-pub" bindtap="changeStatus"></image>
+                  </block>
+                  <image src="{{location}}" class="link-loc"></image>
+
+                  <image src="{{send}}" class="send-pub" style="margin-left: 240rpx"></image>
+            </view>
+      </view>
+</view>
