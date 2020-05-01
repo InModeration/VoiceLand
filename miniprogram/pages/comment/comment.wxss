@@ -210,6 +210,7 @@
   display: inline-block;
   vertical-align: middle;
   width: 80%;
+  padding-top: 10rpx;
 }
 
 .topic-avatar .topic-commenter-time text{
@@ -243,8 +244,15 @@
 .comment-content{
   padding: 20rpx 0 10rpx 0;
   font-size: 28rpx;
-  color: #333;
   line-height: 38rpx;
+}
+
+.comment-content text{
+  color: #333;
+}
+
+.comment-content a{
+  color: #aaa;
 }
 
 .comment-avatar-like{
@@ -325,6 +333,12 @@
 
 .instruction-placeholder{
   color: #cecece;
+}
+
+.bottom-gap{
+  height: 120rpx;
+  width: 100%;
+  background: #fff;
 }
 
 

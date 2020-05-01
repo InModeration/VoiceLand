@@ -15,7 +15,6 @@
     padding: 40rpx 20rpx 10rpx;
     background: #fff;
 }
-
 .question-item .que-tag .tag{
     height: 28rpx;
     padding: 15rpx 20rpx;
@@ -117,7 +116,7 @@
 }
 
 .question-item .topic-userinfo .topic-userinfo-name{
-  width: 70%;
+  width: 65%;
 }
 
 .question-item .topic-userinfo .topic-time{
@@ -209,6 +208,7 @@
   display: inline-block;
   vertical-align: middle;
   width: 82%;
+  padding-top: 10rpx;
 }
 
 
@@ -333,6 +333,7 @@
 .bottom-gap{
   height: 120rpx;
   width: 100%;
+  background: #fff;
 }
 
 

@@ -74,7 +74,7 @@
                   
                   <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
                   <view wx:if="{{item.replies.length >= 3}}">
-                    <a id="{{item.comment_id}}" class="topic-comment-reference" bindtap="moreReplies">查看全部{{item.replies.length}}条回复</a>
+                    <a id="{{item.comment_id}}" class="topic-comment-reference" bindtap="toMoreReplies">查看全部{{item.replies.length}}条回复</a>
                   </view>
                     
                   </view>

@@ -1,6 +1,8 @@
 // pages/comment/comment.js
 
 var util = require('../../utils/util.js')
+var time_util = require('../../utils/time.js')
+
 Page({
 
   /**
@@ -18,16 +20,55 @@ Page({
    */
   onLoad: function (options) {
     var comment_detail = util.getCommentDetail();
-    this.setData({
-      commenter: comment_detail.commenter,
-      content: comment_detail.content,
-      time: comment_detail.time,
-      replies: comment_detail.replies,
-      like_num: comment_detail.like_num,
-      reply_num: comment_detail.reply_num
-    });
-    wx.setNavigationBarTitle({
-      title: this.data.reply_num+' 条回复'
+    var that = this;
+
+    // this.setData({
+    //   commenter: comment_detail.commenter,
+    //   content: comment_detail.content,
+    //   time: comment_detail.time,
+    //   replies: comment_detail.replies,
+    //   like_num: comment_detail.like_num,
+    //   reply_num: comment_detail.reply_num
+    // });
+
+    // 获取评论
+    var comment_id = options.comment;
+    wx.cloud.callFunction({
+      name: 'comment_info',
+      data: {
+        comment_id: comment_id
+      },
+      success: res=>{
+        var cont = res.result.list[0];
+        cont = time_util.processTime(cont, 'time');
+        // console.log(res);
+        that.setData(cont);
+      },
+      fail: err=>{
+        console.log(err);
+      }
+    })
+
+    // 获取回复
+    wx.cloud.callFunction({
+      name: 'comment_reply',
+      data: {
+        comment_id: comment_id
+      },
+      success: res=>{
+        var replies = res.result.list;
+        replies = time_util.processTimeInArray(replies, 'time');
+        // console.log(res);
+        that.setData({
+          replies: replies
+        });
+        wx.setNavigationBarTitle({
+          title: that.data.replies.length+' 条回复'
+        })
+      },
+      fail: err=>{
+        console.log(err);
+      }
     })
   },
 

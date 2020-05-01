@@ -1,5 +1,6 @@
 //answer.js
 var util = require('../../utils/util.js')
+var time_util = require('../../utils/time.js')
 
 var app = getApp()
 Page({
@@ -43,10 +44,11 @@ Page({
         topic_id: topic_id
       },
       success: res=>{
-        // console.log(res);
+        var topic = res.result.list[0];
+        topic = time_util.processTime(topic, 'time');
         that.setData(
-          res.result.list[0]
-        )
+          topic
+        );
       },
       fail: err=>{
         console.log(err);
@@ -64,7 +66,7 @@ Page({
         // console.log(mergeReplies(res.result.list));
 
         var coms = res.result.list;
-        coms = processTime(coms, 'comment_time');
+        coms = time_util.processTimeInArray(coms, 'comment_time');
 
         that.setData({
           comments: coms
@@ -77,23 +79,15 @@ Page({
   },
 
   tapName: function(event){
-    console.log(event)
+    console.log(event);
   },
 
-  moreReplies: function(e){
+  toMoreReplies: function(e){
     wx.navigateTo({
-      url: '../comment/comment',
-    })
+      url: '../comment/comment?comment='+e.currentTarget.id
+    });
   }
 })
-
-// 取时间的年月日
-function processTime(coms, key){
-  for (var i=0; i < coms.length; i++){
-    coms[i][key] = coms[i][key].substring(0,10);
-  }
-  return coms;
-}
 
 // 将同属于一个评论的回复合并到评论的replies字段中
 // function mergeReplies(comments){
