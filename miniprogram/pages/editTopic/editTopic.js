@@ -1,11 +1,11 @@
-// miniprogram/components/slide-toggle/slide-toggle.js
+// miniprogram/pages/editTopic/editTopic.js
 Page({
 
       /**
        * 页面的初始数据
        */
       data: {
-            placeHolder: '记录今天的趣事...'
+
       },
 
       /**

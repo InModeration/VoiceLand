@@ -1,3 +1,0 @@
-<view class="box">
-      <input placeholder="{{placeHolder}}" class="topic-edit"></input>
-</view>
