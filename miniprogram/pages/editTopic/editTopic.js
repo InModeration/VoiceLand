@@ -20,8 +20,9 @@ Page({
             location: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/location.png?sign=9d73dde782cee5d4be0edb39e2574d51&t=1588342392',
             send: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/send.png?sign=e810204c9501d8213e5e89e8c06bd455&t=1588342776',
             pub: true,
-            up: '0px',
-            up2: '102rpx'
+            up: '0rpx',
+            up2: '102rpx',
+            height: '1000rpx'
       },
 
       /**
@@ -108,10 +109,12 @@ Page({
        */
       upBottom: function (e) {
             var up = e.detail.height
-            var up2 = up+parseInt(this.data.up2.slice(0, 3)) / utils.getRpx()
+            var up2 = up+parseInt(this.data.up2) / utils.getRpx()
+            var height = parseInt(this.data.height) / utils.getRpx() - up
             this.setData({
                   up: up + 'px',
-                  up2: up2 + 'px'
+                  up2: up2 + 'px',
+                  height: height + 'px'
             })
       },
 
@@ -121,7 +124,8 @@ Page({
       downBottom: function () {
             this.setData({
                   up: '0px',
-                  up2: '102rpx'
+                  up2: '102rpx',
+                  height: '1000rpx'
             })
       }
 })

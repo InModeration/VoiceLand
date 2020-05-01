@@ -1,6 +1,6 @@
 <!--miniprogram/pages/editTopic/editTopic.wxml-->
 <view class="topic-box">
-      <textarea bindinput="getNumber" class="edit-box" placeholder="{{placeholder}}" adjust-position="true" maxlength="{{maxLength}}" bindfocus="upBottom" bindblur="downBottom" disable-default-padding="true"></textarea>
+      <textarea bindinput="getNumber" class="edit-box" placeholder="{{placeholder}}" adjust-position="true" maxlength="{{maxLength}}" bindfocus="upBottom" bindblur="downBottom" disable-default-padding="true" style="height: {{height}}"></textarea>
       <view>
             <view class="curr-all" style="bottom: {{up2}}">
                   <text class="status {{pub?'green':'black'}}">{{pub?'公开':'仅自己可见'}}</text>

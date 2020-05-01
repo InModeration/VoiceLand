@@ -10,7 +10,6 @@ page {
 .edit-box {
       padding: 45rpx 45rpx 5rpx 45rpx;
       width: 90%;
-      height: 85%;
 }
 
 .curr-all {
