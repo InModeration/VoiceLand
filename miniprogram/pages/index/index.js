@@ -67,6 +67,10 @@ Page({
             });
       },
 
+      onShow: function () {
+            console.log(getCurrentPages())
+      },
+
       // 上拉事件
       upper: function() {
             // wx.showNavigationBarLoading()
@@ -194,6 +198,15 @@ Page({
       toPersonalAll: function () {
             wx.navigateTo({
                   url: '../personalAll/personalAll?user='+this.data.user_id,
+            })
+      },
+
+      /**
+       * 跳转至话题编辑页面
+       */
+      toEditTopic: function () {
+            wx.redirectTo({
+                  url: '../editTopic/editTopic',
             })
       }
 })

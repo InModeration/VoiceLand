@@ -4,7 +4,9 @@
       <view>
             <view class="curr-all" style="bottom: {{up2}}">
                   <text class="status {{pub?'green':'black'}}">{{pub?'公开':'仅自己可见'}}</text>
-                  <text space="nbsp">{{currLength}} / 1000</text>
+                  <view class="count-box">
+                        <text space="nbsp" class="count">{{currLength}} / 1000</text>
+                  </view>
             </view>
 
             <view class="bottom-box" style="bottom: {{up}}">

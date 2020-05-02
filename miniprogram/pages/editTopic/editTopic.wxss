@@ -19,6 +19,9 @@ page {
       font-size: 20rpx;
       margin-left: 65%;
       position: fixed;
+      right: 0rpx;
+      display: flex;
+      flex-direction: row;
 }
 
 .bottom-box {
@@ -50,8 +53,8 @@ page {
 .status {
       font-weight: 600;
       font-size: 24rpx;
-      width: 100rpx;
-      margin-right: 30rpx;
+      width: 120rpx;
+      margin-right: 10rpx;
 }
 
 .green {
@@ -60,4 +63,13 @@ page {
 
 .black {
       color: black
+}
+
+.count-box {
+      width: 120rpx;
+      padding-top: 3rpx;
+}
+
+.count {
+      float: right;
 }
