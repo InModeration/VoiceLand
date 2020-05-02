@@ -1,5 +1,7 @@
 // miniprogram/pages/personalAll/persoanlAll.js
-var app = getApp()
+var app = getApp();
+var util = require('../../utils/util.js');
+
 Page({
 
       /**
@@ -134,5 +136,9 @@ Page({
             wx.navigateTo({
                   url: '../setting/setting?user='+this.data.user_id,
             })
+      },
+
+      addTopic: function(){
+            util.addTopic(this.data.user_id, "MagicalHC 2020/4/21 16:48:30 必须狠狠地新婚快乐", []);
       }
 })

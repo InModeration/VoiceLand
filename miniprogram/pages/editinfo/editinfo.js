@@ -16,6 +16,9 @@ Page({
    */
   onLoad: function (options) {
     var user_id = options.user;
+    this.setData({
+      user_id: user_id
+    });
 
     var that = this;
     wx.cloud.callFunction({
@@ -24,53 +27,14 @@ Page({
         user_id: user_id
       },
       success: res=>{
-        that.setData(res.result.data[0])
+        that.setData(res.result.data[0]);
+        console.log('兴趣: ' + that.data.interest);
+        console.log('类型: ' + typeof(that.data.interest));
       },
       fail: err=>{
         console.log(err);
       }
     })
-    // const db = wx.cloud.database({
-    //   env:'voice-land-qcrwm'
-    // });
-    // db.collection('user').where({
-    //   _id: user_id
-    // }).get({
-    //   success: res=>{
-    //     var data = res.data[0];
-    //     console.log(data._id);
-    //     db.collection('avatar').where({
-    //       user: data._id
-    //     }).get({
-    //       success: res=>{
-    //         that.setData({
-    //           avatar: res.data[0].avatar
-    //         });
-    //       },
-    //       fail: res=>{
-    //         console.log(res);
-    //       }
-    //     });
-    //     that.setData(res.data[0]);
-    //   },
-    //   fail: res=>{
-    //     console.log('fail');
-    //     console.log(res);
-    //   }
-    // });
-    // var user_info = util.getUserInfo();
-    // var insterest_join = user_info.interest.join(' ')
-    // this.setData({
-    //   username: user_info.username,
-    //   icon: user_info.icon,
-    //   motto: user_info.motto,
-    //   background: user_info.background,
-    //   sex: user_info.sex,
-    //   age: user_info.age,
-    //   region: user_info.region,
-    //   interest: insterest_join
-    // });
-    // console.log(this.data);
   },
 
   /**
@@ -120,5 +84,12 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  saveInfo: function(){
+    util.updateInfo(this.data.user_id, 
+      this.data.age, this.data.avatar, this.data.cover, 
+      this.data.interest, this.data.motto+"(测试)", this.data.name, 
+      this.data.region, this.data.sex);
   }
 })

@@ -13,7 +13,7 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let { userInfo, user_id} = event;
+  let { userInfo, user_id, topic_limit} = event;
   // const wxContext = cloud.getWXContext()
 
   // return {
@@ -27,6 +27,9 @@ exports.main = async (event, context) => {
   });
   var $ = db.command.aggregate;
   return await db.collection('topic').aggregate()
+    .sample({
+      size: topic_limit
+    })
     .lookup({
           from: "user",
           localField: "mainuser_id",

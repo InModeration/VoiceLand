@@ -55,7 +55,8 @@ Page({
             wx.cloud.callFunction({
                   name: "index_user_info",
                   data: {
-                        user_id: "Asichurter"
+                        user_id: this.data.user_id,
+                        topic_limit: 5
                   },
                   success: res=>{
                         // console.log(res);
