@@ -132,7 +132,7 @@ Page({
        */
       toSetting: function () {
             wx.navigateTo({
-                  url: '../setting/setting',
+                  url: '../setting/setting?user='+this.data.user_id,
             })
       }
 })

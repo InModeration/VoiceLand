@@ -1,9 +1,9 @@
 <!--pages/setting/setting.wxml-->
 <view class="setting-container">
     <view class="setting-userinfo" bindtap="toEdit">
-        <image class="setting-userinfo-icon" src="{{icon}}" mode="aspectFit" bindTap="" />
+        <image class="setting-userinfo-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
         <view class="setting-userinfo-text">
-            <text class="setting-userinfo-name">{{username}}</text>
+            <text class="setting-userinfo-name">{{name}}</text>
             <view class="setting-userinfo-tip">
                 编辑个人信息
             </view>

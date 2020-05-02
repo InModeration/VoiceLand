@@ -15,11 +15,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var user = util.getUserInfo();
+    var user_id = options.user;
+    var that = this;
+
     this.setData({
-      username: user.username,
-      icon: user.icon
+      user_id: user_id
     });
+
+    wx.cloud.callFunction({
+      name: 'userinfo',
+      data: {
+        user_id: this.data.user_id
+      },
+      success: res=>{
+        var data = res.result.data[0];
+        that.setData({
+          name: data.name,
+          avatar: data.avatar
+        })
+      },
+      fail: err=>{
+        console.log(err);
+      }
+    })
+    
+    // var user = util.getUserInfo();
+    // this.setData({
+    //   username: user.username,
+    //   icon: user.icon
+    // });
   },
 
   /**
@@ -76,7 +100,7 @@ Page({
    */
   toEdit: function () {
         wx.navigateTo({
-              url: '../editinfo/editinfo',
+              url: '../editinfo/editinfo?user='+this.data.user_id,
         })
   }
 })
