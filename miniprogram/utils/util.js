@@ -20,13 +20,13 @@ module.exports = {
   formatTime: formatTime
 };
 
-// var index = require('../data/data_index.js')
-// var index_next = require('../data/data_index_next.js')
-// var discovery = require('../data/data_discovery.js')
-// var discovery_next = require('../data/data_discovery_next.js')
-// var topic_detail = require('../data/data_topic_detail.js')
-// var comment_detail = require('../data/data_comment_detail.js')
-// var user_info = require('../data/data_user_info.js')
+var index = require('../data/data_index.js')
+var index_next = require('../data/data_index_next.js')
+var discovery = require('../data/data_discovery.js')
+var discovery_next = require('../data/data_discovery_next.js')
+var topic_detail = require('../data/data_topic_detail.js')
+var comment_detail = require('../data/data_comment_detail.js')
+var user_info = require('../data/data_user_info.js')
 
 function getData(url){
   return new Promise(function(resolve, reject){
@@ -48,37 +48,37 @@ function getData(url){
   })
 }
 
-// function getData2(){
-//   return index.index;
-// }
+function getData2(){
+  return index.index;
+}
 
-// function getNext(){
-//   return index_next.next;
-// }
+function getNext(){
+  return index_next.next;
+}
 
-// function getDiscovery(){
-//   return discovery.discovery;
-// }
+function getDiscovery(){
+  return discovery.discovery;
+}
 
-// function discoveryNext(){
-//   return discovery_next.next;
-// }
+function discoveryNext(){
+  return discovery_next.next;
+}
 
-// function topicDetail(){
-//   return topic
-// }
+function topicDetail(){
+  return topic
+}
 
-// function getTopicDetail(){
-//   return topic_detail.topic_detail;
-// }
+function getTopicDetail(){
+  return topic_detail.topic_detail;
+}
 
-// function getCommentDetail(){
-//   return comment_detail.comment_detail;
-// }
+function getCommentDetail(){
+  return comment_detail.comment_detail;
+}
 
-// function getUserInfo(){
-//   return user_info.user_info;
-// }
+function getUserInfo(){
+  return user_info.user_info;
+}
 
 /**
  * 获取px和rpx的比率
@@ -183,14 +183,14 @@ function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, 
 }
 
 
-// module.exports.getData = getData;
-// module.exports.getData2 = getData2;
-// module.exports.getNext = getNext;
-// module.exports.getDiscovery = getDiscovery;
-// module.exports.discoveryNext = discoveryNext;
-// module.exports.topicDetail = getTopicDetail;
-// module.exports.getCommentDetail = getCommentDetail;
-// module.exports.getUserInfo = getUserInfo;
+module.exports.getData = getData;
+module.exports.getData2 = getData2;
+module.exports.getNext = getNext;
+module.exports.getDiscovery = getDiscovery;
+module.exports.discoveryNext = discoveryNext;
+module.exports.topicDetail = getTopicDetail;
+module.exports.getCommentDetail = getCommentDetail;
+module.exports.getUserInfo = getUserInfo;
 module.exports.random = random;
 module.exports.getRpx = getRpx;
 module.exports.addTopic = addTopic;
