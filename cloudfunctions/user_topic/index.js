@@ -1,3 +1,8 @@
+/**
+ * 本云函数用于获取用户发表的所有topic，用在personal页面
+ */
+
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

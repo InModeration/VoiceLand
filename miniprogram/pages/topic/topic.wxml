@@ -24,7 +24,7 @@
                         </view>
                   </view>
                   <view class="topic-tip">
-                        <text>{{comment_num}}条评论</text>
+                        <text>{{comments.length}}条评论</text>
                   </view>
             </view>
 
@@ -32,7 +32,7 @@
 
             <view class="answer-feed">
                   <view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
-                        <view bindtap="bindItemTap" class="feed-item">
+                        <view class="feed-item">
                               <view class="topic-content-box">
                                     <view class="topic-source">
                                           <a class="" bindTap="">
@@ -78,8 +78,8 @@
                                                 </view>
 
                                                 <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
-                                                <view wx:if="{{item.replies.length >= 3}}">
-                                                      <a id="{{item.comment_id}}" class="topic-comment-reference" bindtap="toMoreReplies">查看全部{{item.replies.length}}条回复</a>
+                                                <view wx:if="{{item.replies.length >= 3}}" id="{{item.comment_id}}" bindtap="toMoreReplies">
+                                                      <a class="topic-comment-reference">查看全部{{item.replies.length}}条回复</a>
                                                 </view>
 
                                           </view>
@@ -89,6 +89,8 @@
                         </view>
                   </view>
             </view>
+
+            <!-- <button type="primary" bindtap="addComment">新增一条评论</button> -->
 
             <view class="bottom-gap"></view>
 

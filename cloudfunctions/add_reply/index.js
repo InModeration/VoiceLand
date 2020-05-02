@@ -1,3 +1,9 @@
+/**
+ * 本云函数用于新增一条评论comment的回复reply，需要
+ * 提供回复者和被回复者
+ */
+
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

@@ -1,6 +1,7 @@
 // pages/editinfo/editinfo.js
 
 var util = require('../../utils/util.js')
+var app = getApp()
 
 Page({
 
@@ -145,5 +146,12 @@ Page({
             wx.showActionSheet({
                   itemList: ['拍照', '从相册选取'],
             })
+      },
+
+      saveInfo: function(){
+            app.utils.data.updateInfo(this.data.user_id,
+                  this.data.age, this.data.avatar, this.data.cover,
+                  this.data.interest, this.data.motto+"<测试>", this.data.name,
+                  this.data.region, this.data.sex);
       }
 })

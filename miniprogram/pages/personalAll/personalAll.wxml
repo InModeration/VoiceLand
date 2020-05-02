@@ -53,6 +53,7 @@
                         <image class="navigate" src="{{navigate}}"></image>
                   </view>
                   <view class="line"></view>
+                  <button type="primary" bindtap="addTopic">新增话题</button>
             </view>
       </view>
 </view>

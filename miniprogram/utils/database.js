@@ -89,7 +89,6 @@ function addReply(comment_id, replier_id, repliee_id, content){
   });
 }
 
-
 module.exports.addComment = addComment;
 module.exports.updateInfo = updateInfo;
 module.exports.addReply = addReply;

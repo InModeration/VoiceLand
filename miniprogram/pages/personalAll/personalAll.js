@@ -158,5 +158,12 @@ Page({
             wx.redirectTo({
                   url: '../index/index',
             })
+      },
+
+      //新增话题测试
+      addTopic: function(){
+            app.utils.data.addTopic(this.data.user_id,
+                  "@7班-童浩淇 急着回去找你女朋友？",
+                  []);
       }
 })

@@ -1,3 +1,8 @@
+/**
+ * 本云函数用于新增一条topic的评论comment
+ */
+
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

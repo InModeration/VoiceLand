@@ -1,3 +1,8 @@
+/**
+ * 本云函数用于更新用户user的信息
+ */
+
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

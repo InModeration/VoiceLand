@@ -97,90 +97,6 @@ function random (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
 }
 
-/* 
-  调用云函数增加一条topic记录
-  增加回调函数
-*/
-function addTopic(user_id, content, pictures, callback){
-  var data = {
-    mainuser_id: user_id,
-    content: content,
-    pictures: pictures
-  };
-
-  var call = callback()
-
-  wx.cloud.callFunction({
-    name: "add_topic",
-    data: {
-      data: data
-    },
-    success: res=>{
-      console.log(res);
-      return 1;
-      // callback here
-      call()
-    },
-    fail: err=>{
-      console.log(err);
-      return 0;
-    }
-  });
-}
-
-function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, sex){
-  var data = {
-    age: age,
-    avatar: avatar,
-    cover: cover,
-    interest: interest,
-    motto: motto,
-    name: name,
-    region: region,
-    sex: sex
-  };
-
-  console.log('user_id: ' + user_id);
-
-  // wx.cloud.callFunction({
-  //   name: 'update_userinfo',
-  //   data: {
-  //     user_id: user_id,
-  //     data: data
-  //   },
-  //   success: res=>{
-  //     console.log('成功更新数据!');
-  //     console.log(res);
-  //   },
-  //   fail: err=>{
-  //     console.log(err);
-  //   }
-  // });
-
-  const db = wx.cloud.database();
-
-  db.collection('user').doc(user_id).get({
-    complete: console.log
-  });
-
-  db.collection('user').doc(user_id).update({
-    data: {
-      age: age,
-      avatar: avatar,
-      cover: cover,
-      interest: interest,
-      motto: motto,
-      name: name,
-      region: region,
-      sex: sex
-    }
-  }).then(res => {
-    console.log('成功更新!');
-    console.log(res);
-  }).catch(err => {
-    console.log(err);
-  })
-}
 
 
 // module.exports.getData = getData;
@@ -193,5 +109,3 @@ function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, 
 // module.exports.getUserInfo = getUserInfo;
 module.exports.random = random;
 module.exports.getRpx = getRpx;
-module.exports.addTopic = addTopic;
-module.exports.updateInfo = updateInfo;

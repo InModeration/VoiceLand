@@ -331,7 +331,7 @@
 }
 
 .bottom-gap{
-  height: 120rpx;
+  height: 150rpx;
   width: 100%;
   background: #fff;
 }

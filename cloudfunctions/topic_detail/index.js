@@ -1,3 +1,9 @@
+/**
+ * 本云函数用于根据提供的topic id，返回话题对应的内容和
+ * 发表话题的用户的姓名和头像信息
+ */
+
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 

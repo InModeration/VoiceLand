@@ -57,7 +57,7 @@ Page({
                   name: "index_user_info",
                   data: {
                         user_id: this.data.user_id,
-                        topic_limit: 5
+                        topic_limit: 10
                   },
                   success: res=>{
                         // console.log(res);

@@ -40,7 +40,7 @@
                                                 <text class="month">4月</text>
                                           </view>
                                           <view class="saying-content">
-                                                <text bindtap="toDetail">{{item.content}}</text>
+                                                <text bindtap="toDetail" id="{{item._id}}">{{item.content}}</text>
                                                 <view class="saying-operation">
                                                       <image class="like" src="{{like_url}}"></image>
                                                       <text class="like_number">{{item.like_num}}</text>

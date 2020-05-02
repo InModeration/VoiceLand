@@ -60,7 +60,7 @@ Page({
                   success: res=>{
                         // console.log(res);
                         that.setData({
-                              topics: res.result.data
+                              topics: res.result.list
                         });
                   },
                   fail: err=>{
@@ -131,9 +131,9 @@ Page({
       /**
       * 动态详情页
       */
-      toDetail: function () {
+      toDetail: function (e) {
             wx.navigateTo({
-                  url: '../topic/topic'
+                  url: '../topic/topic?'+this.data.user_id+'&topic='+e.currentTarget.id
             })
       },
       displayNickname: function (e) {

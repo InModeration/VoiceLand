@@ -18,15 +18,15 @@ Page({
     })
   },
   onLoad: function (options) {
-    console.log('onLoad')
-    var that = this
+    // console.log('onLoad')
+    var that = this;
     //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
+    // app.getUserInfo(function(userInfo){
+    //   //更新数据
+    //   that.setData({
+    //     userInfo:userInfo
+    //   })
+    // })
     // var topic_data = util.topicDetail();
     // this.setData({
     //   mainuser: topic_data.mainuser,
@@ -37,11 +37,16 @@ Page({
     //   comment_num: topic_data.comment_num
     // });
 
-    var topic_id = options.topic;
+    this.setData({
+      topic_id: options.topic,
+      user_id: options.user
+    })
+
+    // var topic_id = options.topic;
     wx.cloud.callFunction({
       name: "topic_detail",
       data: {
-        topic_id: topic_id
+        topic_id: this.data.topic_id
       },
       success: res=>{
         var topic = res.result.list[0];
@@ -58,7 +63,7 @@ Page({
     wx.cloud.callFunction({
       name: "topic_comment_user",
       data: {
-            topic_id: topic_id
+            topic_id: this.data.topic_id
       },
       success: res=>{
         // console.log(res);
@@ -84,8 +89,14 @@ Page({
 
   toMoreReplies: function(e){
     wx.navigateTo({
-      url: '../comment/comment?comment='+e.currentTarget.id
+      url: '../comment/comment?comment='+e.currentTarget.id+'&user='+this.data.user_id
     });
+  },
+
+  //测试回复功能
+  addComment: function(){
+    app.utils.data.addComment(this.data.topic_id, this.data.user_id, 
+      "鹏哥 国际周和国际周的学分有说法了不..")
   },
 
   /**
@@ -107,62 +118,3 @@ Page({
   }
 })
 
-// 将同属于一个评论的回复合并到评论的replies字段中
-// function mergeReplies(comments){
-//   console.log(comments);
-//   let new_comments = new Object();
-//   let keys = [];
-//   for (var i=0; i < comments.length; i++){
-//     var new_obj = comments[i];
-//     if (!(new_obj.comment_id in new_comments)){
-//       // console.log(new_obj.comment_id);
-//       let replies = [];
-
-//       // 如果没有回复，则没有reply内部的任意一个字段
-//       if ('like_num' in new_obj){
-//         replies.push({
-//           like_num: new_obj.like_num,
-//           repliee: new_obj.repliee,
-//           repliee_id: new_obj.repliee_id,
-//           replier: new_obj.replier,
-//           replier_id: new_obj.replier_id,
-//           sort_key: new_obj.sort_key,
-//           time: new_obj.time,
-//           content: new_obj.content
-//         });
-//       }
-
-//       new_comments[new_obj.comment_id] = {
-//         avatar: new_obj.avatar,
-//         name: new_obj.name,
-//         main_user_id: new_obj.main_user_id,
-//         comment_id: new_obj.comment_id,
-//         comment_like_num: new_obj.comment_like_num,
-//         comment_time: new_obj.comment_time,
-//         comment_content: new_obj.comment_content,
-//         replies: replies
-//       };
-//       keys.push(new_obj.comment_id);
-//     }
-//     else{
-//       new_comments[new_obj.comment_id].replies.push(
-//         {
-//           like_num: new_obj.like_num,
-//           repliee: new_obj.repliee,
-//           repliee_id: new_obj.repliee_id,
-//           replier: new_obj.replier,
-//           replier_id: new_obj.replier_id,
-//           sort_key: new_obj.sort_key,
-//           time: new_obj.time,
-//           content: new_obj.content
-//         }
-//       )
-//     }
-//   }
-  
-//   let returned_comments = []
-//   for (var i=0; i < keys.length; i++){
-//     returned_comments.push(new_comments[keys[i]]);
-//   }
-//   return returned_comments;
-// }

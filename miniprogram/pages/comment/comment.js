@@ -3,6 +3,8 @@
 var util = require('../../utils/util.js')
 var time_util = require('../../utils/time.js')
 
+var app = getApp()
+
 Page({
 
       /**
@@ -20,24 +22,17 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function(options) {
-            var comment_detail = util.getCommentDetail();
             var that = this;
 
-            // this.setData({
-            //   commenter: comment_detail.commenter,
-            //   content: comment_detail.content,
-            //   time: comment_detail.time,
-            //   replies: comment_detail.replies,
-            //   like_num: comment_detail.like_num,
-            //   reply_num: comment_detail.reply_num
-            // });
+            this.setData({
+                  comment_id: options.comment,
+                  user_id: options.user
+            });
 
-            // 获取评论
-            var comment_id = options.comment;
             wx.cloud.callFunction({
                   name: 'comment_info',
                   data: {
-                        comment_id: comment_id
+                        comment_id: this.data.comment_id
                   },
                   success: res => {
                         var cont = res.result.list[0];
@@ -54,7 +49,7 @@ Page({
             wx.cloud.callFunction({
                   name: 'comment_reply',
                   data: {
-                        comment_id: comment_id
+                        comment_id: this.data.comment_id
                   },
                   success: res => {
                         var replies = res.result.list;
@@ -129,5 +124,12 @@ Page({
             wx.navigateBack({
                   delta: 1
             })
+      },
+
+      //回复评论的测试函数
+      addReply: function(){
+            app.utils.data.addReply(this.data.comment_id,
+                  this.data.user_id, this.data.replies[0].replier_id,
+                  "国际周取消，确定了。3个英文学分暂时还没有说法")
       }
 })

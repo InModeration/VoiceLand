@@ -62,6 +62,8 @@
             </view>
       </view>
 
+      <!-- <button type="primary" bindtap="addReply">新增一条回复</button> -->
+
       <view class="bottom-gap"></view>
 
       <view class="bottom-input-area">
