@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "设置"
+      "usingComponents": {
+            "navbar": "/components/navbar/index"
+      }
 }

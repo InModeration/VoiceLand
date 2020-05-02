@@ -1,13 +1,13 @@
 <!--pages/editinfo/editinfo.wxml-->
 <view class="editinfo-container">
-    <view class="editinfo-cover-picture" style="background-image: url({{cover}})">
+    <view class="editinfo-cover-picture" bindtap="changeBackground" style="background-image: url({{cover}})">
         <view class="editinfo-cover-wrapper">
             <view class="editinfo-avatar">
-                <image class="editinfo-avatar-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
+                <image catchtap="changePortrait" class="editinfo-avatar-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
             </view>
         </view>
           
-        <view class="editinfo-editcover">
+        <view class="editinfo-editcover" bindtap="changeBackground">
            <text>编辑封面</text>
         </view>
     </view>
@@ -41,11 +41,7 @@
         <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
     </view>
 
-    <view class="editinfo-line">
-        <text class="editinfo-line-label">兴趣</text>
-        <text class="editinfo-line-input">{{interest}}</text>
-        <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
     <button type="primary" class="editinfo-savebutton">保存信息</button>
 </view>
   
+<image src="{{back_url}}" class="back" bindtap="backLast"></image>

@@ -6,6 +6,10 @@ page {
       position: fixed;
 }
 
+.container {
+      height: 100%
+}
+
 .user {
       width: 725rpx;
       background: #fff;
@@ -17,7 +21,7 @@ page {
 }
 
 .likeAndAvatar {
-      padding-top: 40rpx; 
+      padding-top: 140rpx; 
       display: flex;
       flex-direction: row;
 }
@@ -82,13 +86,17 @@ page {
       color: white;
       margin: 20rpx;
       margin-top: 40rpx;
+      width: 90%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 }
 
 .user-box {
-      height: 400rpx;
+      height: 460rpx;
       padding-left: 20rpx;
       background-repeat: no-repeat;
-      background-size: 100% 130%;
+      background-size: 110% 100%;
       -moz-background-size: 100% 100%;
 }
 
@@ -97,7 +105,7 @@ page {
       height: 100%;
       border-radius: 10px 10px 0px 0px;
       background: white;
-      margin-top: -55rpx;
+      margin-top: -40rpx;
       font-weight: 500;
       color: black;
 }
@@ -183,4 +191,12 @@ page {
       height: 1px;
       background-color: darkgray;
       margin: 5% 1% 5% 1%;
+}
+
+.back {
+      position: fixed;
+      left: 35rpx;
+      top: 65rpx;
+      height: 50rpx;
+      width: 60rpx;
 }

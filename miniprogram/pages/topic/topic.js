@@ -86,6 +86,24 @@ Page({
     wx.navigateTo({
       url: '../comment/comment?comment='+e.currentTarget.id
     });
+  },
+
+  /**
+   * bind:Back
+   */
+  back: function () {
+        wx.navigateBack({
+              delta: 1
+        })
+  },
+
+  /**
+   * bind:Index
+   */
+  index: function () {
+        wx.redirectTo({
+              url: '../index/index',
+        })
   }
 })
 

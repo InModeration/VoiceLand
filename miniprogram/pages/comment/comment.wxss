@@ -341,15 +341,15 @@
   background: #fff;
 }
 
+.container {
+      padding-top: 125rpx;
+      background: white;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.back {
+      position: fixed;
+      left: 30rpx;
+      top: 65rpx;
+      height: 50rpx;
+      width: 60rpx;
+}

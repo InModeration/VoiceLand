@@ -11,7 +11,7 @@ Component({
        */
       properties: {
             pageName: String,
-            showNav: {
+            shownav: {
                   type: Boolean,
                   value: true
             },
@@ -29,7 +29,7 @@ Component({
        * 组件的初始数据
        */
       data: {
-
+            
       },
       lifetimes: {
             attached: function() {
@@ -52,6 +52,6 @@ Component({
             //回主页
             onIndex: function() {
                   this.triggerEvent('Index')
-            },
+            }
       }
 })

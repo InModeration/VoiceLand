@@ -1,97 +1,104 @@
-<view class="container">
-    <view class="question-wrp">
-        <view class="question-item">
-            <view class="topic-userinfo">
-              <image src="{{avatar}}" class=""></image>
-              <text class="topic-userinfo-name">{{name}}</text>
-              <text class="topic-time">{{time}}</text> 
-            </view>
+<view>
+      <navbar page-name="评论详情" bind:Back="back" bind:Index="index"></navbar>
+      <view class="container">
+            <view class="question-wrp">
+                  <view class="question-item">
+                        <view class="topic-userinfo">
+                              <image src="{{avatar}}" class=""></image>
+                              <text class="topic-userinfo-name">{{name}}</text>
+                              <text class="topic-time">{{time}}</text>
+                        </view>
 
-            <view class="topic-content-box">
-              <view class="topic-content">
-                <text>{{content}}</text>
-              </view>
-              <view class="topic-operations">
-                <image class="icon-image" src="{{like_url}}"></image>
-                <text>{{like_num}}</text>
-                <image class="icon-image" src="{{comment_url}}"></image>
-                <text>{{comment_num}}</text>
-                <image class="topic-operations-more" src="{{more_url}}" bindTap="" />
-                  
-              </view>
-            </view>
-        </view>
-      <view class="topic-tip">
-        <text>{{comment_num}}条评论</text>
-      </view>
-    </view>
-
-
-
-    <view class="answer-feed">
-        <view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
-          <view bindtap="bindItemTap" class="feed-item">
-            <view class="topic-content-box">
-                <view class="topic-source">
-                    <a class="" bindTap="">
-                        <view class="topic-avatar">
-                            <image src="{{item.avatar}}"></image>
-
-                            <view class="topic-commenter-time">
-                              <view class="topic-comment-commenter">
-                                {{item.name}}
+                        <view class="topic-content-box">
+                              <view class="topic-content">
+                                    <text>{{content}}</text>
                               </view>
-                              <view class="topic-comment-time">
-                                {{item.comment_time}}
+                              <view class="topic-operations">
+                                    <image class="icon-image" src="{{like_url}}"></image>
+                                    <text>{{like_num}}</text>
+                                    <image class="icon-image" src="{{comment_url}}"></image>
+                                    <text>{{comment_num}}</text>
+                                    <image class="topic-operations-more" src="{{more_url}}" bindTap="" />
+
                               </view>
-                            </view>
-
-                            <view class="topic-avatar-more">
-                              <image src="{{like_url}}"></image>
-                              <text>{{item.comment_like_num}}</text>
-                            </view>
                         </view>
-                    </a>
-                </view>
-                <view class="feed-content">
-                    <view class="answer-body">
-                        <view class="topic-comment-content">
-                            <text>{{item.comment_content}}</text>
-                        </view>
-                    </view>
-                </view>
-
-                <view wx:if="{{item.replies.length > 0}}"  class="topic-comment-reply-wrapper">
-                  <view class="topic-comment-reply-box">
-                    <view wx:for="{{item.replies}}" wx:for-item="rep_item" wx:for-index="rep_idx">
-                      <!-- 控制显示的回复数量为3条 -->
-                      <view wx:if="{{rep_idx <= 2}}">
-                        <view class="topic-comment-reply-line">
-                        <a class="topic-comment-reply-name" bindTap="">{{rep_item.replier}}</a> <text> 回复 </text> <a class="topic-comment-reply-name" bindTap="">{{rep_item.repliee}}</a> <text>: {{rep_item.content}}</text>
-                        </view>
-                      </view>
-                    </view>
-                  
-                  <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
-                  <view wx:if="{{item.replies.length >= 3}}">
-                    <a id="{{item.comment_id}}" class="topic-comment-reference" bindtap="toMoreReplies">查看全部{{item.replies.length}}条回复</a>
                   </view>
-                    
+                  <view class="topic-tip">
+                        <text>{{comment_num}}条评论</text>
                   </view>
-                </view>
-
             </view>
-          </view>
-        </view>
-    </view>
 
-    <view class="bottom-gap"></view>
-    
-    <view class="bottom-input-area">
-      <view class="bottom-input-box">
-        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
-        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+
+
+            <view class="answer-feed">
+                  <view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+                        <view bindtap="bindItemTap" class="feed-item">
+                              <view class="topic-content-box">
+                                    <view class="topic-source">
+                                          <a class="" bindTap="">
+                                                <view class="topic-avatar">
+                                                      <image src="{{item.avatar}}"></image>
+
+                                                      <view class="topic-commenter-time">
+                                                            <view class="topic-comment-commenter">
+                                                                  {{item.name}}
+                                                            </view>
+                                                            <view class="topic-comment-time">
+                                                                  {{item.comment_time}}
+                                                            </view>
+                                                      </view>
+
+                                                      <view class="topic-avatar-more">
+                                                            <image src="{{like_url}}"></image>
+                                                            <text>{{item.comment_like_num}}</text>
+                                                      </view>
+                                                </view>
+                                          </a>
+                                    </view>
+                                    <view class="feed-content">
+                                          <view class="answer-body">
+                                                <view class="topic-comment-content">
+                                                      <text>{{item.comment_content}}</text>
+                                                </view>
+                                          </view>
+                                    </view>
+
+                                    <view wx:if="{{item.replies.length > 0}}" class="topic-comment-reply-wrapper">
+                                          <view class="topic-comment-reply-box">
+                                                <view wx:for="{{item.replies}}" wx:for-item="rep_item" wx:for-index="rep_idx">
+                                                      <!-- 控制显示的回复数量为3条 -->
+                                                      <view wx:if="{{rep_idx <= 2}}">
+                                                            <view class="topic-comment-reply-line">
+                                                                  <a class="topic-comment-reply-name" bindTap="">{{rep_item.replier}}</a>
+                                                                  <text> 回复 </text>
+                                                                  <a class="topic-comment-reply-name" bindTap="">{{rep_item.repliee}}</a>
+                                                                  <text>: {{rep_item.content}}</text>
+                                                            </view>
+                                                      </view>
+                                                </view>
+
+                                                <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
+                                                <view wx:if="{{item.replies.length >= 3}}">
+                                                      <a id="{{item.comment_id}}" class="topic-comment-reference" bindtap="toMoreReplies">查看全部{{item.replies.length}}条回复</a>
+                                                </view>
+
+                                          </view>
+                                    </view>
+
+                              </view>
+                        </view>
+                  </view>
+            </view>
+
+            <view class="bottom-gap"></view>
+
+            <view class="bottom-input-area">
+                  <view class="bottom-input-box">
+                        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
+                        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+                  </view>
+            </view>
       </view>
-    </view>
+
+
 </view>
-

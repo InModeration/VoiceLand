@@ -102,5 +102,23 @@ Page({
         wx.navigateTo({
               url: '../editinfo/editinfo?user='+this.data.user_id,
         })
+  },
+
+  /**
+   * bind:Back
+   */
+  back: function () {
+        wx.navigateBack({
+              delta: 1
+        })
+  },
+
+  /**
+   * bind:Index
+   */
+  index: function () {
+        wx.redirectTo({
+              url: '../index/index',
+        })
   }
 })

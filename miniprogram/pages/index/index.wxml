@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view>
-      <navbar page-name="VoiceLand" bind:Back="back" bind:Index="index"></navbar>
+      <navbar shownav="{{shownav}}" page-name="VoiceLand" bind:Back="back" bind:Index="index"></navbar>
       <view class='page-content'>
             <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
                   <view class="title">

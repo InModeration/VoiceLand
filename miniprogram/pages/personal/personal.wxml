@@ -1,57 +1,60 @@
 <!--miniprogram/pages/personal/personal.wxml-->
-<scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname">
-      <view>
-            <view class="user-box" style="background-image: url({{cover}})">
-                  <view class="likeAndAvatar">
-                        <view class="avatar">
-                              <image src="{{avatar}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
+
+      <scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname">
+            <view>
+                  <view class="user-box" style="background-image: url({{cover}})">
+                        <view class="likeAndAvatar">
+                              <view class="avatar">
+                                    <image src="{{avatar}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
+                              </view>
+
+                              <view class="follow">关心</view>
                         </view>
 
-                        <view class="follow">关心</view>
+                        <view>
+                              <text class="user-nickname">{{name}}</text>
+                        </view>
+
+                        <view class="user-info">
+                              <text>{{sex}}</text>
+                              <text space="nbsp">{{region}}</text>
+                              <text>id</text>
+                        </view>
+
+                        <view class="user-motto">
+                              <text>{{motto}}</text>
+                        </view>
+
                   </view>
 
-                  <view>
-                        <text class="user-nickname">{{name}}</text>
-                  </view>
+                  <view class="personal-box">
+                        <view class="total">
+                              <text>{{topics.length}}条心声</text>
+                        </view>
 
-                  <view class="user-info">
-                        <text>{{sex}}</text>
-                        <text space="nbsp">{{region}}</text>
-                        <text>id</text>
-                  </view>
-
-                  <view class="user-motto">
-                        <text>{{motto}}</text>
-                  </view>
-
-            </view>
-
-            <view class="personal-box">
-                  <view class="total">
-                        <text>{{topics.length}}条心声</text>
-                  </view>
-
-                  <view class="sayings">
-                        <block wx:for="{{topics}}" wx:for-item="item">
-                              <view class="saying">
-                                    <view class="date">
-                                          <text class="day">26</text>
-                                          <text class="month">4月</text>
-                                    </view>
-                                    <view class="saying-content">
-                                          <text bindtap="toDetail">{{item.content}}</text>
-                                          <view class="saying-operation">
-                                                <image class="like" src="{{like_url}}"></image>
-                                                <text class="like_number">{{item.like_num}}</text>
-                                                <image class="comment" src="{{comment_url}}"></image>
-                                                <text class="comment_number">{{item.comment_num}}</text>
-                                                <image class="more" src="{{more_url}}"></image>
+                        <view class="sayings">
+                              <block wx:for="{{topics}}" wx:for-item="item">
+                                    <view class="saying">
+                                          <view class="date">
+                                                <text class="day">26</text>
+                                                <text class="month">4月</text>
                                           </view>
-                                          <view class="line"></view>
+                                          <view class="saying-content">
+                                                <text bindtap="toDetail">{{item.content}}</text>
+                                                <view class="saying-operation">
+                                                      <image class="like" src="{{like_url}}"></image>
+                                                      <text class="like_number">{{item.like_num}}</text>
+                                                      <image class="comment" src="{{comment_url}}"></image>
+                                                      <text class="comment_number">{{item.comment_num}}</text>
+                                                      <image class="more" src="{{more_url}}"></image>
+                                                </view>
+                                                <view class="line"></view>
+                                          </view>
                                     </view>
-                              </view>
-                        </block>
+                              </block>
+                        </view>
                   </view>
             </view>
-      </view>
 </scroll-view>
+
+<image src="{{back_url}}" class="back" bindtap="backLast"></image>

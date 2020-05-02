@@ -8,13 +8,13 @@
     justify-content: space-between;
     /*padding: 200rpx 0;*/
     box-sizing: border-box;
+    padding-top: 150rpx;
     /* background: #F0F4F3; */
   }
 
 .editinfo-cover-picture{
     height: 400rpx;
-    width: 90%;
-    padding-left: 20rpx;
+    width: 95%;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -94,4 +94,12 @@
     position: fixed;
     bottom: 30rpx;
     /* height: 30rpx; */
+}
+
+.back {
+      position: fixed;
+      left: 35rpx;
+      top: 65rpx;
+      height: 50rpx;
+      width: 60rpx;
 }

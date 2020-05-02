@@ -1,34 +1,38 @@
 <!--pages/setting/setting.wxml-->
-<view class="setting-container">
-    <view class="setting-userinfo" bindtap="toEdit">
-        <image class="setting-userinfo-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
-        <view class="setting-userinfo-text">
-            <text class="setting-userinfo-name">{{name}}</text>
-            <view class="setting-userinfo-tip">
-                编辑个人信息
+<view>
+      <navbar page-name="设置" bind:Back="back" bind:Index="index"></navbar>
+      <view class="setting-container">
+            <view class="setting-userinfo" bindtap="toEdit">
+                  <image class="setting-userinfo-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
+                  <view class="setting-userinfo-text">
+                        <text class="setting-userinfo-name">{{name}}</text>
+                        <view class="setting-userinfo-tip">
+                              编辑个人信息
+                        </view>
+                  </view>
+                  <image class="setting-userinfo-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
-        </view>
-        <image class="setting-userinfo-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
 
-    <view class="setting-line">
-        <text class="setting-line-label" selectable="false" space="false" decode="false">我关心的</text>
-        <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
+            <view class="setting-line">
+                  <text class="setting-line-label" selectable="false" space="false" decode="false">我关心的</text>
+                  <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+            </view>
 
-    <view class="setting-line">
-        <text class="setting-line-label" selectable="false" space="false" decode="false">隐私设置</text>
-        <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
+            <view class="setting-line">
+                  <text class="setting-line-label" selectable="false" space="false" decode="false">隐私设置</text>
+                  <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+            </view>
 
-    <view class="setting-line">
-        <text class="setting-line-label" selectable="false" space="false" decode="false">意见反馈</text>
-        <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
+            <view class="setting-line">
+                  <text class="setting-line-label" selectable="false" space="false" decode="false">意见反馈</text>
+                  <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+            </view>
 
-    <view class="setting-line">
-        <text class="setting-line-label" selectable="false" space="false" decode="false">关于 VoiceLand</text>
-        <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
-    </view>
+            <view class="setting-line">
+                  <text class="setting-line-label" selectable="false" space="false" decode="false">关于 VoiceLand</text>
+                  <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
+            </view>
+      </view>
+
+
 </view>
-  
