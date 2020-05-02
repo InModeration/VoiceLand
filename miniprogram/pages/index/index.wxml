@@ -52,7 +52,7 @@
                   <view class="bottom-input-area">
                         <view class="bottom-input-box">
                               <image mode="aspectFit" src="{{comment_url}}" class="bottom-message"></image>
-                              <input class="bottom-input" placeholder="记录今天的趣事..." placeholder-class="instruction-placeholder" bindtap="toEditTopic"></input>
+                              <input class="bottom-input" placeholder="记录今天的趣事..." placeholder-class="instruction-placeholder" bindtap="toEditTopic" disabled="true"></input>
                               <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
                         </view>
                   </view>
