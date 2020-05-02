@@ -14,6 +14,24 @@ App({
                         traceUser: true,
                   })
             }
+
+            // 获取胶囊组件、手机屏幕的信息，设定高度
+            let menuButtonObject = wx.getMenuButtonBoundingClientRect();
+            wx.getSystemInfo({
+                  success: res => {
+
+                        //导航高度
+                        let statusBarHeight = res.statusBarHeight,
+                              navTop = menuButtonObject.top,
+                              navHeight = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight) * 2;
+                        this.globalData.navHeight = navHeight;
+                        this.globalData.navTop = navTop;
+                        this.globalData.windowHeight = res.windowHeight;
+                  },
+                  fail(err) {
+                        console.log(err);
+                  }
+            })
       },
       getUserInfo: function(cb) {
             var that = this
