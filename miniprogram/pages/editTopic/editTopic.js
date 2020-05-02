@@ -1,6 +1,7 @@
 // miniprogram/pages/editTopic/editTopic.js
 
 var utils = require('../../utils/util.js')
+var app = getApp()
 
 Page({
 
@@ -8,6 +9,9 @@ Page({
        * 页面的初始数据
        */
       data: {
+            // test 用
+            user_id: 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9',
+
             placeholders: ['你在做什么...', '你在想什么...', '记录下你的瞬间...', '我想说点什么...'],
             placeholder: '',
             adjustPosition: false,
@@ -22,19 +26,26 @@ Page({
             pub: true,
             up: '0rpx',
             up2: '102rpx',
-            height: '1000rpx'
+            height: '1000rpx',
+
+            // 话题的内容
+            contents: '',
+            pictures: [],
+            links: '',
+            positions: ''
       },
 
       /**
        * 生命周期函数--监听页面加载
        */
       onLoad: function (options) {
+            var that = this
+
             var index = utils.random(0, 4)
             var display = this.data.placeholders[index]
             this.setData({
                   placeholder: display
             })
-            console.log(getCurrentPages())
       },
 
       /**
@@ -88,11 +99,14 @@ Page({
 
       /**
        * 统计当前输入字数
+       * 绑定输入框的内容
        */
       getNumber: function (e) {
+            var contents = e.detail.value
             var number = e.detail.cursor
             this.setData({
-                  currLength: number
+                  currLength: number,
+                  contents: contents
             })
       },
 
@@ -128,5 +142,80 @@ Page({
                   up2: '102rpx',
                   height: '1000rpx'
             })
+      },
+
+      /**
+       * bind:Back监听函数
+       */
+      back: function (e) {
+            wx.showModal({
+                  title: '系统将不会保存当前编辑内容',
+                  content: '返回会导致您的内容将丢失，确定吗？',
+                  cancelText: '继续编辑',
+                  confirmText: '确认退出',
+                  success: (res) => {
+                        if (res.confirm) {
+                              wx.navigateBack({
+                                    delta: 1
+                              })
+                        } else if (res.cancel) {
+                              
+                        }
+                  },
+                  fail: (err) => {
+                        console.log(err)
+                        wx.showToast({
+                              title: '错误',
+                              icon: 'none'
+                        })
+                  }
+            })
+      },
+
+      /**
+       * bind:Index监听函数
+       */
+      index: function (e) {
+
+      },
+
+      /**
+       * 发送话题按钮
+       */
+      sendTopic: function () {
+            if (this.data.currLength === 0) {
+                  wx.showToast({
+                        title: '不能发送空白话题！',
+                        icon: 'none'
+                  })
+            } else {
+                  var data = this.data
+                  utils.addTopic(data.user_id, data.contents, data.pictures, ()=>{
+                        wx.showLoading()
+                        setTimeout(()=>{
+                              wx.hideLoading({
+                                    success: (res) => {
+                                          wx.showToast({
+                                                title: '发送成功！',
+                                                success: (res) => {
+                                                      console.log(res)
+                                                },
+                                                fail: (err) => {
+                                                      console.log(err)
+                                                }
+                                          })
+                                    },
+                                    fail: (err) => {
+                                          console.log(err)
+                                    },
+                                    complete: () => {
+                                          wx.redirectTo({
+                                                url: '../index/index',
+                                          })
+                                    }
+                              })
+                        }, 500)
+                  })
+            }
       }
 })

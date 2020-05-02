@@ -50,7 +50,7 @@ App({
                         }
                   })
             }
-            console.log(this.globalData)
+            // console.log(this.globalData)
       },
       globalData: {
             userInfo: null

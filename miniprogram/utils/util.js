@@ -99,14 +99,17 @@ function random (min, max) {
 
 /* 
   调用云函数增加一条topic记录
+  增加回调函数
 */
-function addTopic(user_id, content, pictures){
+function addTopic(user_id, content, pictures, callback){
   var data = {
     mainuser_id: user_id,
     content: content,
     pictures: pictures
   };
-  
+
+  var call = callback()
+
   wx.cloud.callFunction({
     name: "add_topic",
     data: {
@@ -115,6 +118,8 @@ function addTopic(user_id, content, pictures){
     success: res=>{
       console.log(res);
       return 1;
+      // callback here
+      call()
     },
     fail: err=>{
       console.log(err);

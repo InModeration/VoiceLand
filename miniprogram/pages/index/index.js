@@ -69,7 +69,7 @@ Page({
       },
 
       onShow: function () {
-            console.log(getCurrentPages())
+            
       },
 
       // 上拉事件
@@ -206,8 +206,21 @@ Page({
        * 跳转至话题编辑页面
        */
       toEditTopic: function () {
-            wx.redirectTo({
+            wx.navigateTo({
                   url: '../editTopic/editTopic',
             })
+      },
+
+      /**
+       * 
+       */
+      back: function (e) {
+            console.log(e)
+            console.log('back')
+      },
+
+      index: function (e) {
+            console.log(e)
+            console.log('index')
       }
 })

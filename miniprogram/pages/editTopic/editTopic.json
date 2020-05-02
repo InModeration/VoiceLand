@@ -1,4 +1,5 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "发布"
+  "usingComponents": {
+        "navbar": "/components/navbar/index"
+  }
 }
