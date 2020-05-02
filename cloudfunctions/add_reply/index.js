@@ -6,18 +6,19 @@ cloud.init({
 })
 
 exports.main = async (event, context) => {
-  let { userInfo, data} = event;
+  let { userInfo, comment_id, replier_id, repliee_id, content} = event;
   const db = cloud.database({
     env:'voice-land-qcrwm'
   });
 
   try {
-    return await db.collection('topic').add({
+    return await db.collection('reply').add({
       // data 字段表示需新增的 JSON 数据
       data: {
-        mainuser_id: data.mainuser_id,
-        content: data.content,
-        pictures: data.pictures,
+        comment_id: comment_id,
+        repliee_id: repliee_id,
+        replier_id: replier_id,
+        content: content,
         like_num: 0,
         time: new Date()
       }

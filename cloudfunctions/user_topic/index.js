@@ -10,14 +10,34 @@ exports.main = async (event, context) => {
     env:'voice-land-qcrwm'
   });
 
-  return await db.collection('topic').where({
+  const $ = db.command.aggregate;
+
+  return await db.collection('topic').aggregate()
+  .match({
     mainuser_id: user_id
-  }).get({
-    success: res=>{
+  })
+  .lookup({
+    from: "comment",
+    localField: "_id",
+    foreignField: "topic_id",
+    as: "comments"
+  })
+  .project({
+    comment_num: $.size('$comments'),
+    content: 1,
+    mainuser_id: 1,
+    time: 1,
+    like_num: 1,
+    pictures: 1
+  })
+  
+  .end({
+    success:res=>{
       return res;
     },
     fail: err=>{
       return err;
     }
   })
+
 }
