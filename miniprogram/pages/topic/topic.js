@@ -50,7 +50,8 @@ Page({
       },
       success: res=>{
         var topic = res.result.list[0];
-        topic = time_util.processTime(topic, 'time');
+        console.log(topic);
+        topic = app.utils.time.processTime(topic, 'time');
         that.setData(
           topic
         );

@@ -33,10 +33,10 @@ exports.main = async (event, context) => {
       avatar: true,
       name: true,
       comment_num: true,
-      topic_content: '$content',
+      content: true,
       like_num: true,
       mainuser_id: true,
-      topic_time: '$time',
+      time: true,
       pictures: true,
     })
     .end({
