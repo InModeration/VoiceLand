@@ -31,7 +31,8 @@ exports.main = async (event, context) => {
     .project({
       _id: 1,
       content: 1,
-      like_num: 1,
+      likes: 1,
+      like_num: $.size('$likes'),
       main_user_id: 1,
       time: 1,
       topic_id: 1,

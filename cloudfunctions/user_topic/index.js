@@ -32,7 +32,8 @@ exports.main = async (event, context) => {
     content: 1,
     mainuser_id: 1,
     time: 1,
-    like_num: 1,
+    like_num: $.size('$likes'),
+    likes: 1,
     pictures: 1
   })
   .sort({

@@ -27,7 +27,8 @@ exports.main = async (event, context) => {
       comment_id: 1,
       reply: {                          // 将reply相关内容收集到一个reply对象中方便后续project时只用写一个 reply: 1
         content: '$content',
-        like_num: '$like_num',
+        like_num: $.size('$likes'),
+        likes: '$likes',
         time: '$time'
       },
       repliee_id: 1,

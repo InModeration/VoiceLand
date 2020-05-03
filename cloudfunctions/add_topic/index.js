@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
         mainuser_id: data.mainuser_id,
         content: data.content,
         pictures: data.pictures,
-        like_num: 0,
+        likes: [],
         time: new Date()
       }
     })

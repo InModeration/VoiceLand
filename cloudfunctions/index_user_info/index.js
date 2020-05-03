@@ -26,6 +26,7 @@ exports.main = async (event, context) => {
     env:'voice-land-qcrwm'
   });
   var $ = db.command.aggregate;
+
   return await db.collection('topic').aggregate()
     .lookup({
       from: "comment",
@@ -38,7 +39,8 @@ exports.main = async (event, context) => {
       content: 1,
       mainuser_id: 1,
       time: 1,
-      like_num: 1,
+      like_num: $.size('$likes'),
+      likes: 1,
       pictures: 1
     })
     .sample({
@@ -58,6 +60,7 @@ exports.main = async (event, context) => {
       comment_num: true,
       content: true,
       like_num: true,
+      likes: true,
       mainuser_id: true,
       name: true,
       pictures: true,

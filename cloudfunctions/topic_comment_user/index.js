@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
       topic_id: topic_id
     })
     .project({
-      comment_like_num: '$like_num',
+      comment_likes: '$likes',
       comment_time: '$time',
       comment_content: '$content',
       comment_id: '$_id',
@@ -61,13 +61,13 @@ exports.main = async (event, context) => {
       repliee: '$name',
       reply_content: '$content',
       comment_content: 1,
-      comment_like_num: 1,
+      comment_likes: 1,
       comment_time: 1,
       main_user_id: 1,
       topic_id: 1,
       comment_id: 1,
       content: 1,
-      like_num: 1,
+      likes: 1,
       replier_id: 1,
       repliee_id: 1,
       time: 1
@@ -88,13 +88,13 @@ exports.main = async (event, context) => {
       replier: '$name',
       repliee: 1, 
       comment_content: 1,
-      comment_like_num: 1,
+      comment_likes: 1,
       comment_time: 1,
       main_user_id: 1,
       topic_id: 1,
       comment_id: 1,
       content: 1,
-      like_num: 1,
+      likes: 1,
       replier_id: 1,
       repliee_id: 1,
       time: $.ifNull(['$time', NOT_EXIST_TAG]),
@@ -114,13 +114,13 @@ exports.main = async (event, context) => {
     .group({
       _id:{
         comment_id: '$comment_id',
-        comment_like_num: '$comment_like_num',
         comment_time: '$comment_time',
         comment_content: "$comment_content",
         main_user_id: '$main_user_id',
         topic_id: '$topic_id',
         name: '$name',
-        avatar: '$avatar'
+        avatar: '$avatar',
+        comment_likes: '$comment_likes'
       },
       replies: $.push({
         replier: '$replier',
@@ -129,7 +129,7 @@ exports.main = async (event, context) => {
         repliee_id: '$repliee_id',
         sort_key: '$sort_key',
         content: '$content',
-        like_num: '$like_num',
+        likes: '$likes',
         time: '$time'
       })
     })
@@ -137,7 +137,7 @@ exports.main = async (event, context) => {
       replies: $.filter({
         input: '$replies',
         as: 'item',
-        cond: $.neq(['$$item.time', NOT_EXIST_TAG])
+        cond: $.neq(['$$item.time', NOT_EXIST_TAG])       //将没有回复的评论的replies内部的空对象移除
       })
     })
     .replaceRoot({
@@ -145,6 +145,18 @@ exports.main = async (event, context) => {
     })
     .project({
       _id: 0
+    })
+    .project({
+      comment_like_num: $.size('$comment_likes'),
+      comment_id: 1,
+      comment_time: 1,
+      comment_content: 1,
+      main_user_id: 1,
+      topic_id: 1,
+      name: 1,
+      avatar: 1,
+      comment_likes: 1,
+      replies: 1
     })
     .sort({
       comment_time: 1             // 第二次排序按照评论时间排序，此时回复已经合并，由于第一次排序已经保证了回复的顺序，因此本次排序只排评论
