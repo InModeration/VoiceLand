@@ -7,7 +7,8 @@ page {
 }
 
 .container {
-      height: 100%
+      height: 100%;
+      background: white;
 }
 
 .user {
@@ -189,7 +190,7 @@ page {
 .line {
       width: 98%;
       height: 1px;
-      background-color: darkgray;
+      background-color: rgba(169, 169, 169, 0.178);
       margin: 5% 1% 5% 1%;
 }
 

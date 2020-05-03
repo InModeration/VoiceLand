@@ -98,7 +98,6 @@ function random (min, max) {
 }
 
 
-
 // module.exports.getData = getData;
 // module.exports.getData2 = getData2;
 // module.exports.getNext = getNext;

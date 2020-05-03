@@ -36,6 +36,8 @@ Page({
                         user_id: this.data.user_id
                   },
                   success: res=>{
+                        // test
+                        // console.log(res)
                         var data = res.result.data[0];
                         that.setData({
                               name: data.name,
@@ -58,6 +60,7 @@ Page({
                         user_id: this.data.user_id
                   },
                   success: res=>{
+                        // test
                         // console.log(res);
                         that.setData({
                               topics: res.result.list
@@ -67,7 +70,7 @@ Page({
                         console.log(err);
                   }
             })
-
+            
             //调用应用实例的方法获取全局数据
             // app.getUserInfo(function(userInfo) {
             //       console.log(userInfo)

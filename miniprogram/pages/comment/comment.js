@@ -136,4 +136,4 @@ Page({
 //             // console.log(e.currentTarget.id, this.data.user_id);
 //             app.utils.data.addReplyLike(e.currentTarget.id, this.data.user_id);
 //       }
-// })
+})

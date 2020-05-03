@@ -38,7 +38,7 @@ Page({
       /**
        * 生命周期函数--监听页面加载
        */
-      onLoad: function (options) {
+      onLoad: function(options) {
             var that = this
 
             var index = utils.random(0, 4)
@@ -51,49 +51,49 @@ Page({
       /**
        * 生命周期函数--监听页面初次渲染完成
        */
-      onReady: function () {
+      onReady: function() {
 
       },
 
       /**
        * 生命周期函数--监听页面显示
        */
-      onShow: function () {
-            
+      onShow: function() {
+
       },
 
       /**
        * 生命周期函数--监听页面隐藏
        */
-      onHide: function () {
-            
+      onHide: function() {
+
       },
 
       /**
        * 生命周期函数--监听页面卸载
        */
-      onUnload: function () {
-           
+      onUnload: function() {
+
       },
 
       /**
        * 页面相关事件处理函数--监听用户下拉动作
        */
-      onPullDownRefresh: function () {
+      onPullDownRefresh: function() {
 
       },
 
       /**
        * 页面上拉触底事件的处理函数
        */
-      onReachBottom: function () {
+      onReachBottom: function() {
 
       },
 
       /**
        * 用户点击右上角分享
        */
-      onShareAppMessage: function () {
+      onShareAppMessage: function() {
 
       },
 
@@ -101,7 +101,7 @@ Page({
        * 统计当前输入字数
        * 绑定输入框的内容
        */
-      getNumber: function (e) {
+      getNumber: function(e) {
             var contents = e.detail.value
             var number = e.detail.cursor
             this.setData({
@@ -113,7 +113,7 @@ Page({
       /**
        * 更改要发布的话题的可见范围
        */
-      changeStatus: function () {
+      changeStatus: function() {
             this.setData({
                   pub: !this.data.pub
             })
@@ -122,9 +122,9 @@ Page({
       /**
        * 点击输入框时，textarea下面的组件升高
        */
-      upBottom: function (e) {
+      upBottom: function(e) {
             var up = e.detail.height
-            var up2 = up+parseInt(this.data.up2) / utils.getRpx()
+            var up2 = up + parseInt(this.data.up2) / utils.getRpx()
             var height = parseInt(this.data.height) / utils.getRpx() - up
             this.setData({
                   up: up + 'px',
@@ -136,7 +136,7 @@ Page({
       /**
        * 输入框失去焦点
        */
-      downBottom: function () {
+      downBottom: function() {
             this.setData({
                   up: '0px',
                   up2: '102rpx',
@@ -147,7 +147,7 @@ Page({
       /**
        * bind:Back监听函数
        */
-      back: function (e) {
+      back: function(e) {
             wx.showModal({
                   title: '系统将不会保存当前编辑内容',
                   content: '返回会导致您的内容将丢失，确定吗？',
@@ -159,7 +159,7 @@ Page({
                                     delta: 1
                               })
                         } else if (res.cancel) {
-                              
+
                         }
                   },
                   fail: (err) => {
@@ -175,14 +175,14 @@ Page({
       /**
        * bind:Index监听函数
        */
-      index: function (e) {
+      index: function(e) {
 
       },
 
       /**
        * 发送话题按钮
        */
-      sendTopic: function () {
+      sendTopic: function() {
             if (this.data.currLength === 0) {
                   wx.showToast({
                         title: '不能发送空白话题！',
@@ -190,31 +190,29 @@ Page({
                   })
             } else {
                   var data = this.data
-                  utils.addTopic(data.user_id, data.contents, data.pictures, ()=>{
-                        wx.showLoading()
-                        setTimeout(()=>{
-                              wx.hideLoading({
-                                    success: (res) => {
-                                          wx.showToast({
-                                                title: '发送成功！',
-                                                success: (res) => {
-                                                      console.log(res)
-                                                },
-                                                fail: (err) => {
-                                                      console.log(err)
-                                                }
-                                          })
-                                    },
-                                    fail: (err) => {
-                                          console.log(err)
-                                    },
-                                    complete: () => {
-                                          wx.redirectTo({
-                                                url: '../index/index',
-                                          })
-                                    }
-                              })
-                        }, 500)
+                  wx.showLoading()
+                  app.utils.data.addTopic(data.user_id, data.contents, data.pictures, () => {
+                        wx.hideLoading({
+                              success: (res) => {
+                                    wx.showToast({
+                                          title: '发送成功！',
+                                          success: (res) => {
+                                                console.log(res)
+                                          },
+                                          fail: (err) => {
+                                                console.log(err)
+                                          }
+                                    })
+                              },
+                              fail: (err) => {
+                                    console.log(err)
+                              },
+                              complete: () => {
+                                    wx.redirectTo({
+                                          url: '../index/index',
+                                    })
+                              }
+                        })
                   })
             }
       }
