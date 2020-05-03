@@ -34,7 +34,11 @@ exports.main = async (event, context) => {
       likes: 1,
       like_num: $.size('$likes'),
       main_user_id: 1,
-      time: 1,
+      time: $.dateToString({
+        date: '$time',
+        format: '%Y-%m-%dT%H:%M:%S.%LZ',
+        timezone: "Asia/Shanghai"
+      }),
       topic_id: 1,
       name: 1,
       avatar: 1

@@ -38,7 +38,11 @@ exports.main = async (event, context) => {
       comment_num: $.size('$comments'),
       content: 1,
       mainuser_id: 1,
-      time: 1,
+      time: $.dateToString({
+        date: '$time',
+        format: '%Y-%m-%dT%H:%M:%S.%LZ',
+        timezone: "Asia/Shanghai"
+      }),
       like_num: $.size('$likes'),
       likes: 1,
       pictures: 1
@@ -64,6 +68,7 @@ exports.main = async (event, context) => {
       mainuser_id: true,
       name: true,
       pictures: true,
+      time: true,
       _id: true
     })
     .end({
