@@ -125,7 +125,7 @@ function addTopic(user_id, content, pictures, callback){
     pictures: pictures
   };
 
-  var call = callback();
+  var call = callback;
 
   wx.cloud.callFunction({
     name: "add_topic",
@@ -145,8 +145,63 @@ function addTopic(user_id, content, pictures, callback){
   });
 }
 
+function addTopicLike(topic_id, user_id){
+  const db = wx.cloud.database();
+
+  db.collection('topic').doc(topic_id).get({
+    complete: console.log
+  });
+  const _ = db.command;
+
+  db.collection('user').doc(user_id).update({
+    data: {
+      like_num: _.inc(1)
+    }
+  }).then(res => {
+    console.log('成功更新!');
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  });
+
+}
+
+function updateAvatar(user_id, avatar){
+  const db = wx.cloud.database();
+  const _ = db.command;
+
+  db.collection('user').doc(user_id).update({
+    data: {
+      avatar: avatar
+    }
+  }).then(res => {
+    console.log('成功更新!');
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+function updateCover(user_id, cover){
+  const db = wx.cloud.database();
+  const _ = db.command;
+
+  db.collection('user').doc(user_id).update({
+    data: {
+      cover: cover
+    }
+  }).then(res => {
+    console.log('成功更新!');
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
 module.exports.addComment = addComment;
 module.exports.updateInfo = updateInfo;
 module.exports.addReply = addReply;
 module.exports.addTopic = addTopic;
 module.exports.updateInfo = updateInfo;
+module.exports.updateAvatar = updateAvatar;
+module.exports.updateCover = updateCover;

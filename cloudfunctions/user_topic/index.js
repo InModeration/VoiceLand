@@ -35,7 +35,9 @@ exports.main = async (event, context) => {
     like_num: 1,
     pictures: 1
   })
-  
+  .sort({
+    time: -1
+  })
   .end({
     success:res=>{
       return res;
