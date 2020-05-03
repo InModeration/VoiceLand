@@ -27,17 +27,21 @@ exports.main = async (event, context) => {
     foreignField: "topic_id",
     as: "comments"
   })
+  .sort({
+    time: -1
+  })
   .project({
     comment_num: $.size('$comments'),
     content: 1,
     mainuser_id: 1,
-    time: 1,
+    time: $.dateToString({
+      date: '$time',
+      format: '%Y-%m-%dT%H:%M:%S.%LZ',
+      timezone: "Asia/Shanghai"
+    }),
     like_num: $.size('$likes'),
     likes: 1,
     pictures: 1
-  })
-  .sort({
-    time: -1
   })
   .end({
     success:res=>{

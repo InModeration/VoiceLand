@@ -130,8 +130,16 @@ exports.main = async (event, context) => {
         sort_key: '$sort_key',
         content: '$content',
         likes: '$likes',
-        time: '$time'
+        time:  $.cond({
+          if: $.eq(['$time', NOT_EXIST_TAG]),
+          then: NOT_EXIST_TAG,
+          else: $.dateToString({
+            date: '$time',
+            format: '%Y-%m-%dT%H:%M:%S.%LZ',
+            timezone: "Asia/Shanghai"
+          })
       })
+    })
     })
     .project({
       replies: $.filter({
@@ -149,7 +157,11 @@ exports.main = async (event, context) => {
     .project({
       comment_like_num: $.size('$comment_likes'),
       _id: '$comment_id',
-      comment_time: 1,
+      comment_time: $.dateToString({
+        date: '$comment_time',
+        format: '%Y-%m-%dT%H:%M:%S.%LZ',
+        timezone: "Asia/Shanghai"
+      }),
       comment_content: 1,
       main_user_id: 1,
       topic_id: 1,
