@@ -2,7 +2,6 @@
 
 var util = require('../../utils/util.js')
 var time_util = require('../../utils/time.js')
-
 var app = getApp()
 
 Page({
@@ -15,7 +14,11 @@ Page({
             comment_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/comment%20.png?sign=1d444df91712179f1bbcc3fcbdde87eb&t=1587886769',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
-            back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063'
+            back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063',
+            // 本地时间
+            currTime: '',
+            // 评论时间
+            thisTime: ''
       },
 
       /**
@@ -24,9 +27,13 @@ Page({
       onLoad: function(options) {
             var that = this;
 
+            // 获取本地时间
+            var currTime = app.utils.time.getLocalTime()
+
             this.setData({
                   comment_id: options.comment,
-                  user_id: options.user
+                  user_id: options.user,
+                  currTime: currTime
             });
 
             wx.cloud.callFunction({
@@ -36,6 +43,7 @@ Page({
                   },
                   success: res => {
                         var cont = res.result.list[0];
+                        console.log(cont)
                         cont = app.utils.time.processTime(cont, 'time');
                         that.setData(cont);
                   },

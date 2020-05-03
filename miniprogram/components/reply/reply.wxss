@@ -1,0 +1,36 @@
+/* miniprogram/components/reply/reply.wxss */
+.bottom-input-box{
+  margin: 0 1% 0 1%;
+  height: 5%;
+  width: 98%;
+  border: 1rpx solid black;
+  border-radius: 40rpx;
+  position: fixed;
+}
+
+.bottom-input-box image{
+  display: inline-flex;
+  vertical-align: middle;
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 30rpx;
+}
+
+.bottom-input-box input{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10rpx 10rpx 10rpx 30rpx;
+  height: 80%;
+  font-size: 30rpx;
+  width: 80%;
+  color: black;
+}
+
+
+.bottom-input-box .bottom-message{
+  margin-left: 35rpx;
+}
+
+.instruction-placeholder{
+  color: #838383;
+}

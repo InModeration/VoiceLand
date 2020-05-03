@@ -43,7 +43,7 @@
                                                             <view class="topic-comment-commenter">
                                                                   {{item.name}}
                                                             </view>
-                                                            <view class="topic-comment-time">
+                                                            <view class="topic-comment-time" catchtap="clickComment" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}">
                                                                   {{item.comment_time}}
                                                             </view>
                                                       </view>
@@ -55,7 +55,7 @@
                                                 </view>
                                           </a>
                                     </view>
-                                    <view class="feed-content">
+                                    <view class="feed-content" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}" catchtap="clickComment" >
                                           <view class="answer-body">
                                                 <view class="topic-comment-content">
                                                       <text>{{item.comment_content}}</text>
@@ -94,13 +94,12 @@
 
             <view class="bottom-gap"></view>
 
-            <view class="bottom-input-area">
+            <view class="bottom-input-area" style="bottom: {{up}}">
                   <view class="bottom-input-box">
-                        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
-                        <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
+                        <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="startInput" bindblur="endInput" bindinput="editComment" bindconfirm="sendComment" value="{{comment_content}}"></input>
+                        <image mode="aspectFit" class="bottom-camera" src="{{send_url}}" bindtap="sendComment"></image>
                   </view>
             </view>
       </view>
-
-
 </view>
+<reply id="reply" hidden="{{reply}}" keyboardHeight="{{up}}" replyValue="{{reply_content}}" autoFocus="{{ifFocus}}" bind:Focus="editReply" bind:Blur="enReply" bind:Input="editReply" bind:Confirm="sendReply"></reply>

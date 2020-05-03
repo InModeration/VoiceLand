@@ -1,0 +1,7 @@
+<!--miniprogram/components/reply/reply.wxml-->
+<block wx:if="{{hidden===false}}">
+      <view class="bottom-input-box" style="bottom: {{keyboardHeight}}">
+            <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="onFocus" bindinput="onInput" bindblur="onBlur" bindconfirm="onConfirm" value="{{replyValue}}" focus="{{autoFocus}}"></input>
+            <image mode="aspectFit" class="bottom-camera" src="{{send_url}}" bindtap="sendComment" bindtap="onConfirm"></image>
+      </view>
+</block>

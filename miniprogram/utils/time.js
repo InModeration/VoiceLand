@@ -26,8 +26,8 @@ function getTime(time) {
  * currTime: 当前时间
  */
 function timeGap(thisTime, currTime) {
-      console.log(thisTime)
-      console.log(currTime)
+      // console.log(thisTime)
+      // console.log(currTime)
       //截取字符串，得到日期部分"2009-12-02",用split把字符串分隔成数组
       var begin1 = thisTime.substr(0, 10).split("-");
       var end1 = currTime.substr(0, 10).split("-");
