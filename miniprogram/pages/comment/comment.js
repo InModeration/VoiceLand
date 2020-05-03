@@ -36,8 +36,7 @@ Page({
                   },
                   success: res => {
                         var cont = res.result.list[0];
-                        cont = time_util.processTime(cont, 'time');
-                        // console.log(res);
+                        cont = app.utils.time.processTime(cont, 'time');
                         that.setData(cont);
                   },
                   fail: err => {
@@ -53,7 +52,7 @@ Page({
                   },
                   success: res => {
                         var replies = res.result.list;
-                        replies = time_util.processTimeInArray(replies, 'time');
+                        replies = app.utils.time.processTimeInArray(replies, 'time');
                         // console.log(res);
                         that.setData({
                               replies: replies
@@ -127,9 +126,14 @@ Page({
       },
 
       //回复评论的测试函数
-      addReply: function(){
-            app.utils.data.addReply(this.data.comment_id,
-                  this.data.user_id, this.data.replies[0].replier_id,
-                  "国际周取消，确定了。3个英文学分暂时还没有说法")
-      }
-})
+      // addReply: function(){
+      //       app.utils.data.addReply(this.data.comment_id,
+      //             this.data.user_id, this.data.replies[0].replier_id,
+      //             "国际周取消，确定了。3个英文学分暂时还没有说法")
+      // },
+
+//       addReplyLike: function(e){
+//             // console.log(e.currentTarget.id, this.data.user_id);
+//             app.utils.data.addReplyLike(e.currentTarget.id, this.data.user_id);
+//       }
+// })

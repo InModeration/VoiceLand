@@ -48,7 +48,7 @@
                                                             </view>
                                                       </view>
 
-                                                      <view class="topic-avatar-more">
+                                                      <view class="topic-avatar-more" id="{{item._id}}" bindtap="addCommentLike">
                                                             <image src="{{like_url}}"></image>
                                                             <text>{{item.comment_like_num}}</text>
                                                       </view>
@@ -78,7 +78,7 @@
                                                 </view>
 
                                                 <!-- 只有在回复条数大于3时才显示转到评论详情页面 -->
-                                                <view wx:if="{{item.replies.length >= 3}}" id="{{item.comment_id}}" bindtap="toMoreReplies">
+                                                <view wx:if="{{item.replies.length >= 3}}" id="{{item._id}}" bindtap="toMoreReplies">
                                                       <a class="topic-comment-reference">查看全部{{item.replies.length}}条回复</a>
                                                 </view>
 

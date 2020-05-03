@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
         main_user_id: replier_id,
         content: content,
         topic_id: topic_id,
-        like_num: 0,
+        likes: [],
         time: new Date()
       }
     })

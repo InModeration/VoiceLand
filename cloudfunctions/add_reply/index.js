@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
         repliee_id: repliee_id,
         replier_id: replier_id,
         content: content,
-        like_num: 0,
+        likes: [],
         time: new Date()
       }
     })

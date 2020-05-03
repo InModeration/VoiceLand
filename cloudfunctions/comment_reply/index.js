@@ -45,6 +45,7 @@ exports.main = async (event, context) => {
     })
     .project({
       reply: 1,
+      reply_id: 1,
       comment_id: 1,
       reply: 1,
       repliee_id: 1,
@@ -64,7 +65,7 @@ exports.main = async (event, context) => {
     .project({
       reply: 1,
       comment_id: 1,
-      reply: 1,
+      _id: '$reply_id',
       repliee_id: 1,
       replier_id: 1,
       replier: 1,

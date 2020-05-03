@@ -27,7 +27,7 @@
 
       <view class="answer-feed">
             <view wx:for="{{replies}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
-                  <view bindtap="bindItemTap" class="feed-item">
+                  <view class="feed-item">
                         <view class="topic-content-box">
                               <view class="topic-source">
                                     <a class="" bindTap="">
@@ -41,7 +41,7 @@
                                                       </view>
                                                 </view>
 
-                                                <view class="comment-avatar-like">
+                                                <view class="comment-avatar-like" id="{{item._id}}" bindtap="addReplyLike">
                                                       <image src="{{like_url}}"></image>
                                                       <text>{{item.like_num}}</text>
                                                 </view>

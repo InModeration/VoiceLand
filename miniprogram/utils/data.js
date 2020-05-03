@@ -148,14 +148,10 @@ function addTopic(user_id, content, pictures, callback){
 function addTopicLike(topic_id, user_id){
   const db = wx.cloud.database();
 
-  db.collection('topic').doc(topic_id).get({
-    complete: console.log
-  });
-  const _ = db.command;
-
-  db.collection('user').doc(user_id).update({
+  const _ = db.command
+  db.collection('topic').doc(topic_id).update({
     data: {
-      like_num: _.inc(1)
+      likes: _.push(user_id)
     }
   }).then(res => {
     console.log('成功更新!');
@@ -163,7 +159,38 @@ function addTopicLike(topic_id, user_id){
   }).catch(err => {
     console.log(err);
   });
+}
 
+function addCommentLike(comment_id, user_id){
+  const db = wx.cloud.database();
+
+  const _ = db.command
+  db.collection('comment').doc(comment_id).update({
+    data: {
+      likes: _.push(user_id)
+    }
+  }).then(res => {
+    console.log('成功更新!');
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+function addReplyLike(reply_id, user_id){
+  const db = wx.cloud.database();
+
+  const _ = db.command
+  db.collection('reply').doc(reply_id).update({
+    data: {
+      likes: _.push(user_id)
+    }
+  }).then(res => {
+    console.log('成功更新!');
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
+  });
 }
 
 function updateAvatar(user_id, avatar){
@@ -205,3 +232,6 @@ module.exports.addTopic = addTopic;
 module.exports.updateInfo = updateInfo;
 module.exports.updateAvatar = updateAvatar;
 module.exports.updateCover = updateCover;
+module.exports.addTopicLike = addTopicLike;
+module.exports.addCommentLike = addCommentLike;
+module.exports.addReplyLike = addReplyLike;
