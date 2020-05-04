@@ -14,7 +14,7 @@
                                     <text>{{content}}</text>
                               </view>
                               <view class="topic-operations">
-                                    <image class="icon-image" src="{{like_url}}"></image>
+                                    <image class="icon-image" src="{{liked ? liked_url : like_url}}" catchtap="addTopicLike"></image>
                                     <text>{{like_num}}</text>
                                     <image class="icon-image" src="{{comment_url}}"></image>
                                     <text>{{comments.length}}</text>
@@ -48,8 +48,8 @@
                                                             </view>
                                                       </view>
 
-                                                      <view class="topic-avatar-more" id="{{item._id}}" bindtap="addCommentLike">
-                                                            <image src="{{like_url}}"></image>
+                                                      <view class="topic-avatar-more" id="{{item._id}}" bindtap="addCommentLike" data-idx="{{idx}}">
+                                                            <image src="{{item.comment_liked ? liked_url : like_url}}"></image>
                                                             <text>{{item.comment_like_num}}</text>
                                                       </view>
                                                 </view>

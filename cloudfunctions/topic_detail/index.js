@@ -10,7 +10,7 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 
 exports.main = async (event, context) => {
-  let { userInfo, topic_id} = event;
+  let { userInfo, user_id, topic_id} = event;
 
   const db = cloud.database({
     env:'voice-land-qcrwm'
@@ -43,6 +43,7 @@ exports.main = async (event, context) => {
         timezone: "Asia/Shanghai"
       }),
       pictures: true,
+      liked: $.in([user_id, '$likes'])
     })
     .end({
       success:res=>{

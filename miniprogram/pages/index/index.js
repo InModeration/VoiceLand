@@ -7,13 +7,15 @@ Page({
             feed_length: 0,
             userInfo: '',
             like_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/like.png?sign=f385b6a9ec6bd2fd8eef4c15dd7f60e0&t=1587886758',
+            liked_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/liked.png?sign=6c22cc8c58c58c132eb82cf3c107cec6&t=1588600467',
             comment_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/comment%20.png?sign=1d444df91712179f1bbcc3fcbdde87eb&t=1587886769',
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             search_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/search_black.png?sign=a9f9c7136a7416d5e91d1f75e1ca212c&t=1587887012',
             shownav: false,
             registerModal: true,
-            registerName: ''
+            registerName: '',
+            liked: ()=>{return this.liked_url}
       },
       //事件处理函数
       bindItemTap: function() {
@@ -47,7 +49,7 @@ Page({
                   name: "index_user_info",
                   data: {
                         user_id: this.data.user_id,
-                        topic_limit: 10
+                        topic_limit: 20
                   },
                   success: res=>{
                         // console.log(res);
@@ -311,5 +313,38 @@ Page({
                         that.onLoad();
                   }
             })
+      },
+
+      addTopicLike: function(e){
+            var that = this;
+
+            var idx = e.target.dataset.idx;
+            var icon_field_name = 'feed['+idx+']liked';
+            var likenum_field_name = 'feed['+idx+']like_num';
+            var like_num = this.data.feed[idx].like_num;
+
+            // var newData = Object();
+            // newData[icon_field_name] = true;
+            // newData[likenum_field_name] = like_num+1;
+
+            // console.log(newData);
+            
+            // console.log(e);
+            // console.log(this.data.feed[e.target.dataset.idx].liked);
+            if (this.data.feed[idx].liked){
+                  wx.showToast({
+                    title: '您已经点过赞啦！',
+                    icon: 'none'
+                  });
+            }
+            else {
+                  app.utils.data.addTopicLike(e.currentTarget.id, this.data.user_id,
+                  ()=>{
+                        that.setData({
+                              [icon_field_name]: true,
+                              [likenum_field_name]: like_num+1
+                        })
+                  })
+            }
       }
 })

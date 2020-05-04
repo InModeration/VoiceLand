@@ -6,6 +6,7 @@ Page({
       data: {
             userInfo: {},
             like_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/like.png?sign=f385b6a9ec6bd2fd8eef4c15dd7f60e0&t=1587886758',
+            liked_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/liked.png?sign=6c22cc8c58c58c132eb82cf3c107cec6&t=1588600467',
             comment_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/comment%20.png?sign=1d444df91712179f1bbcc3fcbdde87eb&t=1587886769',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             send_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/send.png?sign=de38d777dfbcf0a42929b31c31ab1219&t=1588519726',
@@ -73,6 +74,7 @@ Page({
             wx.cloud.callFunction({
                   name: "topic_detail",
                   data: {
+                        user_id: this.data.user_id,
                         topic_id: this.data.topic_id
                   },
                   success: res => {
@@ -104,10 +106,11 @@ Page({
             wx.cloud.callFunction({
                   name: "topic_comment_user",
                   data: {
+                        user_id: this.data.user_id,
                         topic_id: this.data.topic_id
                   },
                   success: res => {
-                        // console.log(res);
+                        console.log(res);
                         // console.log('\n\n-------------------------------------------\n\n');
                         // console.log(mergeReplies(res.result.list));
 
@@ -416,5 +419,51 @@ Page({
                         user: that.data.user_id
                   })
             })
+      },
+
+      addTopicLike: function(){
+            var that = this;
+            if (this.data.liked){
+                  wx.showToast({
+                    title: '您已经点过赞啦！',
+                    icon: "none"
+                  })
+            }
+            else {
+                  app.utils.data.addTopicLike(this.data.topic_id, this.data.user_id,
+                        ()=>{
+                              that.setData({
+                                    liked: true,
+                                    like_num: that.data.like_num+1
+                              })
+                        })
+            }
+      },
+
+      addCommentLike: function(e){
+            // console.log(e);
+            var that = this;
+            var idx = e.currentTarget.dataset.idx;
+            var comment_id = e.currentTarget.id;
+            var like_num = this.data.comments[idx].comment_like_num;
+
+            var comment_liked_field = 'comments['+idx+'].comment_liked';
+            var comment_likenum_field = 'comments['+idx+'].comment_like_num';
+
+            if (this.data.comments[idx].comment_liked){
+                  wx.showToast({
+                    title: '您已经点过赞啦！',
+                    icon: "none"
+                  })
+            }
+            else {
+                  app.utils.data.addCommentLike(comment_id, this.data.user_id,
+                        ()=>{
+                              that.setData({
+                                    [comment_liked_field]: true,
+                                    [comment_likenum_field]: like_num+1
+                              })
+                        })
+            }
       }
 })

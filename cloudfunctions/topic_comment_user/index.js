@@ -13,7 +13,7 @@ var NOT_EXIST_TAG = '__NOTEXIST__';
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let { userInfo, topic_id} = event;
+  let { userInfo, user_id, topic_id} = event;
   const db = cloud.database({
     env:'voice-land-qcrwm'
   });
@@ -168,7 +168,8 @@ exports.main = async (event, context) => {
       name: 1,
       avatar: 1,
       comment_likes: 1,
-      replies: 1
+      replies: 1,
+      comment_liked: $.in([user_id, '$comment_likes'])
     })
     .sort({
       comment_time: 1             // 第二次排序按照评论时间排序，此时回复已经合并，由于第一次排序已经保证了回复的顺序，因此本次排序只排评论

@@ -35,7 +35,7 @@
                                           </view>
                                     </view>
                                     <view class="feed-display">
-                                          <image src="{{like_url}}" bindtap="addLike" id="{{item._id}}"></image>
+                                          <image src="{{item.liked ? liked_url : like_url}}" bindtap="addLike" id="{{item._id}}" data-idx="{{idx}}" bindtap="addTopicLike"></image>
                                           <text>{{item.like_num}}</text>
                                           <image src="{{comment_url}}"></image>
                                           <text>{{item.comment_num}}</text>

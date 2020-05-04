@@ -45,7 +45,8 @@ exports.main = async (event, context) => {
       }),
       like_num: $.size('$likes'),
       likes: 1,
-      pictures: 1
+      pictures: 1,
+      like_url: user_id
     })
     .sample({
       size: topic_limit
@@ -69,7 +70,8 @@ exports.main = async (event, context) => {
       name: true,
       pictures: true,
       time: true,
-      _id: true
+      _id: true,
+      liked: $.in([user_id, '$likes'])
     })
     .end({
       success:res=>{

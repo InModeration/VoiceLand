@@ -162,8 +162,9 @@ function addTopic(user_id, content, pictures, callback) {
       });
 }
 
-function addTopicLike(topic_id, user_id) {
+function addTopicLike(topic_id, user_id, callback) {
       const db = wx.cloud.database();
+      var cb = callback;
 
       const _ = db.command
       db.collection('topic').doc(topic_id).update({
@@ -171,8 +172,9 @@ function addTopicLike(topic_id, user_id) {
                   likes: _.push(user_id)
             }
       }).then(res => {
-            console.log('成功更新!');
-            console.log(res);
+            cb();
+            // console.log('成功更新!');
+            // console.log(res);
       }).catch(err => {
             console.log(err);
       });
