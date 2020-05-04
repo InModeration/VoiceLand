@@ -2,10 +2,10 @@
       <view class="question-wrp">
             <view class="question-item">
                   <view class="topic-avatar">
-                        <image src="{{avatar}}"></image>
+                        <image src="{{avatar}}" data-viewuserid="{{main_user_id}}" catchtap="clickRouter"></image>
 
                         <view class="topic-commenter-time">
-                              <text>{{name}}</text>
+                              <text data-viewuserid="{{main_user_id}}" catchtap="clickRouter">{{name}}</text>
                               <view class="comment-time">
                                     {{time}}
                               </view>
@@ -17,7 +17,7 @@
                         </view>
                   </view>
 
-                  <view class="topic-content-box">
+                  <view class="topic-content-box" data-replyeeid="{{main_user_id}}" catchtap="clickContent">
                         <view class="topic-content">
                               <text>{{content}}</text>
                         </view>
@@ -32,27 +32,27 @@
                               <view class="topic-source">
                                     <a class="" bindTap="">
                                           <view class="topic-avatar">
-                                                <image src="{{item.replier_avatar}}"></image>
+                                                <image src="{{item.replier_avatar}}" catchtap="clickRouter" data-viewuserid="{{item.replier_id}}"></image>
 
-                                                <view class="topic-commenter-time">
-                                                      <text>{{item.replier}}</text>
+                                                <view class="topic-commenter-time" catchtap="clickContent" data-replyeeid="{{item.replier_id}}">
+                                                      <text data-viewuserid="{{item.replier_id}}" catchtap="clickRouter">{{item.replier}}</text>
                                                       <view class="comment-time">
                                                             {{item.time}}
                                                       </view>
                                                 </view>
 
-                                                <view class="comment-avatar-like" id="{{item._id}}" bindtap="addReplyLike">
+                                                <view class="comment-avatar-like" id="{{item._id}}" catchtap="addReplyLike">
                                                       <image src="{{like_url}}"></image>
                                                       <text>{{item.like_num}}</text>
                                                 </view>
                                           </view>
                                     </a>
                               </view>
-                              <view class="feed-content">
+                              <view class="feed-content" data-replyeeid="{{item.replier_id}}" catchtap="clickContent">
                                     <view class="answer-body">
                                           <view class="comment-content">
                                                 <text>回复   </text>
-                                                <a bindTap="" id="{{item.repliee_id}}">{{item.repliee}}</a>
+                                                <a  catchtap="clickRouter"  data-viewuserid="{{item.repliee_id}}">{{item.repliee}}</a>
                                                 <text class="" selectable="false" space="false" decode="false">   : {{item.content}}</text>
                                           </view>
                                     </view>
@@ -62,7 +62,9 @@
             </view>
       </view>
 
-      <!-- <button type="primary" bindtap="addReply">新增一条回复</button> -->
+      <!-- <button type="primary" bindtap="addReply">新增一条回复</button> -->      
 </view>
 
 <image src="{{back_url}}" class="back" bindtap="backLast"></image>
+
+<reply replyValue="{{replyValue}}" hidden="{{replyHidden}}" keyboardHeight="{{up}}" autoFocus="{{isFocus}}" bind:Focus="replyFocus" bind:Blur="replyBlur" bind:Input="replyInput" bind:Confirm="replySend"></reply>

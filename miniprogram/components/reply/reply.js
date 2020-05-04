@@ -29,7 +29,7 @@ Component({
       methods: {
             // 输入框获取焦点
             onFocus: function (e) {
-                  this.triggerEvent('Focus', e)
+                  this.triggerEvent('Focus', e.detail)
             },
 
             // 输入监听

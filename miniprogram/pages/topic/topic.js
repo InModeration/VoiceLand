@@ -16,15 +16,23 @@ Page({
             adjustPosition: false,
             comment_content: '',
             up: '0',
-            commentShow: true,
+            commentShow: '',
 
-            // 回复相关
+            // 回复评论
             reply: true,
             reply_content: '',
             ifFocus: false,
             replyUp: '0',
             replyee: '',
-            selectComment: ''
+            selectComment: '',
+
+            // 回复评论中的回复
+            replyTwo: true,
+            replyTwo_content: '',
+            ifFocusTwo: false,
+            replyUpTwo: '0',
+            replyeeTwo: '',
+            selectReply: '',
 
       },
       //事件处理函数
@@ -113,7 +121,7 @@ Page({
                               comment_times.push(gap)
                         }
                         coms = time_util.processTimeInArray(coms, 'comment_time');
-
+                        console.log(coms)
                         that.setData({
                               comments: coms
                         })
@@ -250,7 +258,7 @@ Page({
                                     replyee: selectUser,
                                     selectComment: selectComment,
                                     // 隐藏评论框
-                                    commentShow: false
+                                    commentShow: 'none'
                               })
                         }
                   }
@@ -261,9 +269,7 @@ Page({
        * 弹出回复编辑框
        */
       startReply: function (e) {
-            console.log('reply')
-            console.log(e)
-            var up = e.detail.detail.height
+            var up = e.detail.height
             this.setData({
                   reply: false,
                   replyUp: up + 'px'
@@ -277,7 +283,7 @@ Page({
             this.setData({
                   replyUp: '0',
                   reply: true,
-                  commentShow: true
+                  commentShow: ''
             })
       },
 
@@ -305,6 +311,105 @@ Page({
                   that.endReply()
                   that.setData({
                         reply_content: ''
+                  })
+                  that.onLoad({
+                        topic: that.data.topic_id,
+                        user: that.data.user_id
+                  })
+            })
+      },
+
+      /**
+       * 点击跳转
+       */
+      getReplier: function (e) {
+            var user_id = e.currentTarget.dataset.replierid
+            var curr_id = this.data.user_id
+            console.log(user_id, curr_id)
+            app.utils.router.toPersonal(curr_id, user_id)
+      },
+
+      /**
+       * 点击跳转
+       */
+      getRepliee: function (e) {
+            var user_id = e.currentTarget.dataset.replyeeid
+            var curr_id = this.data.user_id
+            console.log(user_id, curr_id)
+            app.utils.router.toPersonal(curr_id, user_id)
+      },
+
+      /**
+       * 点击他人的reply
+       */
+      clickReply: function (e) {
+            // 要回复的reply的replyer，其变成这条reply的replyee
+            var replyee_id = e.currentTarget.dataset.replyeeid
+            this.setData({
+                  replyeeTwo: replyee_id,
+                  replyTwo: false,
+                  ifFocusTwo: true
+            })
+      },
+
+      /**
+       * 回复reply，冒泡至父组件进行commentid赋值
+       */
+      setCommentID: function (e) {
+            // 点击的reply所属的comment的id
+            var comment_id = e.currentTarget.dataset.commentid
+            this.setData({
+                  selectReply: comment_id 
+            })
+      },
+
+      /**
+       * 弹出回复reply的编辑框
+       */
+      startReplyTwo: function (e) {
+            var up = e.detail.height
+            this.setData({
+                  replyTwo: false,
+                  replyUpTwo: up + 'px',
+                  commentShow: 'none'
+            })
+      },
+
+      /**
+       * 编辑回复reply的输入框
+       */
+      editReplyTwo: function (e) {
+            this.setData({
+                  replyTwo_content: e.detail.value
+            })
+      },
+
+      /**
+       * 收起回复Reply的编辑框
+       */
+      endReplyTwo: function () {
+            this.setData({
+                  replyUpTwo: '0',
+                  replyTwo: true,
+                  commentShow: ''
+            })
+      },
+
+      /**
+       * 发送回复reply的reply
+       */
+      sendReplyTwo: function () {
+            var that = this
+            var comment_id = this.data.selectReply
+            var replier_id = this.data.user_id
+            var repliee_id = this.data.replyeeTwo
+            var content = this.data.replyTwo_content
+            wx.showLoading({})
+            app.utils.data.addReply(comment_id, replier_id, repliee_id, content, () => {
+                  wx.hideLoading()
+                  that.endReply()
+                  that.setData({
+                        replyTwo_content: ''
                   })
                   that.onLoad({
                         topic: that.data.topic_id,

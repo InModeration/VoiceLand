@@ -19,7 +19,8 @@ App({
             this.utils = {
                   data: require('./utils/data.js'),
                   util: require('./utils/util.js'),
-                  time: require('./utils/time.js')
+                  time: require('./utils/time.js'),
+                  router: require('./utils/router.js')
             }
 
             // 获取胶囊组件、手机屏幕的信息，设定高度

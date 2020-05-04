@@ -32,7 +32,7 @@
 
             <view class="answer-feed">
                   <view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
-                        <view class="feed-item">
+                        <view class="feed-item"  bindtap="setCommentID" data-commentid="{{item._id}}">
                               <view class="topic-content-box">
                                     <view class="topic-source">
                                           <a class="" bindTap="">
@@ -69,10 +69,10 @@
                                                       <!-- 控制显示的回复数量为3条 -->
                                                       <view wx:if="{{rep_idx <= 2}}">
                                                             <view class="topic-comment-reply-line">
-                                                                  <a class="topic-comment-reply-name" bindTap="">{{rep_item.replier}}</a>
+                                                                  <a class="topic-comment-reply-name" data-replierid="{{rep_item.replier_id}}" catchtap="getReplier">{{rep_item.replier}}</a>
                                                                   <text> 回复 </text>
-                                                                  <a class="topic-comment-reply-name" bindTap="">{{rep_item.repliee}}</a>
-                                                                  <text>: {{rep_item.content}}</text>
+                                                                  <a class="topic-comment-reply-name" data-replyeeid="{{rep_item.repliee_id}}" catchtap="getRepliee">{{rep_item.repliee}}</a>
+                                                                  <text data-replyeeid="{{rep_item.replier_id}}" bindtap="clickReply">: {{rep_item.content}}</text>
                                                             </view>
                                                       </view>
                                                 </view>
@@ -94,7 +94,7 @@
 
             <view class="bottom-gap"></view>
 
-            <view wx:if="commentShow" class="bottom-input-area" style="bottom: {{up}}">
+            <view class="bottom-input-area" style="bottom: {{up}}; display: {{commentShow}}">
                   <view class="bottom-input-box">
                         <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="startInput" bindblur="endInput" bindinput="editComment" bindconfirm="sendComment" value="{{comment_content}}"></input>
                         <image mode="aspectFit" class="bottom-camera" src="{{send_url}}" bindtap="sendComment"></image>
@@ -102,4 +102,7 @@
             </view>
       </view>
 </view>
+<!-- 回复Comment -->
 <reply id="reply" hidden="{{reply}}" keyboardHeight="{{replyUp}}" replyValue="{{reply_content}}" autoFocus="{{ifFocus}}" bind:Focus="startReply" bind:Blur="endReply" bind:Input="editReply" bind:Confirm="sendReply"></reply>
+<!-- 回复Reply -->
+<reply hidden="{{replyTwo}}" keyboardHeight="{{replyUpTwo}}" replyValue="{{replyTwo_content}}" autoFocus="ifFocusTwo" bind:Focus="startReplyTwo" bind:Blur="endReplyTwo" bind:Input="editReplyTwo" bind:Confirm="sendReplyTwo"></reply>
