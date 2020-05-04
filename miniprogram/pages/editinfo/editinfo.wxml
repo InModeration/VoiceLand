@@ -14,34 +14,39 @@
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">昵称</text>
-        <text class="editinfo-line-input">{{name}}</text>
+        <input class="editinfo-line-input" value="{{name}}" bindinput="valueOnChange" data-key="name" />
     </view>
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">签名</text>
-        <text class="editinfo-line-input">{{motto}}</text>
-        <!-- <textarea class="editinfo-line-input">{{motto}}</textarea> -->
+        
+        <!-- <text class="editinfo-line-input">{{motto}}</text> -->
+        <textarea class="editinfo-line-input" value="{{motto}}" bindinput="valueOnChange" data-key="motto" ></textarea>
     </view>
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">性别</text>
-        <text class="editinfo-line-input">{{sex}}</text>
+        <!-- <text class="editinfo-line-input">{{sex}}</text> -->
+        <picker class="editinfo-line-input" mode='selector' range="{{sex_options}}" value="{{sex_index}}" bindchange="valueOnChange" data-key="sex_index">{{sex_options[sex_index]}}</picker>
         <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
     </view>
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">年龄</text>
-        <text class="editinfo-line-input">{{age}}</text>
+        <!-- <text class="editinfo-line-input">{{age}}</text> -->
+        <picker class="editinfo-line-input" mode='selector' range="{{age_options}}" value="{{age_index}}" bindchange="valueOnChange" data-key="age_index">{{age_options[age_index]}}</picker>
         <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
     </view>
 
     <view class="editinfo-line">
         <text class="editinfo-line-label">地区</text>
-        <text class="editinfo-line-input">{{region}}</text>
+        <!-- <text class="editinfo-line-input">{{region}}</text> -->
+        <picker class="editinfo-line-input" mode='selector' range="{{region_options}}" value="{{region_index}}" bindchange="valueOnChange" data-key="region_index">{{region_options[region_index]}}</picker>
         <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
     </view>
 
-    <button type="primary" class="editinfo-savebutton">保存信息</button>
+    <button type="primary" class="editinfo-savebutton" bindtap="saveInfo">保存信息</button>
+
 </view>
   
 <image src="{{back_url}}" class="back" bindtap="backLast"></image>

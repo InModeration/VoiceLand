@@ -47,19 +47,19 @@ function addComment(topic_id, replier_id, content, callback) {
       });
 }
 
-function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, sex) {
-      var data = {
-            age: age,
-            avatar: avatar,
-            cover: cover,
-            interest: interest,
-            motto: motto,
-            name: name,
-            region: region,
-            sex: sex
-      };
+function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, sex, callback) {
+      // var data = {
+      //       age: age,
+      //       avatar: avatar,
+      //       cover: cover,
+      //       interest: interest,
+      //       motto: motto,
+      //       name: name,
+      //       region: region,
+      //       sex: sex
+      // };
 
-      console.log('user_id: ' + user_id);
+      // console.log('user_id: ' + user_id);
 
       // wx.cloud.callFunction({
       //   name: 'update_userinfo',
@@ -76,11 +76,8 @@ function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, 
       //   }
       // });
 
+      var cb = callback;
       const db = wx.cloud.database();
-
-      db.collection('user').doc(user_id).get({
-            complete: console.log
-      });
 
       db.collection('user').doc(user_id).update({
             data: {
@@ -94,10 +91,12 @@ function updateInfo(user_id, age, avatar, cover, interest, motto, name, region, 
                   sex: sex
             }
       }).then(res => {
-            console.log('成功更新!');
-            console.log(res);
+            // console.log('成功更新!');
+            // console.log(res);
+            cb('保存成功!');
       }).catch(err => {
-            console.log(err);
+            // console.log(err);
+            cb('保存失败!');
       });
 }
 
@@ -179,8 +178,9 @@ function addTopicLike(topic_id, user_id) {
       });
 }
 
-function addCommentLike(comment_id, user_id) {
+function addCommentLike(comment_id, user_id, callback) {
       const db = wx.cloud.database();
+      var cb = callback;
 
       const _ = db.command
       db.collection('comment').doc(comment_id).update({
@@ -188,10 +188,12 @@ function addCommentLike(comment_id, user_id) {
                   likes: _.push(user_id)
             }
       }).then(res => {
-            console.log('成功更新!');
-            console.log(res);
+            // console.log('成功更新!');
+            // console.log(res);
+            cb('保存成功');
       }).catch(err => {
-            console.log(err);
+            // console.log(err);
+            cb('保存失败');
       });
 }
 
@@ -247,7 +249,6 @@ module.exports.addComment = addComment;
 module.exports.updateInfo = updateInfo;
 module.exports.addReply = addReply;
 module.exports.addTopic = addTopic;
-module.exports.updateInfo = updateInfo;
 module.exports.updateAvatar = updateAvatar;
 module.exports.updateCover = updateCover;
 module.exports.addTopicLike = addTopicLike;
