@@ -94,7 +94,7 @@
 
             <view class="bottom-gap"></view>
 
-            <view class="bottom-input-area" style="bottom: {{up}}">
+            <view wx:if="commentShow" class="bottom-input-area" style="bottom: {{up}}">
                   <view class="bottom-input-box">
                         <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="startInput" bindblur="endInput" bindinput="editComment" bindconfirm="sendComment" value="{{comment_content}}"></input>
                         <image mode="aspectFit" class="bottom-camera" src="{{send_url}}" bindtap="sendComment"></image>
@@ -102,4 +102,4 @@
             </view>
       </view>
 </view>
-<reply id="reply" hidden="{{reply}}" keyboardHeight="{{up}}" replyValue="{{reply_content}}" autoFocus="{{ifFocus}}" bind:Focus="editReply" bind:Blur="enReply" bind:Input="editReply" bind:Confirm="sendReply"></reply>
+<reply id="reply" hidden="{{reply}}" keyboardHeight="{{replyUp}}" replyValue="{{reply_content}}" autoFocus="{{ifFocus}}" bind:Focus="startReply" bind:Blur="endReply" bind:Input="editReply" bind:Confirm="sendReply"></reply>

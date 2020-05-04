@@ -16,6 +16,7 @@ Page({
             adjustPosition: false,
             comment_content: '',
             up: '0',
+            commentShow: true,
 
             // 回复相关
             reply: true,
@@ -247,7 +248,9 @@ Page({
                                     reply: false,
                                     ifFocus: true,
                                     replyee: selectUser,
-                                    selectComment: selectComment
+                                    selectComment: selectComment,
+                                    // 隐藏评论框
+                                    commentShow: false
                               })
                         }
                   }
@@ -257,7 +260,8 @@ Page({
       /**
        * 弹出回复编辑框
        */
-      editReply: function (e) {
+      startReply: function (e) {
+            console.log('reply')
             console.log(e)
             var up = e.detail.detail.height
             this.setData({
@@ -271,8 +275,9 @@ Page({
        */
       endReply: function () {
             this.setData({
-                  replyUp: '0px',
-                  reply: true
+                  replyUp: '0',
+                  reply: true,
+                  commentShow: true
             })
       },
 
