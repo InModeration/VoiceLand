@@ -25,6 +25,33 @@ Page({
             })
       },
       onLoad: function() {
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            wx.login({
+                  success (res) {
+                    if (res.code) {
+                      //发起网络请求
+                      wx.cloud.callFunction({
+                            name: 'get_openid',
+                            data: {
+                                  code: res.code
+                            },
+                            success: res=>{
+                                  console.log(res);
+                            },
+                            fail: err=>{
+                                  console.log(err);
+                            }
+                      })
+                    } else {
+                      console.log('登录失败！' + res.errMsg)
+                    }
+                  }
+                })
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
             var user_id = 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9';//'KnGTfXz9d33f2XXbjep1IuisBz2RlHNuOAoIQgwy5vDUpzKF';
             this.setData({
                   user_id: user_id
