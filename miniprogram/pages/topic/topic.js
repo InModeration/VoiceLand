@@ -229,7 +229,7 @@ Page({
       clickComment: function (e) {
             var that = this
             // 点击的用户的id
-            var selectUser = e.currentTarget.dataset.user_id
+            var selectUser = e.currentTarget.dataset.userid
             // 点击的评论的id
             var selectComment = e.currentTarget.dataset.commentid
             wx.showActionSheet({

@@ -63,15 +63,6 @@
       </view>
 
       <!-- <button type="primary" bindtap="addReply">新增一条回复</button> -->
-
-      <view class="bottom-gap"></view>
-
-      <view class="bottom-input-area">
-            <view class="bottom-input-box">
-                  <input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder"></input>
-                  <image mode="aspectFit" class="bottom-camera" src="{{camera_url}}"></image>
-            </view>
-      </view>
 </view>
 
 <image src="{{back_url}}" class="back" bindtap="backLast"></image>
