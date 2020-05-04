@@ -138,3 +138,7 @@
   font-weight: 600px;
   line-height: 39rpx;
 }
+
+.modalButton{
+  width: 100%;
+}

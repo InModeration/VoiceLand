@@ -59,4 +59,9 @@
 
             </scroll-view>
       </view>
+
+      <modal title="新用户注册" hidden="{{registerModal}}" bindconfirm="register" no-cancel>
+            <view>请输入您要使用的昵称</view>
+            <input placeholder="昵称" bindinput="registerOnChange" />
+      </modal>
 </view>

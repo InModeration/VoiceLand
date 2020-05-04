@@ -10,7 +10,7 @@ Page({
        */
       data: {
             // test 用
-            user_id: 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9',
+            // user_id: 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9',
 
             placeholders: ['你在做什么...', '你在想什么...', '记录下你的瞬间...', '我想说点什么...'],
             placeholder: '',
@@ -39,6 +39,10 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function(options) {
+            this.setData({
+                  user_id: options.user
+            })
+
             var that = this
 
             var index = utils.random(0, 4)

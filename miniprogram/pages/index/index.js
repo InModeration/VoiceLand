@@ -11,7 +11,9 @@ Page({
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             search_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/search_black.png?sign=a9f9c7136a7416d5e91d1f75e1ca212c&t=1587887012',
-            shownav: false
+            shownav: false,
+            registerModal: true,
+            registerName: ''
       },
       //事件处理函数
       bindItemTap: function() {
@@ -81,9 +83,13 @@ Page({
                                     success: int_res=>{
                                           // console.log(int_res);
                                           if (int_res.result.data.length == 0){
-                                                wx.showToast({
-                                                  title: '您还没有注册!',
-                                                  icon: 'none'
+                                                // wx.showToast({
+                                                //   title: '您还没有注册!',
+                                                //   icon: 'none'
+                                                // })
+                                                that.setData({
+                                                      registerModal: false,
+                                                      currentOpenid: res.result.openid
                                                 })
                                           }
                                           else {
@@ -248,7 +254,7 @@ Page({
        */
       toEditTopic: function () {
             wx.navigateTo({
-                  url: '../editTopic/editTopic',
+                  url: '../editTopic/editTopic?user='+this.data.user_id,
             })
       },
 
@@ -263,5 +269,47 @@ Page({
       index: function (e) {
             console.log(e)
             console.log('index')
+      },
+
+      registerOnChange: function(e){
+            // console.log(e);
+            // this.setData({
+            //       resgisterName: e.detail.value
+            // });
+            this.registerName = e.detail.value;
+            // console.log(this.registerName);
+      },
+
+      register: function(e){
+            var that = this;
+            // console.log('注册!');
+            this.setData({
+                  registerModal: true
+            });
+            console.log(this.registerName);
+            wx.cloud.callFunction({
+                  name: 'register_user',
+                  data: {
+                        open_id: that.data.currentOpenid,
+                        name: that.registerName
+                  },
+                  success: res=>{
+                        wx.showToast({
+                          title: '注册成功',
+                          duration: 1500,
+                          complete: res=>{
+                                that.onLoad();
+                        }
+                        })
+                  },
+                  fail: err=>{
+                        wx.showToast({
+                          title: '注册失败',
+                          icon: 'none'
+                        })
+                        console.log(err);
+                        that.onLoad();
+                  }
+            })
       }
 })
