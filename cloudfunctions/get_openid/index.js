@@ -11,7 +11,16 @@ cloud.init()
 exports.main = async (event, context) => {
   let { userInfo, code} = event;
 
-  return await rp(`https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${appsecret}&js_code=${code}&grant_type=authorization_code`)
+  var option ={
+    url: `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${appsecret}&js_code=${code}&grant_type=authorization_code`,
+    method: "GET",
+    json: true,
+    headers: {
+        "content-type": "application/json",
+    }
+  }
+
+  return await rp(option)
     .then(function (res) {
       return res
     })

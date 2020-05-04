@@ -24,52 +24,13 @@ Page({
                   url: '../question/question'
             })
       },
-      onLoad: function() {
-            
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            wx.login({
-                  success (res) {
-                    if (res.code) {
-                      //发起网络请求
-                      wx.cloud.callFunction({
-                            name: 'get_openid',
-                            data: {
-                                  code: res.code
-                            },
-                            success: res=>{
-                                  console.log(res);
-                            },
-                            fail: err=>{
-                                  console.log(err);
-                            }
-                      })
-                    } else {
-                      console.log('登录失败！' + res.errMsg)
-                    }
-                  }
-                })
-            ////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-            var user_id = 'hMo8uqK1xJDezX67gm04HjP91E2Hf0vEPxR5YDkV05LuREj9';//'KnGTfXz9d33f2XXbjep1IuisBz2RlHNuOAoIQgwy5vDUpzKF';
-            this.setData({
-                  user_id: user_id
-            });
-
+      showIndexContent: function(){
             var that = this;
-            //调用应用实例的方法获取全局数据
-            // app.getUserInfo(function(userInfo) {
-            //       // console.log(userInfo)
-            //       //更新数据
-            //       that.setData({
-            //             userInfo: userInfo,
-            //       })
-            // })
             wx.cloud.callFunction({
                   name: "userinfo",
                   data: {
-                        user_id: user_id
+                        user_id: this.data.user_id
                   },
                   success: res=>{
                         // console.log(res);
@@ -94,6 +55,58 @@ Page({
                         });
                   }
             });
+      },
+
+      onLoad: function() {
+
+            var that = this;
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            wx.login({
+                  success (res) {
+                    if (res.code) {
+                      //发起网络请求
+                      wx.cloud.callFunction({
+                            name: 'get_openid',
+                            data: {
+                                  code: res.code
+                            },
+                            success: res=>{
+                              //     console.log(res);
+                              wx.cloud.callFunction({
+                                    name: 'map_user_id',
+                                    data: {
+                                          open_id: res.result.openid
+                                    },
+                                    success: int_res=>{
+                                          // console.log(int_res);
+                                          if (int_res.result.data.length == 0){
+                                                wx.showToast({
+                                                  title: '您还没有注册!',
+                                                  icon: 'none'
+                                                })
+                                          }
+                                          else {
+                                                that.setData({
+                                                      user_id: int_res.result.data[0]._id
+                                                })
+                                                that.showIndexContent();
+                                          }
+                                    },
+                                    fail: console.log
+                              })
+                            },
+                            fail: err=>{
+                                  console.log('登录失败！');
+                                  console.log(err);
+                            }
+                      })
+                    } else {
+                      console.log('登录失败！' + res.errMsg)
+                    }
+                  }
+                })
+            ////////////////////////////////////////////////////////////////////////////////////////////////
       },
 
       onShow: function () {
