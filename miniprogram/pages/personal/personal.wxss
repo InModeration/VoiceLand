@@ -41,10 +41,20 @@ page {
       font-weight: 600;
       width: 100rpx;
       height: 40rpx;
-      background: rgba(169, 169, 169, 0.596);
+      
       border-radius: 60px;
       text-align: center;
       padding-top: 10rpx;
+}
+
+.not-followed{
+      background: #eee;
+      color: black;
+}
+
+.followed{
+      background:rgba(169, 169, 169, 0.596);
+      color: #ccc;
 }
 
 .user .user-info {

@@ -25,19 +25,19 @@ exports.main = async (event, context) => {
   })
   .lookup({
     from: "user",
-    localField: 'conern_id',
+    localField: 'concern_id',
     foreignField: "_id",
-    as: "conern"
+    as: "concern"
   })
   .replaceRoot({
     newRoot: $.mergeObjects([ $.arrayElemAt(['$concern', 0]), '$$ROOT' ])
   })
-  // .project({
-  //   _id: '$concern_id',
-  //   name: 1,
-  //   avatar: 1,
-  //   motto: 1
-  // })
+  .project({
+    _id: '$concern_id',
+    name: 1,
+    avatar: 1,
+    motto: 1
+  })
   .end({
     success:res=>{
       return res;

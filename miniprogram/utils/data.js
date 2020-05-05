@@ -169,7 +169,7 @@ function addTopicLike(topic_id, user_id, callback) {
       const _ = db.command
       db.collection('topic').doc(topic_id).update({
             data: {
-                  likes: _.push(user_id)
+                  likes: _.addToSet(user_id)
             }
       }).then(res => {
             cb();
@@ -187,7 +187,7 @@ function addCommentLike(comment_id, user_id, callback) {
       const _ = db.command
       db.collection('comment').doc(comment_id).update({
             data: {
-                  likes: _.push(user_id)
+                  likes: _.addToSet(user_id)
             }
       }).then(res => {
             // console.log('成功更新!');
@@ -206,7 +206,7 @@ function addReplyLike(reply_id, user_id, callback) {
       const _ = db.command
       db.collection('reply').doc(reply_id).update({
             data: {
-                  likes: _.push(user_id)
+                  likes: _.addToSet(user_id)
             }
       }).then(res => {
             // console.log('成功更新!');
@@ -249,6 +249,42 @@ function updateCover(user_id, cover) {
       });
 }
 
+function addConcern(user_id, my_user_id, callback) {
+      var cb = callback;
+      const db = wx.cloud.database();
+
+      const _ = db.command
+      db.collection('user').doc(my_user_id).update({
+            data: {
+                  concern: _.addToSet(user_id)
+            }
+      }).then(res => {
+            // console.log('成功更新!');
+            console.log(res);
+            cb();
+      }).catch(err => {
+            console.log(err);
+      });
+}
+
+function removeConcern(user_id, my_user_id, callback) {
+      var cb = callback;
+      const db = wx.cloud.database();
+
+      const _ = db.command
+      db.collection('user').doc(my_user_id).update({
+            data: {
+                  concern: _.pull(user_id)
+            }
+      }).then(res => {
+            // console.log('成功更新!');
+            console.log(res);
+            cb();
+      }).catch(err => {
+            console.log(err);
+      });
+}
+
 module.exports.addComment = addComment;
 module.exports.updateInfo = updateInfo;
 module.exports.addReply = addReply;
@@ -258,3 +294,5 @@ module.exports.updateCover = updateCover;
 module.exports.addTopicLike = addTopicLike;
 module.exports.addCommentLike = addCommentLike;
 module.exports.addReplyLike = addReplyLike;
+module.exports.addConcern = addConcern;
+module.exports.removeConcern = removeConcern;

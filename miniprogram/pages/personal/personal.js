@@ -52,7 +52,7 @@ Page({
                   fail: err=>{
                         console.log(err);
                   }
-            })
+            });
 
             wx.cloud.callFunction({
                   name: 'user_topic',
@@ -69,7 +69,29 @@ Page({
                   fail: err=>{
                         console.log(err);
                   }
-            })
+            });
+
+            // 获取本人的信息，以查看该用户是否已经关心
+            wx.cloud.callFunction({
+                  name: 'userinfo',
+                  data: {
+                        user_id: cur_user_id
+                  },
+                  success: res=>{
+                        // console.log('mine:');
+                        // console.log(res);
+                        // console.log(res.result.data[0].concern.indexOf(cur_user_id));
+                        // console.log(user_id);
+                        // console.log(res.result.data[0].concern);
+                        that.setData({
+                              concern: res.result.data[0].concern,
+                              in_my_concern: res.result.data[0].concern.indexOf(user_id) != -1      // 该用户是否已经在我的关心列表内
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err)
+                  }
+            });
             
             //调用应用实例的方法获取全局数据
             // app.getUserInfo(function(userInfo) {
@@ -166,5 +188,35 @@ Page({
             wx.navigateBack({
                   delta: 1
             })
+      },
+
+      addConcern: function(){
+            var that = this;
+            // if (this.data.in_my_concern){
+            //       wx.showToast({
+            //         title: '您已经关心过这个人了！',
+            //         icon: 'none'
+            //       })
+            // }
+            // else {
+            app.utils.data.addConcern(this.data.user_id, this.data.cur_user_id, 
+                  ()=>{
+                        that.data.concern.push(that.data.user_id);
+                        that.setData({
+                              in_my_concern: true
+                        })
+                  })
+            // }
+      },
+
+      removeConcern: function(){
+            var that = this;
+            app.utils.data.removeConcern(this.data.user_id, this.data.cur_user_id, 
+                  ()=>{
+                        delete that.data.concern[that.data.concern.indexOf(this.data.user_id)];
+                        that.setData({
+                              in_my_concern: false
+                        })
+                  })
       }
 })

@@ -16,14 +16,12 @@ exports.main = async (event, context) => {
     env:'voice-land-qcrwm'
   });
   const _ = db.command
-  exports.main = async (event, context) => {
-    try {
-      return await db.collection('user').doc(user_id)
-      .update({
-        data: data,
-      })
-    } catch(e) {
-      console.error(e)
-    }
+  try {
+    return await db.collection('user').doc(user_id)
+    .update({
+      data: data,
+    })
+  } catch(e) {
+    console.error(e)
   }
 }

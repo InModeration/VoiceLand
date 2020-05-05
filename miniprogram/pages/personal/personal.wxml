@@ -8,7 +8,8 @@
                                     <image src="{{avatar}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
                               </view>
 
-                              <view class="follow">关心</view>
+                              <view class="follow not-followed" hidden="{{in_my_concern}}" bindtap="addConcern">关心</view>
+                              <view class="follow followed" hidden="{{!in_my_concern}}" bindtap="removeConcern">已关心</view>
                         </view>
 
                         <view>
