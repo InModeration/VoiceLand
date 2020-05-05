@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+        "side-slip": "/components/side-slip/index",
+        "navbar": "/components/navbar/index"
+  }
+}

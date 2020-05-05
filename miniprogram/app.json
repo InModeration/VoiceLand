@@ -1,6 +1,7 @@
 {
       "pages": [
             "pages/index/index",
+            "pages/concern/concern",
             "pages/editTopic/editTopic",
             "pages/editinfo/editinfo",
             "pages/personalAll/personalAll",

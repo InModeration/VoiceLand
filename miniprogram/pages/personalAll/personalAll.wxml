@@ -24,13 +24,13 @@
                         <text class="join-title">加入天数</text>
                         <text class="join-item">{{joiningDay}}</text>
                   </view>
-                  <view>
+                  <view catchtap="toConcern" data-who="to">
                         <text class="join-title">我关心谁</text>
-                        <text class="join-item">128</text>
+                        <text class="join-item">{{concerning_num}}</text>
                   </view>
-                  <view>
+                  <view catchtap="toConcern" data-who="from">
                         <text class="join-title">谁关心我</text>
-                        <text class="join-item">2</text>
+                        <text class="join-item">{{concerned_num}}</text>
                   </view>
             </view>
 

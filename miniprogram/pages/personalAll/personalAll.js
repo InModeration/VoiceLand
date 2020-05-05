@@ -23,22 +23,18 @@ Page({
                   user_id: options.user
             });
 
-            wx.cloud.callFunction({
-                  name: 'userinfo',
-                  data: {
-                        user_id: this.data.user_id
-                  },
-                  success: res=>{
-                        var data = res.result.data[0];
-                        that.setData({
-                              name: data.name,
-                              avatar: data.avatar,
-                              sex: data.sex,
-                              region: data.region,
-                              id: data._id
-                        })
-                  }
-            })
+            // wx.cloud.callFunction({
+            //       name: 'userinfo',
+            //       data: {
+            //             user_id: this.data.user_id
+            //       },
+            //       success: res=>{
+                        
+            //             that.setData({
+
+            //             })
+            //       }
+            // })
 
             wx.cloud.callFunction({
                   name: 'userinfo',
@@ -47,16 +43,39 @@ Page({
                   },
                   success: res=>{
                         // console.log(res);
-                        var jointime = new Date(res.result.data[0].joinTime);
+                        var data = res.result.data[0];
+                        var jointime = new Date(data.joinTime);
                         var today = new Date();
                         var joiningday = Math.floor((today-jointime)/86400000)+1;
 
                         that.setData({
-                              joiningDay: joiningday
+                              joiningDay: joiningday,
+                              name: data.name,
+                              avatar: data.avatar,
+                              sex: data.sex,
+                              region: data.region,
+                              id: data._id,
+                              concerning_num: data.concern.length
                         })
                   },
                   fail: err=>{
                         console.log(err);
+                  }
+            })
+
+            wx.cloud.callFunction({
+                  name: 'query_concerned',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        // console.log(res)
+                        that.setData({
+                              concerned_num: res.result.data.length
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err)
                   }
             })
 
@@ -159,4 +178,11 @@ Page({
                   url: '../index/index',
             })
       },
+
+      toConcern: function(e){
+            var direc = e.currentTarget.dataset.who;
+            wx.navigateTo({
+              url: '../concern/concern?user='+this.data.user_id+'&direction='+direc,
+            })
+      }
 })

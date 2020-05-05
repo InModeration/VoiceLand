@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
         avatar: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/default_avatar.jpg?sign=11d0ca410eb95707aaf2cf79b447877e&t=1588583818',
         cover: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/background/default/default-1.jpg?sign=29a34a3a1195ce88a75b716d0787fc57&t=1587992126',
         interest: [],
+        concern: [],
         joinTime: new Date(),
         motto: '',
         name: name,
