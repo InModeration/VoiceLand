@@ -3,7 +3,9 @@
       <block wx:if="{{shownav}}">
             <view class="navbar-action-wrap navbar-action-group row item-center" style='top:{{navTop}}px;background-color:rgba(255,255,255,.6)'>
                   <ss-icon name="back" color="{{iconColor}}" size="15px" block="{{true}}" class="navbar-action_item" bind:click="onBack" style="display:{{display}}"></ss-icon>
-                  <ss-icon name="index" color="{{iconColor}}" size="15px" block="{{true}}" class="navbar-action_item last" bind:click="onIndex" style="display:{{display}}"></ss-icon>
+                  <block wx:if="{{showindex}}">
+                        <ss-icon name="index" color="{{iconColor}}" size="15px" block="{{true}}" class="navbar-action_item last" bind:click="onIndex" style="display:{{display}}"></ss-icon>
+                  </block>
             </view>
       </block>
 

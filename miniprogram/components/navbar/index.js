@@ -15,6 +15,10 @@ Component({
                   type: Boolean,
                   value: true
             },
+            showindex: {
+                  type:Boolean,
+                  value: true
+            },
             bgColor: {
                   type: String,
                   value: '#fff'

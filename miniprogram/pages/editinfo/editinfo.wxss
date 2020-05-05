@@ -1,4 +1,8 @@
 /* pages/editinfo/editinfo.wxss */
+.test {
+    height: 500px;
+    width: 100%;
+}
 
 .editinfo-container {
     height: 90%;
@@ -81,6 +85,36 @@
     font-size: 30rpx;
 }
 
+.plain-hover{
+    position: relative;
+    top: 3rpx;
+    box-shadow:0px 0px 10px #bbbec4 inset; 
+  }
+
+  .bubble{ 
+    position: relative;
+    overflow: hidden;
+   }
+   .bubble:after{
+    content: "";
+    background: #999;
+    position: absolute; 
+    width: 750rpx;
+    height: 750rpx;
+    left: calc(50% - 375rpx);
+    top: calc(50% - 375rpx);
+    opacity: 0;
+    margin: auto;
+    border-radius: 50%;
+    transform: scale(1);
+    transition: all 0.4s ease-in-out;
+   }
+   .bubble:active:after {
+    transform: scale(0);
+    opacity: 1;
+    transition: 0s;
+   }
+
 .editinfo-line .editinfo-line-set{
     display: inline-block;
     vertical-align: middle;
@@ -93,6 +127,10 @@
     width: 85%;
     position: fixed;
     bottom: 30rpx;
+    border-radius: 20px;
+    background: white;
+    color: black;
+    border: 2px darkgrey inset;
     /* height: 30rpx; */
 }
 

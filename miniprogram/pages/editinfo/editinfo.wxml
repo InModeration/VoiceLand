@@ -1,9 +1,9 @@
 <!--pages/editinfo/editinfo.wxml-->
 <view class="editinfo-container">
-    <view class="editinfo-cover-picture" bindtap="changeBackground" style="background-image: url({{cover}})">
+    <view class="editinfo-cover-picture" bindtap="changeBackground" style="background-image: url({{cover_url}})">
         <view class="editinfo-cover-wrapper">
             <view class="editinfo-avatar">
-                <image catchtap="changePortrait" class="editinfo-avatar-icon" src="{{avatar}}" mode="aspectFit" bindTap="" />
+                <image catchtap="changePortrait" class="editinfo-avatar-icon" src="{{avatar_url}}" mode="aspectFit" bindTap="" />
             </view>
         </view>
           
@@ -21,7 +21,7 @@
         <text class="editinfo-line-label">签名</text>
         
         <!-- <text class="editinfo-line-input">{{motto}}</text> -->
-        <textarea class="editinfo-line-input" value="{{motto}}" bindinput="valueOnChange" data-key="motto" ></textarea>
+        <input class="editinfo-line-input" value="{{motto}}" bindinput="valueOnChange" data-key="motto" ></input>
     </view>
 
     <view class="editinfo-line">
@@ -45,7 +45,7 @@
         <image class="editinfo-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
     </view>
 
-    <button type="primary" class="editinfo-savebutton" bindtap="saveInfo">保存信息</button>
+    <button class="editinfo-savebutton bubble" bindtap="saveInfo">保存信息</button>
 
 </view>
   
