@@ -10,7 +10,7 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let { userInfo, comment_id} = event;
+  let { userInfo, user_id, comment_id} = event;
   const db = cloud.database({
     env:'voice-land-qcrwm'
   });
@@ -33,6 +33,7 @@ exports.main = async (event, context) => {
       content: 1,
       likes: 1,
       like_num: $.size('$likes'),
+      liked: $.in([user_id, '$likes']),
       main_user_id: 1,
       time: $.dateToString({
         date: '$time',

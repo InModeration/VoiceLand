@@ -11,6 +11,7 @@ Page({
        */
       data: {
             like_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/like.png?sign=f385b6a9ec6bd2fd8eef4c15dd7f60e0&t=1587886758',
+            liked_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/liked.png?sign=6c22cc8c58c58c132eb82cf3c107cec6&t=1588600467',
             comment_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/comment%20.png?sign=1d444df91712179f1bbcc3fcbdde87eb&t=1587886769',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
@@ -45,10 +46,10 @@ Page({
             wx.cloud.callFunction({
                   name: 'comment_info',
                   data: {
+                        user_id: this.data.user_id,
                         comment_id: this.data.comment_id
                   },
                   success: res => {
-                        console.log(res)
                         var cont = res.result.list[0]
                         var thistime = app.utils.time.getTime(cont.time)
                         var time = app.utils.time.getGap(thistime, currTime)
@@ -66,9 +67,11 @@ Page({
             wx.cloud.callFunction({
                   name: 'comment_reply',
                   data: {
+                        user_id: this.data.user_id,
                         comment_id: this.data.comment_id
                   },
                   success: res => {
+                        console.log(res);
                         var replies = res.result.list;
                         var len = replies.length
                         var times = []
@@ -170,15 +173,26 @@ Page({
       /**
        * 点击内容，弹出框
        */
-      clickContent: function(e) {
+      clickCommentContent: function(e) {
             var that = this
             // 点击的对象的id
             var replyeeId = e.currentTarget.dataset.replyeeid
-            console.log(e)
+            // console.log(e)
             wx.showActionSheet({
                   itemList: ['赞', '回复', '举报'],
                   success: res => {
-                        if (res.tapIndex === 0 || res.tapIndex === 2) {
+                        if (res.tapIndex === 0){
+                              if (that.data.liked){
+                                    wx.showToast({
+                                          title: '您已经点过赞啦！',
+                                          icon: 'none'
+                                    })
+                              }
+                              else {
+                                    that.addCommentLike()
+                              }
+                        }
+                        else if (res.tapIndex === 2) {
                               wx.showToast({
                                     title: '开发中',
                                     icon: 'none'
@@ -193,6 +207,67 @@ Page({
                   }
             })
       },
+
+      clickReplyContent: function(e) {
+            var that = this
+            // 点击的对象的id
+            var replyeeId = e.currentTarget.dataset.replyeeid
+            var replyIdx = e.currentTarget.dataset.idx
+            var replyId = e.currentTarget.dataset.replyid
+            var flag = e.currentTarget.dataset.isComment
+            // console.log(e)
+            wx.showActionSheet({
+                  itemList: ['赞', '回复', '举报'],
+                  success: res => {
+                        if (res.tapIndex === 0){
+                              if (flag == 'true'){
+                                    if (that.data.liked){
+                                          wx.showToast({
+                                            title: '您已经点过赞啦！',
+                                            icon: 'none'
+                                          })
+                                    }
+                                    else {
+                                          that.addComment()
+                                    }
+                              }
+                              else {
+                                    if (that.data.replies[replyIdx].liked){
+                                          wx.showToast({
+                                            title: '您已经点过赞啦！',
+                                            icon: 'none'
+                                          })
+                                    }
+                                    else {
+                                          // 为了适配点击图标点赞的方法，此处需要利用数据构造一个
+                                          // dummy 事件对象传递到方法中
+                                          that.addReplyLike({
+                                                currentTarget: {
+                                                      id: replyId,
+                                                      dataset: {
+                                                            idx: replyIdx,
+                                                      }
+                                                }
+                                          })
+                                    }      
+                              }
+                        }
+                        else if (res.tapIndex === 2) {
+                              wx.showToast({
+                                    title: '开发中',
+                                    icon: 'none'
+                              })
+                        } else if (res.tapIndex === 1) {
+                              that.setData({
+                                    replyHidden: false,
+                                    isFocus: true,
+                                    replyeeId: replyeeId
+                              })
+                        }
+                  }
+            })
+      },
+
 
       /**
        * bind:Focus
@@ -243,5 +318,51 @@ Page({
                         user: replier_id
                   })
             })
+      },
+
+      addCommentLike: function(){
+            var that = this;
+            if (this.data.liked){
+                  wx.showToast({
+                    title: '您已经点过赞啦！',
+                    icon: "none"
+                  })
+            }
+            else {
+                  app.utils.data.addCommentLike(this.data.comment_id, this.data.user_id, 
+                        ()=>{
+                              that.setData({
+                                    liked: true,
+                                    like_num: that.data.like_num+1
+                              })
+                        })
+            }
+      },
+
+      addReplyLike: function(e){
+            // console.log(e);
+            var that = this;
+            var idx = e.currentTarget.dataset.idx;
+            var reply_id = e.currentTarget.id;
+            var like_num = this.data.replies[idx].like_num;
+
+            var reply_liked_field = 'replies['+idx+'].liked';
+            var reply_likenum_field = 'replies['+idx+'].like_num';
+
+            if (this.data.replies[idx].liked){
+                  wx.showToast({
+                    title: '您已经点过赞啦！',
+                    icon: "none"
+                  })
+            }
+            else {
+                  app.utils.data.addReplyLike(reply_id, this.data.user_id, 
+                        ()=>{
+                              that.setData({
+                                    [reply_liked_field]: true,
+                                    [reply_likenum_field]: like_num+1
+                              })
+                        })
+            }
       }
 })

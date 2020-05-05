@@ -11,13 +11,13 @@
                               </view>
                         </view>
 
-                        <view class="comment-avatar-like">
-                              <image src="{{like_url}}"></image>
+                        <view class="comment-avatar-like" catchtap="addCommentLike">
+                              <image src="{{liked ? liked_url : like_url}}"></image>
                               <text>{{like_num}}</text>
                         </view>
                   </view>
 
-                  <view class="topic-content-box" data-replyeeid="{{main_user_id}}" catchtap="clickContent">
+                  <view class="topic-content-box" data-replyeeid="{{main_user_id}}" catchtap="clickCommentContent">
                         <view class="topic-content">
                               <text>{{content}}</text>
                         </view>
@@ -34,21 +34,21 @@
                                           <view class="topic-avatar">
                                                 <image src="{{item.replier_avatar}}" catchtap="clickRouter" data-viewuserid="{{item.replier_id}}"></image>
 
-                                                <view class="topic-commenter-time" catchtap="clickContent" data-replyeeid="{{item.replier_id}}">
+                                                <view class="topic-commenter-time" catchtap="clickReplyContent" data-replyeeid="{{item.replier_id}}" data-replyid="{{item._id}}" data-idx="{{idx}}">
                                                       <text data-viewuserid="{{item.replier_id}}" catchtap="clickRouter">{{item.replier}}</text>
                                                       <view class="comment-time">
                                                             {{item.time}}
                                                       </view>
                                                 </view>
 
-                                                <view class="comment-avatar-like" id="{{item._id}}" catchtap="addReplyLike">
-                                                      <image src="{{like_url}}"></image>
+                                                <view class="comment-avatar-like" id="{{item._id}}" catchtap="addReplyLike" data-idx="{{idx}}">
+                                                      <image src="{{item.liked ? liked_url : like_url}}"></image>
                                                       <text>{{item.like_num}}</text>
                                                 </view>
                                           </view>
                                     </a>
                               </view>
-                              <view class="feed-content" data-replyeeid="{{item.replier_id}}" catchtap="clickContent">
+                              <view class="feed-content" data-replyeeid="{{item.replier_id}}" data-replyid="{{item._id}}" data-idx="{{idx}}" catchtap="clickReplyContent">
                                     <view class="answer-body">
                                           <view class="comment-content">
                                                 <text>回复   </text>

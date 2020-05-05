@@ -43,7 +43,7 @@
                                                             <view class="topic-comment-commenter">
                                                                   {{item.name}}
                                                             </view>
-                                                            <view class="topic-comment-time" catchtap="clickComment" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}">
+                                                            <view class="topic-comment-time" catchtap="clickComment" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}" data-idx="{{idx}}">
                                                                   {{item.comment_time}}
                                                             </view>
                                                       </view>
@@ -55,7 +55,7 @@
                                                 </view>
                                           </a>
                                     </view>
-                                    <view class="feed-content" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}" catchtap="clickComment" >
+                                    <view class="feed-content" data-userid="{{item.main_user_id}}" data-commentid="{{item._id}}" catchtap="clickComment" data-idx="{{idx}}">
                                           <view class="answer-body">
                                                 <view class="topic-comment-content">
                                                       <text>{{item.comment_content}}</text>

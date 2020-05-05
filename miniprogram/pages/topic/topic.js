@@ -238,22 +238,45 @@ Page({
        * 点击别人的评论
        */
       clickComment: function (e) {
+            // console.log(e);
             var that = this
             // 点击的用户的id
             var selectUser = e.currentTarget.dataset.userid
             // 点击的评论的id
             var selectComment = e.currentTarget.dataset.commentid
+            var selectIdx = e.currentTarget.dataset.idx;
             wx.showActionSheet({
                   itemList: ['赞', '回复', '举报'],
                   success: res=>{
                         console.log(res)
                         var index = res.tapIndex
-                        if (index === 0 || index === 2) {
+                        if (index == 0){
+                              if (that.data.comments[selectIdx].liked){
+                                    wx.showToast({
+                                      title: '您已经点过赞啦！',
+                                      icon: 'none'
+                                    })
+                              }
+                              else {   
+                                    // 为了适配点击图标点赞的方法，此处需要利用数据构造一个
+                                    // dummy 事件对象传递到方法中
+                                    that.addCommentLike({
+                                          currentTarget: {
+                                                id: selectComment,
+                                                dataset: {
+                                                      idx: selectIdx,
+                                                }
+                                          }
+                                    })
+                              }
+                        }
+                        else if (index === 2) {
                               wx.showToast({
                                     title: '开发中',
                                     icon: 'none'
                               })
-                        } else if (index === 1) {
+                        }
+                        else if (index === 1) {
                               // 弹出回复框
                               that.setData({
                                     reply: false,
@@ -441,7 +464,7 @@ Page({
       },
 
       addCommentLike: function(e){
-            // console.log(e);
+            console.log(e);
             var that = this;
             var idx = e.currentTarget.dataset.idx;
             var comment_id = e.currentTarget.id;

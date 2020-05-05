@@ -192,14 +192,15 @@ function addCommentLike(comment_id, user_id, callback) {
       }).then(res => {
             // console.log('成功更新!');
             // console.log(res);
-            cb('保存成功');
+            cb();
       }).catch(err => {
-            // console.log(err);
-            cb('保存失败');
+            console.log(err);
+            // cb('保存失败');
       });
 }
 
-function addReplyLike(reply_id, user_id) {
+function addReplyLike(reply_id, user_id, callback) {
+      var cb = callback;
       const db = wx.cloud.database();
 
       const _ = db.command
@@ -208,8 +209,9 @@ function addReplyLike(reply_id, user_id) {
                   likes: _.push(user_id)
             }
       }).then(res => {
-            console.log('成功更新!');
-            console.log(res);
+            // console.log('成功更新!');
+            // console.log(res);
+            cb();
       }).catch(err => {
             console.log(err);
       });
