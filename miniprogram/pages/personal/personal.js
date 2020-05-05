@@ -158,7 +158,7 @@ Page({
       */
       toDetail: function (e) {
             wx.navigateTo({
-                  url: '../topic/topic?user='+this.data.user_id+'&topic='+e.currentTarget.id
+                  url: '../topic/topic?user='+this.data.cur_user_id+'&topic='+e.currentTarget.id
             })
       },
       displayNickname: function (e) {
