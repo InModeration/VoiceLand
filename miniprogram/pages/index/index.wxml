@@ -47,6 +47,8 @@
                         </view>
                   </block>
 
+                  <register hideModal="{{hideModal}}"></register>
+
                   <view class="bottom-gap"></view>
 
                   <view class="bottom-input-area">
@@ -60,8 +62,11 @@
             </scroll-view>
       </view>
 
-      <modal title="新用户注册" hidden="{{registerModal}}" bindconfirm="register" no-cancel>
-            <view>请输入您要使用的昵称</view>
-            <input placeholder="昵称" bindinput="registerOnChange" />
-      </modal>
+      <!-- <modal title="新用户" hidden="{{registerModal}}" bindconfirm="register" no-cancel>
+            <view class="register-container">
+                  <text class="register-label">您的昵称:</text><input class="register-input" placeholder-class="register-placeholder" placeholder="昵称" bindinput="registerOnChange" />
+            </view>
+            <view class="register-tourist" catchtap="useTourist">不注册，使用游客模式预览</view>
+      </modal> -->
+      
 </view>

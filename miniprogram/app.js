@@ -23,6 +23,8 @@ App({
                   router: require('./utils/router.js')
             }
 
+            this.tourist_flag = '__TOURIST__'
+
             // 获取胶囊组件、手机屏幕的信息，设定高度
             let menuButtonObject = wx.getMenuButtonBoundingClientRect();
             wx.getSystemInfo({

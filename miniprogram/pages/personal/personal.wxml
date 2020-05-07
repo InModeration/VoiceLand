@@ -58,4 +58,6 @@
             </view>
 </scroll-view>
 
+<register hideModal="{{hideModal}}"></register>
+
 <image src="{{back_url}}" class="back" bindtap="backLast"></image>

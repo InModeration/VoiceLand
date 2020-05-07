@@ -1,0 +1,36 @@
+/* components/register/register.wxss */
+.register-container{
+  margin: 10rpx;
+  display: inline-block;
+  width: 100%;
+}
+
+.register-label{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 26rpx;
+  color: #333;
+  width: 23%;
+}
+
+.register-input{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 15rpx;
+  padding: 15rpx;
+  border: #ddd solid 2rpx;
+  border-radius: 20rpx;
+  width: 60%;
+}
+
+.register-placeholder{
+  font-size: 28rpx;
+  color: #ddd;
+}
+
+.register-tourist{
+  margin-left: 35%;
+  text-decoration:underline;
+  font-size: 24rpx;
+  color: #26a;
+}

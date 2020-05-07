@@ -25,7 +25,10 @@ Page({
             replyValue: '',
             replyHidden: true,
             up: '0',
-            isFocus: false
+            isFocus: false,
+
+            // 注册组件的显示控制
+            hideModal: true
       },
 
       /**
@@ -305,64 +308,111 @@ Page({
        */
       replySend: function () {
             var that = this
-            var comment_id = this.data.comment_id
-            var replier_id = this.data.user_id
-            var repliee_id = this.data.replyeeId
-            var content = this.data.replyContent
-            wx.showLoading()
-            app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
-                  wx.hideLoading()
-                  that.replyBlur()
-                  that.onLoad({
-                        comment: comment_id,
-                        user: replier_id
+
+            if (this.data.user_id !== app.tourist_flag){
+                  var comment_id = this.data.comment_id
+                  var replier_id = this.data.user_id
+                  var repliee_id = this.data.replyeeId
+                  var content = this.data.replyContent
+                  wx.showLoading()
+                  app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
+                        wx.hideLoading()
+                        that.replyBlur()
+                        that.onLoad({
+                              comment: comment_id,
+                              user: replier_id
+                        })
                   })
-            })
+            }
+            else{
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
+                  })
+            }
       },
 
       addCommentLike: function(){
             var that = this;
-            if (this.data.liked){
-                  wx.showToast({
-                    title: '您已经点过赞啦！',
-                    icon: "none"
-                  })
-            }
-            else {
-                  app.utils.data.addCommentLike(this.data.comment_id, this.data.user_id, 
-                        ()=>{
-                              that.setData({
-                                    liked: true,
-                                    like_num: that.data.like_num+1
-                              })
+            if (this.data.user_id !== app.tourist_flag){
+                  if (this.data.liked){
+                        wx.showToast({
+                        title: '您已经点过赞啦！',
+                        icon: "none"
                         })
+                  }
+                  else {
+                        app.utils.data.addCommentLike(this.data.comment_id, this.data.user_id, 
+                              ()=>{
+                                    that.setData({
+                                          liked: true,
+                                          like_num: that.data.like_num+1
+                                    })
+                              })
+                  }
+            }
+            else{
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
+                  })
             }
       },
 
       addReplyLike: function(e){
             // console.log(e);
             var that = this;
-            var idx = e.currentTarget.dataset.idx;
-            var reply_id = e.currentTarget.id;
-            var like_num = this.data.replies[idx].like_num;
 
-            var reply_liked_field = 'replies['+idx+'].liked';
-            var reply_likenum_field = 'replies['+idx+'].like_num';
+            if (this.data.user_id){
+                  var idx = e.currentTarget.dataset.idx;
+                  var reply_id = e.currentTarget.id;
+                  var like_num = this.data.replies[idx].like_num;
 
-            if (this.data.replies[idx].liked){
-                  wx.showToast({
-                    title: '您已经点过赞啦！',
-                    icon: "none"
-                  })
+                  var reply_liked_field = 'replies['+idx+'].liked';
+                  var reply_likenum_field = 'replies['+idx+'].like_num';
+
+                  if (this.data.replies[idx].liked){
+                        wx.showToast({
+                        title: '您已经点过赞啦！',
+                        icon: "none"
+                        })
+                  }
+                  else {
+                        app.utils.data.addReplyLike(reply_id, this.data.user_id, 
+                              ()=>{
+                                    that.setData({
+                                          [reply_liked_field]: true,
+                                          [reply_likenum_field]: like_num+1
+                                    })
+                              })
+                  }
             }
             else {
-                  app.utils.data.addReplyLike(reply_id, this.data.user_id, 
-                        ()=>{
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
                               that.setData({
-                                    [reply_liked_field]: true,
-                                    [reply_likenum_field]: like_num+1
+                                    hideModal: false
                               })
-                        })
+                          }
+                        }
+                  })
             }
       }
 })

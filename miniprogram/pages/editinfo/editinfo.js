@@ -213,9 +213,10 @@ Page({
                   if (this.data.avatar != this.data.avatar_url) {
                         // 获取图片扩展名
                         var extension = this.data.avatar_url.split('.').pop()
+                        var date = (new Date()).getTime()
                         wx.cloud.uploadFile({
                               // 将进行覆盖
-                              cloudPath: `assets/image/avatar/diy/${this.data.user_id}.${extension}`,
+                              cloudPath: `assets/image/avatar/diy/${this.data.user_id}.${date}.${extension}`,
                               filePath: this.data.avatar_url,
                               success: res => {
                                     var fileid = res.fileID
@@ -245,9 +246,10 @@ Page({
                               var cover = app.globalData.backgroundTempPath
                               // 获取图片扩展名
                               var extension = cover.split('.').pop()
+                              var date = (new Date()).getTime()
                               wx.cloud.uploadFile({
                                     // 将进行覆盖
-                                    cloudPath: `assets/image/background/diy/${this.data.user_id}.${extension}`,
+                                    cloudPath: `assets/image/background/diy/${this.data.user_id}.${date}.${extension}`,
                                     filePath: cover,
                                     success: res => {
                                           var fileid = res.fileID

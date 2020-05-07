@@ -1,0 +1,7 @@
+<!--components/register/register.wxml-->
+<modal title="新用户" hidden="{{hideModal}}" bindconfirm="register" no-cancel>
+      <view class="register-container">
+            <text class="register-label">您的昵称:</text><input class="register-input" placeholder-class="register-placeholder" placeholder="昵称" bindinput="inputOnChange" />
+      </view>
+      <view class="register-tourist" catchtap="useTourist">不注册，使用游客模式预览</view>
+</modal>

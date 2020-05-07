@@ -97,6 +97,83 @@ function random (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
 }
 
+function register(name, success_callback, fail_callback){
+  var scb = success_callback;
+  var fcb = fail_callback;
+  wx.login({
+    success (res) {
+      if (res.code) {
+        //获取用户openid
+        wx.cloud.callFunction({
+              name: 'get_openid',
+              data: {
+                    code: res.code
+              },
+              success: res=>{
+                //     console.log(res);
+                // 检查用户是否已经注册过了
+                wx.cloud.callFunction({
+                      name: 'map_user_id',
+                      data: {
+                            open_id: res.result.openid
+                      },
+                      success: int_res=>{
+                            // 用户的opneid已经存在，说明用户已经注册过了
+                            if (int_res.result.data.length != 0){ 
+                              wx.showToast({
+                                title: '错误！该用户已经注册过了！',
+                                icon: 'none'
+                              })
+                            }
+                            else {
+                                  wx.showLoading({
+                                    title: '注册中',
+                                  })
+                                  wx.cloud.callFunction({
+                                    name: 'register_user',
+                                    data: {
+                                      open_id: res.result.openid,
+                                      name: name
+                                    },
+                                    success: reg_res=>{
+                                      wx.hideLoading({
+                                        complete: (res) => {
+                                          wx.showToast({
+                                            title: '注册成功！',
+                                            complete: a=>{
+                                              wx.redirectTo({
+                                                url: '../pages/index/index'
+                                              })
+                                            }
+                                          })
+                                        },
+                                      })
+                                      scb()
+                                    },
+                                    fail: err=>{
+                                      fcb('注册失败!服务器端返回错误')
+                                    }
+                                  })
+                            }
+                      },
+                      fail: int_err=>{
+                        fcb('查询用户注册状态失败!')
+                      }
+                })
+              },
+              fail: err=>{
+                fcb('注册失败，请重试！')
+                console.log(err);
+              }
+        })
+      } else {
+        fcb('微信账户登录失败，请重试！')
+        console.log(res)
+      }
+    }
+  })
+}
+
 
 // module.exports.getData = getData;
 // module.exports.getData2 = getData2;
@@ -108,3 +185,4 @@ function random (min, max) {
 // module.exports.getUserInfo = getUserInfo;
 module.exports.random = random;
 module.exports.getRpx = getRpx;
+module.exports.register = register;

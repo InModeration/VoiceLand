@@ -1,5 +1,6 @@
 {
       "usingComponents": {
-            "reply": "/components/reply/reply"
+            "reply": "/components/reply/reply",
+            "register": "/components/register/register"
       }
 }

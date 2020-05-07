@@ -106,3 +106,5 @@
 <reply id="reply" hidden="{{reply}}" keyboardHeight="{{replyUp}}" replyValue="{{reply_content}}" autoFocus="{{ifFocus}}" bind:Focus="startReply" bind:Blur="endReply" bind:Input="editReply" bind:Confirm="sendReply"></reply>
 <!-- 回复Reply -->
 <reply hidden="{{replyTwo}}" keyboardHeight="{{replyUpTwo}}" replyValue="{{replyTwo_content}}" autoFocus="ifFocusTwo" bind:Focus="startReplyTwo" bind:Blur="endReplyTwo" bind:Input="editReplyTwo" bind:Confirm="sendReplyTwo"></reply>
+
+<register hideModal="{{hideModal}}"></register>

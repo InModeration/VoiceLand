@@ -13,7 +13,7 @@ Page({
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             search_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/search_black.png?sign=a9f9c7136a7416d5e91d1f75e1ca212c&t=1587887012',
             shownav: false,
-            registerModal: true,
+            hideModal: true,
             registerName: '',
             liked: ()=>{return this.liked_url}
       },
@@ -31,19 +31,21 @@ Page({
 
       showIndexContent: function(){
             var that = this;
-            wx.cloud.callFunction({
-                  name: "userinfo",
-                  data: {
-                        user_id: this.data.user_id
-                  },
-                  success: res=>{
-                        // console.log(res);
-                        that.setData({
-                              avatar: res.result.data[0].avatar
-                        });
-                  },
-                  fail: console.log
-            });
+            if (this.data.user_id != app.tourist_flag){
+                  wx.cloud.callFunction({
+                        name: "userinfo",
+                        data: {
+                              user_id: this.data.user_id
+                        },
+                        success: res=>{
+                              // console.log(res);
+                              that.setData({
+                                    avatar: res.result.data[0].avatar
+                              });
+                        },
+                        fail: console.log
+                  });
+            }
 
             wx.cloud.callFunction({
                   name: "index_user_info",
@@ -64,8 +66,11 @@ Page({
       onLoad: function() {
 
             var that = this;
+            this.setData({
+                  user_id: app.tourist_flag
+            })
             
-            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////新用户注册////////////////////////////////////////////
             wx.login({
                   success (res) {
                     if (res.code) {
@@ -83,22 +88,17 @@ Page({
                                           open_id: res.result.openid
                                     },
                                     success: int_res=>{
-                                          // console.log(int_res);
-                                          if (int_res.result.data.length == 0){
-                                                // wx.showToast({
-                                                //   title: '您还没有注册!',
-                                                //   icon: 'none'
-                                                // })
+                                          if (int_res.result.data.length === 0){
                                                 that.setData({
-                                                      registerModal: false,
-                                                      currentOpenid: res.result.openid
+                                                      hideModal: false
                                                 })
+                                                that.showIndexContent()                                                
                                           }
                                           else {
                                                 that.setData({
                                                       user_id: int_res.result.data[0]._id
                                                 })
-                                                that.showIndexContent();
+                                                that.showIndexContent()
                                           }
                                     },
                                     fail: console.log
@@ -217,12 +217,6 @@ Page({
             // console.log(e);
             wx.navigateTo({
                   url: '../personal/personal?user='+user_id+'&curUser='+this.data.user_id
-                  // success: (res) => {
-                  //       console.log(res)
-                  // },
-                  // fail: (err) => {
-                  //       console.log(err)
-                  // }
             })
       },
 
@@ -246,18 +240,50 @@ Page({
        * 跳转至个人主页
        */
       toPersonalAll: function () {
-            wx.navigateTo({
-                  url: '../personalAll/personalAll?user='+this.data.user_id,
-            })
+            if (this.data.user_id !== app.tourist_flag){
+                  wx.navigateTo({
+                        url: '../personalAll/personalAll?user='+this.data.user_id,
+                  })
+            }
+            else {
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能查看个人信息，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
+                  })
+            }
       },
 
       /**
        * 跳转至话题编辑页面
        */
       toEditTopic: function () {
-            wx.navigateTo({
-                  url: '../editTopic/editTopic?user='+this.data.user_id,
-            })
+            var that = this
+            if (this.data.user_id === app.tourist_flag){
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
+                  })
+            }
+
+            else{
+                  wx.navigateTo({
+                        url: '../editTopic/editTopic?user='+this.data.user_id,
+                  })
+            }
       },
 
       /**
@@ -288,7 +314,10 @@ Page({
             this.setData({
                   registerModal: true
             });
-            console.log(this.registerName);
+            // console.log(this.registerName);
+            // wx.showToast({
+            //   title: '注册成功',
+            // })
             wx.cloud.callFunction({
                   name: 'register_user',
                   data: {
@@ -316,35 +345,52 @@ Page({
       },
 
       addTopicLike: function(e){
+            // console.log(this.data.user_id, app.tourist_flag)
+
             var that = this;
 
-            var idx = e.target.dataset.idx;
-            var icon_field_name = 'feed['+idx+']liked';
-            var likenum_field_name = 'feed['+idx+']like_num';
-            var like_num = this.data.feed[idx].like_num;
-
-            // var newData = Object();
-            // newData[icon_field_name] = true;
-            // newData[likenum_field_name] = like_num+1;
-
-            // console.log(newData);
-            
-            // console.log(e);
-            // console.log(this.data.feed[e.target.dataset.idx].liked);
-            if (this.data.feed[idx].liked){
-                  wx.showToast({
-                    title: '您已经点过赞啦！',
-                    icon: 'none'
-                  });
+            if (this.data.user_id !== app.tourist_flag){
+                  var idx = e.target.dataset.idx;
+                  var icon_field_name = 'feed['+idx+']liked';
+                  var likenum_field_name = 'feed['+idx+']like_num';
+                  var like_num = this.data.feed[idx].like_num;
+                  if (this.data.feed[idx].liked){
+                        wx.showToast({
+                        title: '您已经点过赞啦！',
+                        icon: 'none'
+                        });
+                  }
+                  else {
+                        app.utils.data.addTopicLike(e.currentTarget.id, this.data.user_id,
+                        ()=>{
+                              that.setData({
+                                    [icon_field_name]: true,
+                                    [likenum_field_name]: like_num+1
+                              })
+                        })
+                  }
             }
             else {
-                  app.utils.data.addTopicLike(e.currentTarget.id, this.data.user_id,
-                  ()=>{
-                        that.setData({
-                              [icon_field_name]: true,
-                              [likenum_field_name]: like_num+1
-                        })
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
                   })
+
             }
+      },
+
+      useTourist: function(){
+            this.setData({
+                  user_id: app.tourist_flag,
+                  registerModal: true
+            })
+            this.showIndexContent()
       }
 })

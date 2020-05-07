@@ -35,6 +35,9 @@ Page({
             replyeeTwo: '',
             selectReply: '',
 
+            // 注册组件显示控制
+            hideModal: true
+
       },
       //事件处理函数
       bindItemTap: function() {
@@ -42,9 +45,10 @@ Page({
                   url: '../answer/answer'
             })
       },
+
       onLoad: function(options) {
             // console.log('onLoad')
-            console.log(options)
+            // console.log(options)
             var that = this;
             //调用应用实例的方法获取全局数据
             // app.getUserInfo(function(userInfo){
@@ -124,7 +128,7 @@ Page({
                               comment_times.push(gap)
                         }
                         coms = time_util.processTimeInArray(coms, 'comment_time');
-                        console.log(coms)
+                        // console.log(coms)
                         that.setData({
                               comments: coms
                         })
@@ -151,12 +155,6 @@ Page({
             wx.navigateTo({
                   url: '../comment/comment?comment=' + e.currentTarget.id + '&user=' + this.data.user_id
             });
-      },
-
-      //测试回复功能
-      addComment: function() {
-            app.utils.data.addComment(this.data.topic_id, this.data.user_id,
-                  "鹏哥 国际周和国际周的学分有说法了不..")
       },
 
       /**
@@ -210,28 +208,44 @@ Page({
        * 发送评论
        */
       sendComment: function () {
-            var content = this.data.comment_content
             var that = this
-            if (content.length === 0) {
-                  wx.showToast({
-                        title: '评论不能为空！',
-                        icon: 'none'
+
+            if (this.data.user_id !== app.tourist_flag){
+                  var content = this.data.comment_content
+                  if (content.length === 0) {
+                        wx.showToast({
+                              title: '评论不能为空！',
+                              icon: 'none'
+                        })
+                        return
+                  }
+                  var topic_id = this.data.topic_id
+                  var user_id = this.data.user_id
+                  wx.showLoading({})
+                  app.utils.data.addComment(topic_id, user_id, content, ()=>{
+                        wx.hideLoading()
+                        that.setData({
+                              comment_content: ''
+                        })
+                        that.onLoad({
+                              topic: topic_id,
+                              user: user_id
+                        })
                   })
-                  return
             }
-            var topic_id = this.data.topic_id
-            var user_id = this.data.user_id
-            wx.showLoading({})
-            app.utils.data.addComment(topic_id, user_id, content, ()=>{
-                  wx.hideLoading()
-                  that.setData({
-                        comment_content: ''
+            else {
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
                   })
-                  that.onLoad({
-                        topic: topic_id,
-                        user: user_id
-                  })
-            })
+            }
       },
 
       /**
@@ -327,22 +341,38 @@ Page({
        */
       sendReply: function (e) {
             var that = this
-            var comment_id = this.data.selectComment
-            var replier_id = this.data.user_id
-            var repliee_id = this.data.replyee
-            var content = this.data.reply_content
-            wx.showLoading({})
-            app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
-                  wx.hideLoading()
-                  that.endReply()
-                  that.setData({
-                        reply_content: ''
+
+            if (this.data.user_id !== app.tourist_flag){
+                  var comment_id = this.data.selectComment
+                  var replier_id = this.data.user_id
+                  var repliee_id = this.data.replyee
+                  var content = this.data.reply_content
+                  wx.showLoading({})
+                  app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
+                        wx.hideLoading()
+                        that.endReply()
+                        that.setData({
+                              reply_content: ''
+                        })
+                        that.onLoad({
+                              topic: that.data.topic_id,
+                              user: that.data.user_id
+                        })
                   })
-                  that.onLoad({
-                        topic: that.data.topic_id,
-                        user: that.data.user_id
+            }
+            else {
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
                   })
-            })
+            }
       },
 
       /**
@@ -426,67 +456,116 @@ Page({
        */
       sendReplyTwo: function () {
             var that = this
-            var comment_id = this.data.selectReply
-            var replier_id = this.data.user_id
-            var repliee_id = this.data.replyeeTwo
-            var content = this.data.replyTwo_content
-            wx.showLoading({})
-            app.utils.data.addReply(comment_id, replier_id, repliee_id, content, () => {
-                  wx.hideLoading()
-                  that.endReply()
-                  that.setData({
-                        replyTwo_content: ''
+
+            if (this.data.user_id !== app.tourist_flag){
+                  var comment_id = this.data.selectReply
+                  var replier_id = this.data.user_id
+                  var repliee_id = this.data.replyeeTwo
+                  var content = this.data.replyTwo_content
+                  wx.showLoading({})
+                  app.utils.data.addReply(comment_id, replier_id, repliee_id, content, () => {
+                        wx.hideLoading()
+                        that.endReply()
+                        that.setData({
+                              replyTwo_content: ''
+                        })
+                        that.onLoad({
+                              topic: that.data.topic_id,
+                              user: that.data.user_id
+                        })
                   })
-                  that.onLoad({
-                        topic: that.data.topic_id,
-                        user: that.data.user_id
+            }
+            else {
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
                   })
-            })
+            }
       },
 
       addTopicLike: function(){
             var that = this;
-            if (this.data.liked){
-                  wx.showToast({
-                    title: '您已经点过赞啦！',
-                    icon: "none"
-                  })
+
+            if (this.data.user_id !== app.tourist_flag){
+                  if (this.data.liked){
+                        wx.showToast({
+                          title: '您已经点过赞啦！',
+                          icon: "none"
+                        })
+                  }
+                  else {
+                        app.utils.data.addTopicLike(this.data.topic_id, this.data.user_id,
+                              ()=>{
+                                    that.setData({
+                                          liked: true,
+                                          like_num: that.data.like_num+1
+                                    })
+                              })
+                  }
             }
             else {
-                  app.utils.data.addTopicLike(this.data.topic_id, this.data.user_id,
-                        ()=>{
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
                               that.setData({
-                                    liked: true,
-                                    like_num: that.data.like_num+1
+                                    hideModal: false
                               })
-                        })
+                          }
+                        }
+                  })
             }
       },
 
       addCommentLike: function(e){
-            console.log(e);
+            // console.log(e);
             var that = this;
-            var idx = e.currentTarget.dataset.idx;
-            var comment_id = e.currentTarget.id;
-            var like_num = this.data.comments[idx].comment_like_num;
 
-            var comment_liked_field = 'comments['+idx+'].comment_liked';
-            var comment_likenum_field = 'comments['+idx+'].comment_like_num';
-
-            if (this.data.comments[idx].comment_liked){
-                  wx.showToast({
-                    title: '您已经点过赞啦！',
-                    icon: "none"
-                  })
-            }
-            else {
-                  app.utils.data.addCommentLike(comment_id, this.data.user_id,
-                        ()=>{
-                              that.setData({
-                                    [comment_liked_field]: true,
-                                    [comment_likenum_field]: like_num+1
-                              })
+            if (this.data.user_id !== app.tourist_flag){
+                  var idx = e.currentTarget.dataset.idx;
+                  var comment_id = e.currentTarget.id;
+                  var like_num = this.data.comments[idx].comment_like_num;
+      
+                  var comment_liked_field = 'comments['+idx+'].comment_liked';
+                  var comment_likenum_field = 'comments['+idx+'].comment_like_num';
+      
+                  if (this.data.comments[idx].comment_liked){
+                        wx.showToast({
+                          title: '您已经点过赞啦！',
+                          icon: "none"
                         })
+                  }
+                  else {
+                        app.utils.data.addCommentLike(comment_id, this.data.user_id,
+                              ()=>{
+                                    that.setData({
+                                          [comment_liked_field]: true,
+                                          [comment_likenum_field]: like_num+1
+                                    })
+                              })
+                  }
+            }
+
+            else {
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
+                  })
             }
       }
 })

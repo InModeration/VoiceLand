@@ -1,6 +1,7 @@
 {
       "usingComponents": {
             "navbar": "/components/navbar/index",
-            "reply": "/components/reply/reply"
+            "reply": "/components/reply/reply",
+            "register": "/components/register/register"
       }
 }

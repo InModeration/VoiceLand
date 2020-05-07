@@ -68,3 +68,5 @@
 <image src="{{back_url}}" class="back" bindtap="backLast"></image>
 
 <reply replyValue="{{replyValue}}" hidden="{{replyHidden}}" keyboardHeight="{{up}}" autoFocus="{{isFocus}}" bind:Focus="replyFocus" bind:Blur="replyBlur" bind:Input="replyInput" bind:Confirm="replySend"></reply>
+
+<register hideModal="{{hideModal}}"></register>

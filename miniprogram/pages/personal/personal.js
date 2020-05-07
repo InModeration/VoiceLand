@@ -12,7 +12,8 @@ Page({
             comment_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/comment%20.png?sign=1d444df91712179f1bbcc3fcbdde87eb&t=1587886769',
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
-            back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063'
+            back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063',
+            hideModal: true
       },
 
       /**
@@ -72,26 +73,23 @@ Page({
             });
 
             // 获取本人的信息，以查看该用户是否已经关心
-            wx.cloud.callFunction({
-                  name: 'userinfo',
-                  data: {
-                        user_id: cur_user_id
-                  },
-                  success: res=>{
-                        // console.log('mine:');
-                        // console.log(res);
-                        // console.log(res.result.data[0].concern.indexOf(cur_user_id));
-                        // console.log(user_id);
-                        // console.log(res.result.data[0].concern);
-                        that.setData({
-                              concern: res.result.data[0].concern,
-                              in_my_concern: res.result.data[0].concern.indexOf(user_id) != -1      // 该用户是否已经在我的关心列表内
-                        })
-                  },
-                  fail: err=>{
-                        console.log(err)
-                  }
-            });
+            if (cur_user_id != app.tourist_flag){
+                  wx.cloud.callFunction({
+                        name: 'userinfo',
+                        data: {
+                              user_id: cur_user_id
+                        },
+                        success: res=>{
+                              that.setData({
+                                    concern: res.result.data[0].concern,
+                                    in_my_concern: res.result.data[0].concern.indexOf(user_id) != -1      // 该用户是否已经在我的关心列表内
+                              })
+                        },
+                        fail: err=>{
+                              console.log(err)
+                        }
+                  });
+            }
             
             //调用应用实例的方法获取全局数据
             // app.getUserInfo(function(userInfo) {
@@ -192,21 +190,32 @@ Page({
 
       addConcern: function(){
             var that = this;
-            // if (this.data.in_my_concern){
-            //       wx.showToast({
-            //         title: '您已经关心过这个人了！',
-            //         icon: 'none'
-            //       })
-            // }
-            // else {
-            app.utils.data.addConcern(this.data.user_id, this.data.cur_user_id, 
-                  ()=>{
-                        that.data.concern.push(that.data.user_id);
-                        that.setData({
-                              in_my_concern: true
-                        })
+
+            // console.log(this.data.cur_user_id)
+
+            if (this.data.cur_user_id === app.tourist_flag){
+                  wx.showModal({
+                        title: '注册',
+                        content: '您现在使用的是游客模式，不能进行关心，要注册吗？',
+                        success (res) {
+                          if (res.confirm) {
+                              that.setData({
+                                    hideModal: false
+                              })
+                          }
+                        }
                   })
-            // }
+            }
+
+            else {
+                  app.utils.data.addConcern(this.data.user_id, this.data.cur_user_id, 
+                        ()=>{
+                              that.data.concern.push(that.data.user_id);
+                              that.setData({
+                                    in_my_concern: true
+                              })
+                  })
+            }
       },
 
       removeConcern: function(){
