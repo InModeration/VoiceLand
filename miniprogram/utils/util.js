@@ -142,7 +142,7 @@ function register(name, success_callback, fail_callback){
                                             title: '注册成功！',
                                             complete: a=>{
                                               wx.redirectTo({
-                                                url: '../pages/index/index'
+                                                url: '../index/index'
                                               })
                                             }
                                           })

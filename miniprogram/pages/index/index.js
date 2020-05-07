@@ -240,6 +240,7 @@ Page({
        * 跳转至个人主页
        */
       toPersonalAll: function () {
+            var that = this;
             if (this.data.user_id !== app.tourist_flag){
                   wx.navigateTo({
                         url: '../personalAll/personalAll?user='+this.data.user_id,
