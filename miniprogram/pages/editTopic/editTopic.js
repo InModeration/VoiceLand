@@ -23,22 +23,25 @@ Page({
             private: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/private%20.png?sign=170bb739c88be1db617e0fd2840aecdd&t=1588345929',
             location: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/location.png?sign=9d73dde782cee5d4be0edb39e2574d51&t=1588342392',
             send: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/send.png?sign=e810204c9501d8213e5e89e8c06bd455&t=1588342776',
+            remove: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/remove.png?sign=c540460c880a2a9bad8d8a911620fb08&t=1588875409',
             pub: true,
             up: '0rpx',
             up2: '102rpx',
-            height: '1000rpx',
+            height: '800rpx',
 
             // 话题的内容
             contents: '',
             pictures: [],
             links: '',
-            positions: ''
+            positions: '',
+            picLenth: 0,
+            fileIDs: []
       },
 
       /**
        * 生命周期函数--监听页面加载
        */
-      onLoad: function(options) {
+      onLoad: function (options) {
             this.setData({
                   user_id: options.user
             })
@@ -55,49 +58,49 @@ Page({
       /**
        * 生命周期函数--监听页面初次渲染完成
        */
-      onReady: function() {
+      onReady: function () {
 
       },
 
       /**
        * 生命周期函数--监听页面显示
        */
-      onShow: function() {
+      onShow: function () {
 
       },
 
       /**
        * 生命周期函数--监听页面隐藏
        */
-      onHide: function() {
+      onHide: function () {
 
       },
 
       /**
        * 生命周期函数--监听页面卸载
        */
-      onUnload: function() {
+      onUnload: function () {
 
       },
 
       /**
        * 页面相关事件处理函数--监听用户下拉动作
        */
-      onPullDownRefresh: function() {
+      onPullDownRefresh: function () {
 
       },
 
       /**
        * 页面上拉触底事件的处理函数
        */
-      onReachBottom: function() {
+      onReachBottom: function () {
 
       },
 
       /**
        * 用户点击右上角分享
        */
-      onShareAppMessage: function() {
+      onShareAppMessage: function () {
 
       },
 
@@ -105,7 +108,7 @@ Page({
        * 统计当前输入字数
        * 绑定输入框的内容
        */
-      getNumber: function(e) {
+      getNumber: function (e) {
             var contents = e.detail.value
             var number = e.detail.cursor
             this.setData({
@@ -117,7 +120,7 @@ Page({
       /**
        * 更改要发布的话题的可见范围
        */
-      changeStatus: function() {
+      changeStatus: function () {
             this.setData({
                   pub: !this.data.pub
             })
@@ -125,33 +128,36 @@ Page({
 
       /**
        * 点击输入框时，textarea下面的组件升高
+       * 图片不予显示
        */
-      upBottom: function(e) {
+      upBottom: function (e) {
             var up = e.detail.height
             var up2 = up + parseInt(this.data.up2) / utils.getRpx()
             var height = parseInt(this.data.height) / utils.getRpx() - up
             this.setData({
                   up: up + 'px',
                   up2: up2 + 'px',
-                  height: height + 'px'
+                  height: height + 'px',
+                  picLenth: 0
             })
       },
 
       /**
        * 输入框失去焦点
        */
-      downBottom: function() {
+      downBottom: function () {
             this.setData({
                   up: '0px',
                   up2: '102rpx',
-                  height: '1000rpx'
+                  height: '800rpx',
+                  picLenth: this.data.pictures.length
             })
       },
 
       /**
        * bind:Back监听函数
        */
-      back: function(e) {
+      back: function (e) {
             wx.showModal({
                   title: '系统将不会保存当前编辑内容',
                   content: '返回会导致您的内容将丢失，确定吗？',
@@ -179,14 +185,14 @@ Page({
       /**
        * bind:Index监听函数
        */
-      index: function(e) {
+      index: function (e) {
 
       },
 
       /**
        * 发送话题按钮
        */
-      sendTopic: function() {
+      sendTopic: function () {
             if (this.data.currLength === 0) {
                   wx.showToast({
                         title: '不能发送空白话题！',
@@ -195,29 +201,125 @@ Page({
             } else {
                   var data = this.data
                   wx.showLoading()
-                  app.utils.data.addTopic(data.user_id, data.contents, data.pictures, () => {
-                        wx.hideLoading({
-                              success: (res) => {
-                                    wx.showToast({
-                                          title: '发送成功！',
-                                          success: (res) => {
-                                                console.log(res)
-                                          },
-                                          fail: (err) => {
-                                                console.log(err)
-                                          }
-                                    })
-                              },
-                              fail: (err) => {
-                                    console.log(err)
-                              },
-                              complete: () => {
-                                    wx.redirectTo({
-                                          url: '../index/index',
-                                    })
-                              }
-                        })
+                  // 上传图片至云存储
+                  var count = 0
+                  this.uploadImgAndSend(count, () => {
+                        console.log('开始上传')
                   })
             }
+      },
+
+      /**
+       * 选择照片
+       */
+      chooseImg: function (e) {
+            if (this.data.pictures.length !== 0) {
+                  wx.showToast({
+                        title: '已上传的图片将清空',
+                        icon: 'none'
+                  })
+            }
+            var that = this
+            wx.chooseImage({
+                  count: 9,
+                  success: res => {
+                        console.log(res)
+                        that.setData({
+                              pictures: res.tempFilePaths,
+                              picLenth: res.tempFilePaths.length
+                        })
+                  }
+            })
+      },
+
+      /**
+       * 预览照片
+       */
+      previewImg: function (e) {
+            var that = this
+            var imgUrl = e.currentTarget.dataset.url
+            wx.previewImage({
+                  current: imgUrl,
+                  urls: that.data.pictures
+            })
+      },
+
+      /**
+       * 删除图片
+       */
+      deleteImg: function (e) {
+            var index = e.currentTarget.dataset.delete
+            var pictures = this.data.pictures
+            this.setData({
+                  pictures: pictures.slice(0, index).concat(pictures.slice(index + 1, pictures.length))
+            })
+      },
+
+      /**
+       * 递归上传图片至云存储
+       * 存储fileid
+       * 上传至云数据库
+       */
+      uploadImgAndSend: function (count, callback) {
+            callback()
+            if (count === this.data.pictures.length - 1) {
+                  var new_callback = () => {
+                        console.log('图片上传完毕,开始调用发送topic的API')
+                        var data = this.data
+                        app.utils.data.addTopic(data.user_id, data.contents, data.fileIDs, () => {
+                              wx.hideLoading({
+                                    success: (res) => {
+                                          wx.showToast({
+                                                title: '发送成功！',
+                                                success: (res) => {
+                                                      console.log(res)
+                                                },
+                                                fail: (err) => {
+                                                      console.log(err)
+                                                }
+                                          })
+                                    },
+                                    fail: (err) => {
+                                          console.log(err)
+                                    },
+                                    complete: () => {
+                                          wx.redirectTo({
+                                                url: '../index/index',
+                                          })
+                                    }
+                              })
+                        })
+                  }
+            } else if (count === this.data.pictures.length) {
+                  console.log('发送成功,返回主页')
+                  return
+            } else {
+                  var new_callback = () => {
+                        console.log('上传图片中')
+                  }
+            }
+            var that = this
+            var extension = this.data.pictures[count].split('.').pop()
+            wx.cloud.uploadFile({
+                  // 命名规则： 用户id - getTime - count . extension
+                  cloudPath: `assets/image/topic/${this.data.user_id}-${new Date().getTime()}-${count}.${extension}`,
+                  filePath: this.data.pictures[count],
+                  success: res => {
+                        var fileid = res.fileID
+                        var fileIDs = that.data.fileIDs
+                        fileIDs.push(fileid)
+                        // 获取fileid
+                        that.setData({
+                              fileIDs: fileIDs
+                        })
+                  },
+                  fail: err => {
+                        console.log(err)
+                  },
+                  complete: res => {
+                        // 继续导入
+                        that.uploadImgAndSend(++count, new_callback)
+                  }
+            })
       }
 })

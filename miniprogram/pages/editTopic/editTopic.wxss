@@ -3,6 +3,29 @@ page {
       position: fixed;
 }
 
+.box-sv {
+      width: 700rpx;
+      padding: 20rpx 0;
+      height: 133rpx;
+      white-space: nowrap;
+      margin: 3% auto
+}
+
+.choosed-img {
+      width: 200rpx;
+      height: 133rpx;
+      margin-right: 0rpx;
+      border-radius: 5px;
+}
+
+.delete-icon {
+      width: 30rpx;
+      height: 30rpx;
+      margin-bottom: 103rpx;
+      margin-left: -4rpx;
+      margin-right: 20rpx;
+}
+
 .topic-box {
       height: 1200rpx;
 }

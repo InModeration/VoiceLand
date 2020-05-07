@@ -1,29 +1,37 @@
 <!--miniprogram/pages/editTopic/editTopic.wxml-->
 <view>
-      <navbar page-name="编辑话题" bind:Back="back" bind:Index="back"></navbar>
-      <view class="topic-box">
-            <textarea bindinput="getNumber" class="edit-box" placeholder="{{placeholder}}" adjust-position="true" maxlength="{{maxLength}}" bindfocus="upBottom" bindblur="downBottom" disable-default-padding="true" style="height: {{height}}"></textarea>
-            <view>
-                  <view class="curr-all" style="bottom: {{up2}}">
-                        <text class="status {{pub?'green':'black'}}">{{pub?'公开':'仅自己可见'}}</text>
-                        <view class="count-box">
-                              <text space="nbsp" class="count">{{currLength}} / 1000</text>
-                        </view>
-                  </view>
+	<navbar page-name="编辑话题" bind:Back="back" bind:Index="back"></navbar>
+	<view class="topic-box">
+		<textarea bindinput="getNumber" class="edit-box" placeholder="{{placeholder}}" adjust-position="true" maxlength="{{maxLength}}" bindfocus="upBottom" bindblur="downBottom" disable-default-padding="true" style="height: {{height}}"></textarea>
+		<block wx:if="{{picLenth !== 0}}">
+			<scroll-view class='box-sv' scroll-x>
+				<block wx:for="{{pictures}}" wx:key="{{index}}">
+					<image class="choosed-img" src='{{item}}' catchtap='previewImg' mode="aspectFill" data-url='{{item}}'></image>
+					<image src="{{remove}}" catchtap="deleteImg" class="delete-icon" data-delete="{{index}}"></image>
+				</block>
+			</scroll-view>
+		</block>
+		<view>
+			<view class="curr-all" style="bottom: {{up2}}">
+				<text class="status {{pub?'green':'black'}}">{{pub?'公开':'仅自己可见'}}</text>
+				<view class="count-box">
+					<text space="nbsp" class="count">{{currLength}} / 1000</text>
+				</view>
+			</view>
 
-                  <view class="bottom-box" style="bottom: {{up}}">
-                        <image src="{{pic}}" class="pic"></image>
-                        <image src="{{link}}" class="link-loc"></image>
-                        <block wx:if="{{pub}}">
-                              <image src="{{public}}" class="send-pub" bindtap="changeStatus"></image>
-                        </block>
-                        <block wx:else>
-                              <image src="{{private}}" class="send-pub" bindtap="changeStatus"></image>
-                        </block>
-                        <image src="{{location}}" class="link-loc"></image>
+			<view class="bottom-box" style="bottom: {{up}}">
+				<image src="{{pic}}" class="pic" bindtap="chooseImg"></image>
+				<image src="{{link}}" class="link-loc"></image>
+				<block wx:if="{{pub}}">
+					<image src="{{public}}" class="send-pub" bindtap="changeStatus"></image>
+				</block>
+				<block wx:else>
+					<image src="{{private}}" class="send-pub" bindtap="changeStatus"></image>
+				</block>
+				<image src="{{location}}" class="link-loc"></image>
 
-                        <image src="{{send}}" class="send-pub" style="margin-left: 240rpx" bindtap="sendTopic"></image>
-                  </view>
-            </view>
-      </view>
+				<image src="{{send}}" class="send-pub" style="margin-left: 240rpx" bindtap="sendTopic"></image>
+			</view>
+		</view>
+	</view>
 </view>
