@@ -88,18 +88,12 @@ Page({
                                           open_id: res.result.openid
                                     },
                                     success: int_res=>{
-                                          if (int_res.result.data.length === 0){
-                                                that.setData({
-                                                      hideModal: false
-                                                })
-                                                that.showIndexContent()                                                
-                                          }
-                                          else {
+                                          if (int_res.result.data.length !== 0){
                                                 that.setData({
                                                       user_id: int_res.result.data[0]._id
-                                                })
-                                                that.showIndexContent()
+                                                })                                    
                                           }
+                                          that.showIndexContent()
                                     },
                                     fail: console.log
                               })
