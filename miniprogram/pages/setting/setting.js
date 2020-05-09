@@ -15,6 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading()
     var user_id = options.user;
     var that = this;
 
@@ -36,6 +37,9 @@ Page({
       },
       fail: err=>{
         console.log(err);
+      },
+      complete: res => {
+        wx.hideLoading()
       }
     })
     

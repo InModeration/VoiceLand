@@ -20,6 +20,7 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function(options) {
+            wx.showLoading()
             var that = this;
 
             var user_id = options.user;
@@ -62,13 +63,31 @@ Page({
                   },
                   success: res=>{
                         // test
-                        console.log(res);
+                        // console.log(res);
+                        var topics = res.result.list
+                        var topicsLength = topics.length
                         that.setData({
-                              topics: res.result.list
+                              topics: topics
                         });
+                        for (let i = 0; i < topicsLength; i++) {
+                              var thisPictures = topics[i].pictures
+                              wx.cloud.getTempFileURL({
+                                    fileList: thisPictures,
+                                    success: res => {
+                                          var filelist = res.fileList
+                                          var name = 'topics[' + i + '].pictures'
+                                          that.setData({
+                                                [name]: filelist
+                                          })
+                                    }
+                              })
+                        }
                   },
                   fail: err=>{
                         console.log(err);
+                  },
+                  complete: res => {
+                        // console.log(that.data.topics)
                   }
             });
 
@@ -87,6 +106,9 @@ Page({
                         },
                         fail: err=>{
                               console.log(err)
+                        },
+                        complete: res => {
+                              wx.hideLoading()
                         }
                   });
             }
@@ -227,5 +249,22 @@ Page({
                               in_my_concern: false
                         })
                   })
+      },
+
+      /**
+       * 预览照片
+       */
+      previewImg: function (e) {
+            var picUrl = e.currentTarget.dataset.url
+            var picUrls = []
+            var picsIndex = e.currentTarget.dataset.picindex
+            var pictures = this.data.topics[picsIndex].pictures
+            for (var i in pictures) {
+                  picUrls.push(pictures[i].tempFileURL)
+            }
+            wx.previewImage({
+                  current: picUrl,
+                  urls: picUrls
+            })
       }
 })

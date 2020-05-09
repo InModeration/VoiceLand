@@ -1,67 +1,75 @@
 <!--miniprogram/pages/personal/personal.wxml-->
 
-      <scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname">
-            <view>
-                  <view class="user-box" style="background-image: url({{cover}})">
-                        <view class="likeAndAvatar">
-                              <view class="avatar">
-                                    <image src="{{avatar}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
-                              </view>
+<scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname">
+	<view>
+		<view class="user-box" style="background-image: url({{cover}})">
+			<view class="likeAndAvatar">
+				<view class="avatar">
+					<image src="{{avatar}}" background-size="cover" class="avatar" bindtap="editInfo"></image>
+				</view>
 
-                              <view class="follow not-followed" hidden="{{in_my_concern}}" bindtap="addConcern">关心</view>
-                              <view class="follow followed" hidden="{{!in_my_concern}}" bindtap="removeConcern">已关心</view>
-                        </view>
+				<view class="follow not-followed" hidden="{{in_my_concern}}" bindtap="addConcern">关心</view>
+				<view class="follow followed" hidden="{{!in_my_concern}}" bindtap="removeConcern">已关心</view>
+			</view>
 
-                        <view>
-                              <text class="user-nickname">{{name}}</text>
-                        </view>
+			<view>
+				<text class="user-nickname">{{name}}</text>
+			</view>
 
-                        <view class="user-info">
-                              <text>{{sex}}</text>
-                              <text space="nbsp">{{region}}</text>
-                              <text>id</text>
-                        </view>
+			<view class="user-info">
+				<text>{{sex}}</text>
+				<text space="nbsp">{{region}}</text>
+				<text>id</text>
+			</view>
 
-                        <view class="user-motto">
-                              <text>{{motto}}</text>
-                        </view>
+			<view class="user-motto">
+				<text>{{motto}}</text>
+			</view>
 
-                  </view>
+		</view>
 
-                  <view class="personal-box">
-                        <view class="total">
-                              <text>{{topics.length}}条心声</text>
-                        </view>
+		<view class="personal-box">
+			<view class="total">
+				<text>{{topics.length}}条心声</text>
+			</view>
 
-                        <view class="sayings">
-                              <block wx:for="{{topics}}" wx:for-item="item" wx:for-index="idx">
-                                    <!-- 本年的年份不显示，其余的同年只显示第一次年份 -->
-                                    <!-- 动态必须按照时间降序排列 -->
-                                    <view class="saying-year" wx:if="{{idx > 0 && topics[idx].year!=topics[idx-1].year}}">
-                                          {{item.year}}
-                                    </view>
+			<view class="sayings">
+				<block wx:for="{{topics}}" wx:for-item="item" wx:for-index="idx">
+					<!-- 本年的年份不显示，其余的同年只显示第一次年份 -->
+					<!-- 动态必须按照时间降序排列 -->
+					<view class="saying-year" wx:if="{{idx > 0 && topics[idx].year!=topics[idx-1].year}}">
+						{{item.year}}
+					</view>
 
-                                    <view class="saying">
-                                          <view class="date">
-                                                <text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="day">{{item.day}}</text>
-                                                <text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="month">{{item.month}}月</text>
-                                          </view>
-                                          <view class="saying-content">
-                                                <text bindtap="toDetail" id="{{item._id}}">{{item.content}}</text>
-                                                <view class="saying-operation">
-                                                      <image class="like" src="{{like_url}}"></image>
-                                                      <text class="like_number">{{item.like_num}}</text>
-                                                      <image class="comment" src="{{comment_url}}"></image>
-                                                      <text class="comment_number">{{item.comment_num}}</text>
-                                                      <image class="more" src="{{more_url}}"></image>
-                                                </view>
-                                                <view class="line"></view>
-                                          </view>
-                                    </view>
-                              </block>
-                        </view>
-                  </view>
-            </view>
+					<view class="saying">
+						<view class="date">
+							<text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="day">{{item.day}}</text>
+							<text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="month">{{item.month}}月</text>
+						</view>
+						<view class="saying-content">
+							<text bindtap="toDetail" id="{{item._id}}">{{item.content}}</text>
+							<block wx:if="{{item.pictures.length !== 0}}">
+								<scroll-view class='box-sv' scroll-x>
+									<block wx:for="{{item.pictures}}" wx:key="{{index}}" wx:for-item="picItem">
+										<image class="choosed-img" src='{{picItem.tempFileURL}}' catchtap='previewImg' mode="aspectFill" data-url='{{picItem.tempFileURL}}' data-picindex="{{idx}}"></image>
+									</block>
+								</scroll-view>
+							</block>
+
+							<view class="saying-operation">
+								<image class="like" src="{{like_url}}"></image>
+								<text class="like_number">{{item.like_num}}</text>
+								<image class="comment" src="{{comment_url}}"></image>
+								<text class="comment_number">{{item.comment_num}}</text>
+								<image class="more" src="{{more_url}}"></image>
+							</view>
+							<view class="line"></view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
 </scroll-view>
 
 <register hideModal="{{hideModal}}"></register>
