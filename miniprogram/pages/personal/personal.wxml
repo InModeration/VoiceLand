@@ -43,8 +43,8 @@
 
                                     <view class="saying">
                                           <view class="date">
-                                                <text class="day">{{item.day}}</text>
-                                                <text class="month">{{item.month}}月</text>
+                                                <text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="day">{{item.day}}</text>
+                                                <text wx:if="{{idx==0 || topics[idx].month!=topics[idx-1].month || topics[idx].day!=topics[idx-1].day}}" class="month">{{item.month}}月</text>
                                           </view>
                                           <view class="saying-content">
                                                 <text bindtap="toDetail" id="{{item._id}}">{{item.content}}</text>

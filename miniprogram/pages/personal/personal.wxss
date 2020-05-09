@@ -195,6 +195,7 @@ page {
 .date {
       display: flex;
       flex-direction: column;
+      width: 24px;
 }
 
 .line {
