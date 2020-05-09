@@ -205,13 +205,40 @@ Page({
                         icon: 'none'
                   })
             } else {
-                  var data = this.data
-                  wx.showLoading()
-                  // 上传图片至云存储
-                  var count = 0
-                  this.uploadImgAndSend(count, () => {
-                        console.log('开始上传')
-                  })
+                  if (this.data.pictures.length === 0) {
+                        var data = this.data
+                        app.utils.data.addTopic(data.user_id, data.contents, data.fileIDs, () => {
+                              wx.hideLoading({
+                                    success: (res) => {
+                                          wx.showToast({
+                                                title: '发送成功！',
+                                                success: (res) => {
+                                                      console.log(res)
+                                                },
+                                                fail: (err) => {
+                                                      console.log(err)
+                                                }
+                                          })
+                                    },
+                                    fail: (err) => {
+                                          console.log(err)
+                                    },
+                                    complete: () => {
+                                          wx.redirectTo({
+                                                url: '../index/index',
+                                          })
+                                    }
+                              })
+                        })
+                  } else {
+                        var data = this.data
+                        wx.showLoading()
+                        // 上传图片至云存储
+                        var count = 0
+                        this.uploadImgAndSend(count, () => {
+                              console.log('开始上传')
+                        })
+                  }
             }
       },
 
