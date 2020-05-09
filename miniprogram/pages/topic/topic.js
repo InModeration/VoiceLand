@@ -66,6 +66,7 @@ Page({
             //   like_num: topic_data.like_num,
             //   comment_num: topic_data.comment_num
             // });
+            wx.showLoading()
             var currTime = app.utils.time.getLocalTime()
 
             this.setData({
@@ -92,6 +93,16 @@ Page({
                         that.setData(
                               topic
                         );
+                        console.log(that.data.pictures)
+                        var picturesArr = util.objToArray(that.data.pictures)
+                        wx.cloud.getTempFileURL({
+                              fileList: picturesArr,
+                              success: res => {
+                                    that.setData({
+                                          pictures: res.fileList
+                                    })
+                              }
+                        })
                   },
                   fail: err => {
                         console.log(err);
@@ -143,6 +154,9 @@ Page({
                   },
                   fail: err => {
                         console.log(err);
+                  },
+                  complete: res => {
+                        wx.hideLoading()
                   }
             });
       },
@@ -567,5 +581,21 @@ Page({
                         }
                   })
             }
+      },
+
+            /**
+       * 预览照片
+       */
+      previewImg: function (e) {
+            var picUrl = e.currentTarget.dataset.url
+            var pictures = this.data.pictures
+            var picUrls = [] 
+            for (var i in pictures) {
+                  picUrls.push(pictures[i].tempFileURL)
+            }
+            wx.previewImage({
+                  current: picUrl,
+                  urls: picUrls
+            })
       }
 })

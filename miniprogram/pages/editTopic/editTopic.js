@@ -42,6 +42,7 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function (options) {
+            wx.showLoading()
             this.setData({
                   user_id: options.user
             })
@@ -53,6 +54,11 @@ Page({
             this.setData({
                   placeholder: display
             })
+            console.log(options.mode)
+            if (options.mode === 'camera') {
+                  this.chooseImg()
+            }
+            wx.hideLoading()
       },
 
       /**

@@ -6,6 +6,24 @@
     background: #F0F4F3;
     color: #000;
 }
+.box-sv {
+  width: 100%;
+  padding: 20rpx 0;
+  height: 220rpx;
+  white-space: nowrap;
+  margin: 3% auto
+}
+
+.choosed-img {
+  width: 200rpx;
+  height: 220rpx;
+  margin-left: 20rpx;
+  border-radius: 5px;
+}
+
+.box-sv :first-child {
+  margin-left: 0rpx;
+}
 .question-wrp{
     border-radius: 3px;
     box-shadow: 0 1px 2px #bebebe;

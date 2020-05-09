@@ -54,17 +54,34 @@ Page({
                         topic_limit: 20
                   },
                   success: res=>{
+                        var list = res.result.list
+                        var listLength = res.result.list.length
                         // console.log(res);
                         that.setData({
-                              feed: res.result.list,
-                              feed_length: res.result.list.length
+                              feed: list,
+                              feed_length: listLength
                         });
+                        for (let i = 0; i < listLength; i++) {
+                              var thisPictures = util.objToArray(list[i].pictures)
+                              wx.cloud.getTempFileURL({
+                                    fileList: thisPictures,
+                                    success: res => {
+                                          var fileList = res.fileList
+                                          var picturesName = 'feed[' + i + '].pictures'
+                                          that.setData({
+                                                [picturesName]: fileList
+                                          })
+                                    }
+                              })
+                        }
+                        console.log(that.data.feed)
+                        wx.hideLoading({})
                   }
             });
       },
 
       onLoad: function() {
-
+            wx.showLoading({})
             var that = this;
             this.setData({
                   user_id: app.tourist_flag
@@ -258,9 +275,11 @@ Page({
       /**
        * 跳转至话题编辑页面
        */
-      toEditTopic: function () {
+      toEditTopic: function (e) {
             var that = this
+            wx.showLoading()
             if (this.data.user_id === app.tourist_flag){
+                  wx.hideLoading()
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
@@ -275,8 +294,9 @@ Page({
             }
 
             else{
+                  wx.hideLoading()
                   wx.navigateTo({
-                        url: '../editTopic/editTopic?user='+this.data.user_id,
+                        url: '../editTopic/editTopic?user='+this.data.user_id+'&mode='+e.currentTarget.dataset.mode,
                   })
             }
       },
@@ -387,5 +407,23 @@ Page({
                   registerModal: true
             })
             this.showIndexContent()
+      },
+
+      /**
+       * 预览照片
+       */
+      previewImg: function (e) {
+            var that = this
+            var picUrl = e.currentTarget.dataset.url
+            var picUrls = []
+            var picsIndex = e.currentTarget.dataset.picindex
+            var feed = this.data.feed[picsIndex].pictures
+            for (var i in feed) {
+                  picUrls.push(feed[i].tempFileURL)
+            }
+            wx.previewImage({
+                  current: picUrl,
+                  urls: picUrls
+            })
       }
 })

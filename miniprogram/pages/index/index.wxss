@@ -3,6 +3,25 @@
   height: 1500rpx;
   background: white;
 }
+.box-sv {
+  width: 100%;
+  padding: 20rpx 0;
+  height: 220rpx;
+  white-space: nowrap;
+  margin: 3% auto
+}
+
+.choosed-img {
+  width: 200rpx;
+  height: 220rpx;
+  margin-left: 20rpx;
+  border-radius: 5px;
+}
+
+.box-sv :first-child {
+  margin-left: 0rpx;
+}
+
 .container .search{
   width: 735rpx;
   height: 65rpx;

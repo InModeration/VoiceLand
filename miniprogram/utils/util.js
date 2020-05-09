@@ -28,15 +28,15 @@ module.exports = {
 // var comment_detail = require('../data/data_comment_detail.js')
 // var user_info = require('../data/data_user_info.js')
 
-function getData(url){
-  return new Promise(function(resolve, reject){
+function getData(url) {
+  return new Promise(function (resolve, reject) {
     wx.request({
       url: url,
       data: {},
       header: {
         //'Content-Type': 'application/json'
       },
-      success: function(res) {
+      success: function (res) {
         console.log("success")
         resolve(res)
       },
@@ -86,85 +86,84 @@ function getData(url){
  * px = rpx / getRpx
  */
 function getRpx() {
-      var winWidth = wx.getSystemInfoSync().windowWidth
-      return 750/winWidth
+  var winWidth = wx.getSystemInfoSync().windowWidth
+  return 750 / winWidth
 }
 
 /**
  * 获取[min, max]的整数
  */
-function random (min, max) {
-      return Math.floor(Math.random() * (max - min) + min)
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min) + min)
 }
 
-function register(name, success_callback, fail_callback){
+function register(name, success_callback, fail_callback) {
   var scb = success_callback;
   var fcb = fail_callback;
   wx.login({
-    success (res) {
+    success(res) {
       if (res.code) {
         //获取用户openid
         wx.cloud.callFunction({
-              name: 'get_openid',
+          name: 'get_openid',
+          data: {
+            code: res.code
+          },
+          success: res => {
+            //     console.log(res);
+            // 检查用户是否已经注册过了
+            wx.cloud.callFunction({
+              name: 'map_user_id',
               data: {
-                    code: res.code
+                open_id: res.result.openid
               },
-              success: res=>{
-                //     console.log(res);
-                // 检查用户是否已经注册过了
-                wx.cloud.callFunction({
-                      name: 'map_user_id',
-                      data: {
-                            open_id: res.result.openid
-                      },
-                      success: int_res=>{
-                            // 用户的opneid已经存在，说明用户已经注册过了
-                            if (int_res.result.data.length != 0){ 
-                              wx.showToast({
-                                title: '错误！该用户已经注册过了！',
-                                icon: 'none'
+              success: int_res => {
+                // 用户的opneid已经存在，说明用户已经注册过了
+                if (int_res.result.data.length != 0) {
+                  wx.showToast({
+                    title: '错误！该用户已经注册过了！',
+                    icon: 'none'
+                  })
+                } else {
+                  wx.showLoading({
+                    title: '注册中',
+                  })
+                  wx.cloud.callFunction({
+                    name: 'register_user',
+                    data: {
+                      open_id: res.result.openid,
+                      name: name
+                    },
+                    success: reg_res => {
+                      wx.hideLoading({
+                        complete: (res) => {
+                          wx.showToast({
+                            title: '注册成功！',
+                            complete: a => {
+                              wx.redirectTo({
+                                url: '../index/index'
                               })
                             }
-                            else {
-                                  wx.showLoading({
-                                    title: '注册中',
-                                  })
-                                  wx.cloud.callFunction({
-                                    name: 'register_user',
-                                    data: {
-                                      open_id: res.result.openid,
-                                      name: name
-                                    },
-                                    success: reg_res=>{
-                                      wx.hideLoading({
-                                        complete: (res) => {
-                                          wx.showToast({
-                                            title: '注册成功！',
-                                            complete: a=>{
-                                              wx.redirectTo({
-                                                url: '../index/index'
-                                              })
-                                            }
-                                          })
-                                        },
-                                      })
-                                      scb()
-                                    },
-                                    fail: err=>{
-                                      fcb('注册失败!服务器端返回错误')
-                                    }
-                                  })
-                            }
-                      },
-                      fail: int_err=>{
-                        fcb('查询用户注册状态失败!')
-                      }
-                })
+                          })
+                        },
+                      })
+                      scb()
+                    },
+                    fail: err => {
+                      fcb('注册失败!服务器端返回错误')
+                    }
+                  })
+                }
               },
-              fail: err=>{
-                fcb('注册失败，请重试！')
-                console.log(err);
+              fail: int_err => {
+                fcb('查询用户注册状态失败!')
               }
+            })
+          },
+          fail: err => {
+            fcb('注册失败，请重试！')
+            console.log(err);
+          }
         })
       } else {
         fcb('微信账户登录失败，请重试！')
@@ -172,6 +171,17 @@ function register(name, success_callback, fail_callback){
       }
     }
   })
+}
+
+/**
+ * 对象转数组
+ */
+function objToArray(array) {
+  var arr = []
+  for (var i in array) {
+    arr.push(array[i]);
+  }
+  return arr;
 }
 
 
@@ -186,3 +196,4 @@ function register(name, success_callback, fail_callback){
 module.exports.random = random;
 module.exports.getRpx = getRpx;
 module.exports.register = register;
+module.exports.objToArray = objToArray;
