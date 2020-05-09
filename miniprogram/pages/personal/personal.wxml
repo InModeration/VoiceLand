@@ -34,11 +34,17 @@
                         </view>
 
                         <view class="sayings">
-                              <block wx:for="{{topics}}" wx:for-item="item">
+                              <block wx:for="{{topics}}" wx:for-item="item" wx:for-index="idx">
+                                    <!-- 本年的年份不显示，其余的同年只显示第一次年份 -->
+                                    <!-- 动态必须按照时间降序排列 -->
+                                    <view class="saying-year" wx:if="{{idx > 0 && topics[idx].year!=topics[idx-1].year}}">
+                                          {{item.year}}
+                                    </view>
+
                                     <view class="saying">
                                           <view class="date">
-                                                <text class="day">26</text>
-                                                <text class="month">4月</text>
+                                                <text class="day">{{item.day}}</text>
+                                                <text class="month">{{item.month}}月</text>
                                           </view>
                                           <view class="saying-content">
                                                 <text bindtap="toDetail" id="{{item._id}}">{{item.content}}</text>

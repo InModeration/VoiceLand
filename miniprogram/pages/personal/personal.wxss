@@ -211,3 +211,9 @@ page {
       height: 50rpx;
       width: 60rpx;
 }
+
+.saying-year{
+      font-size: 40rpx;
+      color: #333;
+      margin: 0 0 40rpx 10rpx;
+}

@@ -62,7 +62,7 @@ Page({
                   },
                   success: res=>{
                         // test
-                        // console.log(res);
+                        console.log(res);
                         that.setData({
                               topics: res.result.list
                         });
