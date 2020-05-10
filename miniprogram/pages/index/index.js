@@ -87,7 +87,9 @@ Page({
       },
 
       onLoad: function() {
-            wx.showLoading({})
+            wx.showLoading({
+                  mask: true
+            })
             var that = this;
             this.setData({
                   user_id: app.tourist_flag
@@ -196,7 +198,9 @@ Page({
        */
       toEditTopic: function (e) {
             var that = this
-            wx.showLoading()
+            wx.showLoading({
+                  mask: true
+            })
             if (this.data.user_id === app.tourist_flag){
                   wx.hideLoading()
                   wx.showModal({
@@ -353,6 +357,7 @@ Page({
             }
             wx.showLoading({
               title: '搜索中',
+              mask: true
             })
             // 发起搜索时，将当前页数重置为0
             this.setData({
@@ -363,7 +368,9 @@ Page({
 
       loadMore: function(e) {
             var that = this
-            wx.showLoading()
+            wx.showLoading({
+                  mask: true
+            })
             this.setData({
                   currentPage: this.data.currentPage + 1
             })
@@ -378,9 +385,11 @@ Page({
                         var list = res.result.list
                         var listLength = res.result.list.length
                         if (listLength === 0) {
+                              console.log(listLength)
                               wx.showToast({
                                 title: '暂无更多内容',
-                                icon: 'none'
+                                icon: 'none',
+                                mask: true
                               })
                               return
                         }

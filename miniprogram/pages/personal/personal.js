@@ -88,7 +88,8 @@ Page({
                         var topics = res.result.list
                         var topicsLength = topics.length
                         that.setData({
-                              topics: topics
+                              topics: topics,
+                              topicsLength: topicsLength
                         });
                         for (let i = 0; i < topicsLength; i++) {
                               var thisPictures = topics[i].pictures
@@ -108,7 +109,7 @@ Page({
                         console.log(err);
                   },
                   complete: res => {
-                        // console.log(that.data.topics)
+                        // console.log(that.data)
                   }
             });
 
@@ -296,9 +297,78 @@ Page({
        * 刷新触发
        */
       refresh: function (e) {
+            this.setData({
+                  currentPage: 0
+            })
             this.onLoad({
                   user: this.data.user_id,
                   curUser: this.data.user_id
             })
+      },
+
+      /**
+       * 加载更多
+       */
+      loadMore: function (e) {
+            if (this.data.topic_count === this.data.topicsLength) {
+                  wx.showToast({
+                    title: '到底啦!~',
+                    icon: 'none',
+                    mask: true
+                  })
+                  return 
+            }
+            var that = this
+            wx.showLoading({
+                  mask: true
+            })
+            this.setData({
+                  currentPage: this.data.currentPage + 1
+            })
+            wx.cloud.callFunction({
+                  name: 'user_topic',
+                  data: {
+                        user_id: this.data.user_id,
+                        page: this.data.currentPage
+                  },
+                  success: res=>{
+                        // test
+                        // console.log(res);
+                        var topics = res.result.list
+                        var topicsLength = topics.length
+                        var newtopics = that.data.topics
+                        for (var i in topics) {
+                              newtopics.push(topics[i])
+                        }
+                        that.setData({
+                              topics: newtopics,
+                              topicsLength: that.data.topicsLength + topicsLength
+                        });
+                        var length = that.data.topicsLength
+                        for (let i = topicsLength; i < length; i++) {
+                              var thisPictures = newtopics[i].pictures
+                              wx.cloud.getTempFileURL({
+                                    fileList: thisPictures,
+                                    success: res => {
+                                          var filelist = res.fileList
+                                          var name = 'topics[' + i + '].pictures'
+                                          that.setData({
+                                                [name]: filelist
+                                          })
+                                    }
+                              })
+                        }
+                  },
+                  fail: err=>{
+                        console.log(err);
+                  },
+                  complete: res => {
+                        console.log(that.data)
+                        wx.hideLoading({})
+                        that.setData({
+                              refresher: false
+                        })
+                  }
+            });
       }
 })

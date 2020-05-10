@@ -2,7 +2,7 @@
 <view>
 	<navbar shownav="{{shownav}}" page-name="VoiceLand" bind:Back="back" bind:Index="index"></navbar>
 
-	<scroll-view scroll-y="true" class="container" refresher-enabled bindrefresherrefresh="refresh" refresher-triggered="{{refresher}}" bindscrolltolower="loadMore" lower-threshold="1">
+	<scroll-view scroll-y="true" class="container" refresher-enabled bindrefresherrefresh="refresh" refresher-triggered="{{refresher}}" bindscrolltolower="loadMore" lower-threshold="0">
 		<view class="title">
 			<text>发现</text>
 			<image class="my-mini-icon" bindtap="toPersonalAll" mode="aspectFit" src="{{avatar}}" data-host="1"></image>

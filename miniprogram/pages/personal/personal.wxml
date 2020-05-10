@@ -1,6 +1,6 @@
 <!--miniprogram/pages/personal/personal.wxml-->
 
-<scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname" refresher-enabled bindrefresherrefresh="refresh" refresher-triggered="{{refresher}}">
+<scroll-view class="container" scroll-y="true" scroll-x="false" bindscroll="displayNickname" refresher-enabled bindrefresherrefresh="refresh" refresher-triggered="{{refresher}}" bindscrolltolower="loadMore" lower-threshold="0">
 	<view>
 		<view class="user-box" style="background-image: url({{cover}})">
 			<view class="likeAndAvatar">
