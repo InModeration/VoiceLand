@@ -10,7 +10,7 @@
 			<view class="search flex-wrp">
 				<view class="search-left flex-item search-box">
 					<image src="{{search_url}}"></image>
-					<input placeholder="" placeholder-class="search-placeholder" />
+					<input placeholder="" placeholder-class="search-placeholder" bindconfirm="search" />
 				</view>
 				<!-- <view class="search-right flex-item" bindtap="upper">
           <image src="../../assets/images/lighting.png"></image>

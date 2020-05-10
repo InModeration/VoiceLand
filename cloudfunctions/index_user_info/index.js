@@ -4,7 +4,7 @@
   使用随机采样的方式获取到不同的内容
 */
 
-//TODO: 一次性的数量返回限制和随机采样
+var topic_per_page = 5
 
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
@@ -13,7 +13,12 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let { userInfo, user_id, topic_limit} = event;
+  let { userInfo, user_id, page, keyword} = event;
+
+  if (keyword == null){
+    keyword = '.*';
+  }
+
   // const wxContext = cloud.getWXContext()
 
   // return {
@@ -28,6 +33,12 @@ exports.main = async (event, context) => {
   var $ = db.command.aggregate;
 
   return await db.collection('topic').aggregate()
+    .match({
+      content: db.RegExp({
+        regexp: keyword,
+        options: 'i',
+      })
+    })
     .lookup({
       from: "comment",
       localField: "_id",
@@ -48,9 +59,11 @@ exports.main = async (event, context) => {
       pictures: 1,
       like_url: user_id
     })
-    .sample({
-      size: topic_limit
-    })
+    .skip(page*topic_per_page)        // 每页10个topic
+    .limit(topic_per_page)
+    // .sample({
+    //   size: topic_limit
+    // })
     .lookup({
           from: "user",
           localField: "mainuser_id",

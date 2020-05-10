@@ -15,6 +15,7 @@ Page({
             shownav: false,
             hideModal: true,
             registerName: '',
+            currentPage: 0,
             liked: ()=>{return this.liked_url}
       },
       //事件处理函数
@@ -29,7 +30,8 @@ Page({
             })
       },
 
-      showIndexContent: function(){
+      showIndexContent: function(keyword=null){
+
             var that = this;
             if (this.data.user_id != app.tourist_flag){
                   wx.cloud.callFunction({
@@ -51,7 +53,8 @@ Page({
                   name: "index_user_info",
                   data: {
                         user_id: this.data.user_id,
-                        topic_limit: 20
+                        page: this.data.currentPage,
+                        keyword: keyword
                   },
                   success: res=>{
                         var list = res.result.list
@@ -424,6 +427,24 @@ Page({
             wx.previewImage({
                   current: picUrl,
                   urls: picUrls
+            })
+      },
+
+      search: function(e){
+            var keyword = e.detail.value
+            if (keyword == ''){
+                  keyword = null
+            }
+            wx.showLoading({
+              title: '搜索中',
+            })
+            // 发起搜索时，将当前页数重置为0
+            this.setData({
+                  currentPage: 0
+            })
+            this.showIndexContent(keyword)
+            wx.hideLoading({
+              complete: (res) => {}
             })
       }
 })
