@@ -30,7 +30,7 @@
 
 		<view class="personal-box">
 			<view class="total">
-				<text>{{topics.length}}条心声</text>
+				<text>{{topic_count}}条心声</text>
 			</view>
 
 			<view class="sayings">

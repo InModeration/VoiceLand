@@ -359,9 +359,6 @@ Page({
                   currentPage: 0
             })
             this.showIndexContent(keyword)
-            wx.hideLoading({
-              complete: (res) => {}
-            })
       },
 
       loadMore: function(e) {

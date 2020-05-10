@@ -39,6 +39,9 @@ exports.main = async (event, context) => {
         options: 'i',
       })
     })
+    .sort({
+      time: -1              // 时间降序排序
+    })
     .lookup({
       from: "comment",
       localField: "_id",
@@ -59,7 +62,7 @@ exports.main = async (event, context) => {
       pictures: 1,
       like_url: user_id
     })
-    .skip(page*topic_per_page)        // 每页10个topic
+    .skip(page*topic_per_page)        // 跳过指定页面之前的内容，再限制当前页面数量完成分页
     .limit(topic_per_page)
     // .sample({
     //   size: topic_limit

@@ -15,7 +15,8 @@ Page({
             back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063',
             hideModal: true,
             showNickname: 'none',
-            refresher: false
+            refresher: false,
+            currentPage: 0
       },
 
       /**
@@ -58,10 +59,28 @@ Page({
                   }
             });
 
+            console.log(this.data.user_id)
+            wx.cloud.callFunction({
+                  name: 'user_topic_count',
+                  data: {
+                        user_id: this.data.user_id
+                  },
+                  success: res=>{
+                        // console.log(res)
+                        that.setData({
+                              topic_count: res.result.total
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err)
+                  }
+            });
+
             wx.cloud.callFunction({
                   name: 'user_topic',
                   data: {
-                        user_id: this.data.user_id
+                        user_id: this.data.user_id,
+                        page: this.data.currentPage
                   },
                   success: res=>{
                         // test
