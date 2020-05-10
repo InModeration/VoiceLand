@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
   /**
@@ -97,9 +98,9 @@ Page({
         // 获取设备高度 设置scroll-view的高度
         wx.getSystemInfo({
               success: function(res) {
-                    console.log(res)
+                    var height = res.windowHeight - app.globalData.navHeight
                     that.setData({
-                          height: res.windowHeight + 'px'
+                          height: height  + 'px'
                     })
               },
         })
