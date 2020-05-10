@@ -314,7 +314,9 @@ Page({
                   var replier_id = this.data.user_id
                   var repliee_id = this.data.replyeeId
                   var content = this.data.replyContent
-                  wx.showLoading()
+                  wx.showLoading({
+                        mask: true
+                  })
                   app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
                         wx.hideLoading()
                         that.replyBlur()

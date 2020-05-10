@@ -66,7 +66,9 @@ Page({
             //   like_num: topic_data.like_num,
             //   comment_num: topic_data.comment_num
             // });
-            wx.showLoading()
+            wx.showLoading({
+                  mask: true
+            })
             var currTime = app.utils.time.getLocalTime()
 
             this.setData({

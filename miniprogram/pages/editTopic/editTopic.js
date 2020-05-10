@@ -42,7 +42,9 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function (options) {
-            wx.showLoading()
+            wx.showLoading({
+                  mask: true
+            })
             this.setData({
                   user_id: options.user
             })
@@ -232,7 +234,9 @@ Page({
                         })
                   } else {
                         var data = this.data
-                        wx.showLoading()
+                        wx.showLoading({
+                              mask: true
+                        })
                         // 上传图片至云存储
                         var count = 0
                         this.uploadImgAndSend(count, () => {
