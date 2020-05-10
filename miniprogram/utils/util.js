@@ -48,38 +48,6 @@ function getData(url) {
   })
 }
 
-// function getData2(){
-//   return index.index;
-// }
-
-// function getNext(){
-//   return index_next.next;
-// }
-
-// function getDiscovery(){
-//   return discovery.discovery;
-// }
-
-// function discoveryNext(){
-//   return discovery_next.next;
-// }
-
-// function topicDetail(){
-//   return topic
-// }
-
-// function getTopicDetail(){
-//   return topic_detail.topic_detail;
-// }
-
-// function getCommentDetail(){
-//   return comment_detail.comment_detail;
-// }
-
-// function getUserInfo(){
-//   return user_info.user_info;
-// }
-
 /**
  * 获取px和rpx的比率
  * rpx = px * getRpx

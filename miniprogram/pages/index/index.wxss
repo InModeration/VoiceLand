@@ -1,6 +1,6 @@
 /**index.wxss**/
 .container{
-  height: 1500rpx;
+  height: 1080rpx;
   background: white;
 }
 .box-sv {
@@ -143,12 +143,6 @@
 
 .search-box {
         border: 1px solid black;
-}
-
-.bottom-gap{
-  height: 150rpx;
-  width: 100%;
-  background: #fff;
 }
 
 .index-content text{

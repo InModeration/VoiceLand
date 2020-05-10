@@ -40,6 +40,14 @@ page {
       box-shadow: 0 2px 5px #eee;
 }
 
+.nickName {
+      position: fixed;
+      left: 305rpx;
+      top: 65rpx;
+      height: 50rpx;
+      width: 60rpx;
+}
+
 .likeAndAvatar {
       padding-top: 140rpx;
       display: flex;

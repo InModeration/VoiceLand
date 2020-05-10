@@ -13,7 +13,9 @@ Page({
             camera_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/camera.png?sign=d102a3e17157cf4dd3966a02ba01a648&t=1587886776',
             more_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/more.png?sign=83161b2337cd14966522d1ae7b7fe7ea&t=1587887690',
             back_url: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/back.png?sign=e77d67c342931895f0b2e75543930c5c&t=1588416063',
-            hideModal: true
+            hideModal: true,
+            showNickname: 'none',
+            refresher: false
       },
 
       /**
@@ -109,6 +111,9 @@ Page({
                         },
                         complete: res => {
                               wx.hideLoading()
+                              that.setData({
+                                    refresher: false
+                              })
                         }
                   });
             }
@@ -184,12 +189,12 @@ Page({
       displayNickname: function (e) {
             var scrollTop = e.detail.scrollTop
             if (scrollTop >= 150)
-                  wx.setNavigationBarTitle({
-                        title: this.data.name,
+                  this.setData({
+                        showNickname: ''
                   })
             else
-                  wx.setNavigationBarTitle({
-                        title: '',
+                  this.setData({
+                        showNickname: 'none'
                   })
       },
 
@@ -265,6 +270,16 @@ Page({
             wx.previewImage({
                   current: picUrl,
                   urls: picUrls
+            })
+      },
+
+      /**
+       * 刷新触发
+       */
+      refresh: function (e) {
+            this.onLoad({
+                  user: this.data.user_id,
+                  curUser: this.data.user_id
             })
       }
 })
