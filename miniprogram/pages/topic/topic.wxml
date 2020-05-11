@@ -14,7 +14,7 @@
 						<text>{{content}}</text>
 						<block wx:if="{{pictures.length !== 0}}">
 							<scroll-view class='box-sv' scroll-x>
-								<block wx:for="{{pictures}}" wx:key="{{index}}">
+								<block wx:for="{{pictures}}" wx:key="index">
 									<image class="choosed-img" src='{{item.tempFileURL}}' catchtap='previewImg' mode="aspectFill" data-url='{{item.tempFileURL}}'></image>
 								</block>
 							</scroll-view>
@@ -23,9 +23,9 @@
 					<view class="topic-operations">
 						<image class="icon-image" src="{{liked ? liked_url : like_url}}" catchtap="addTopicLike"></image>
 						<text>{{like_num}}</text>
-						<image class="icon-image" src="{{comment_url}}"></image>
+						<image class="icon-image" src="{{comment_url}}" catchtap="insideComment"></image>
 						<text>{{comments.length}}</text>
-						<image class="topic-operations-more" src="{{more_url}}" bindTap="" />
+						<image class="topic-operations-more" src="{{more_url}}" catchtap="moreOperation" />
 
 					</view>
 				</view>
@@ -38,7 +38,7 @@
 
 
 		<view class="answer-feed">
-			<view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+			<view wx:for="{{comments}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}" wx:key="idx">
 				<view class="feed-item" bindtap="setCommentID" data-commentid="{{item._id}}">
 					<view class="topic-content-box">
 						<view class="topic-source">
@@ -72,14 +72,14 @@
 
 						<view wx:if="{{item.replies.length > 0}}" class="topic-comment-reply-wrapper">
 							<view class="topic-comment-reply-box">
-								<view wx:for="{{item.replies}}" wx:for-item="rep_item" wx:for-index="rep_idx">
+								<view wx:for="{{item.replies}}" wx:for-item="rep_item" wx:for-index="rep_idx" wx:key="rep_idx">
 									<!-- 控制显示的回复数量为3条 -->
 									<view wx:if="{{rep_idx <= 2}}">
 										<view class="topic-comment-reply-line">
 											<a class="topic-comment-reply-name" data-replierid="{{rep_item.replier_id}}" catchtap="getReplier">{{rep_item.replier}}</a>
 											<text> 回复 </text>
 											<a class="topic-comment-reply-name" data-replyeeid="{{rep_item.repliee_id}}" catchtap="getRepliee">{{rep_item.repliee}}</a>
-											<text data-replyeeid="{{rep_item.replier_id}}" bindtap="clickReply">: {{rep_item.content}}</text>
+											<text data-replyid="{{rep_item.reply_id}}" data-replyeeid="{{rep_item.replier_id}}" bindtap="clickReply">: {{rep_item.content}}</text>
 										</view>
 									</view>
 								</view>
@@ -103,7 +103,7 @@
 
 		<view class="bottom-input-area" style="bottom: {{up}}; display: {{commentShow}}">
 			<view class="bottom-input-box">
-				<input class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="startInput" bindblur="endInput" bindinput="editComment" bindconfirm="sendComment" value="{{comment_content}}"></input>
+				<input focus="{{commentFocus}}" class="bottom-input" placeholder="说点什么吧" placeholder-class="instruction-placeholder" adjust-position="{{adjustPosition}}" confirm-type="send" bindfocus="startInput" bindblur="endInput" bindinput="editComment" bindconfirm="sendComment" value="{{comment_content}}"></input>
 				<image mode="aspectFit" class="bottom-camera" src="{{send_url}}" bindtap="sendComment"></image>
 			</view>
 		</view>

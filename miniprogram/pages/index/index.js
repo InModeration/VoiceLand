@@ -17,30 +17,32 @@ Page({
             registerName: '',
             currentPage: 0,
             refresher: false,
-            liked: ()=>{return this.liked_url}
+            liked: () => {
+                  return this.liked_url
+            }
       },
       //事件处理函数
-      bindItemTap: function() {
+      bindItemTap: function () {
             wx.navigateTo({
                   url: '../answer/answer'
             })
       },
-      bindQueTap: function() {
+      bindQueTap: function () {
             wx.navigateTo({
                   url: '../question/question'
             })
       },
 
-      showIndexContent: function(keyword=null){
+      showIndexContent: function (keyword = null) {
 
             var that = this;
-            if (this.data.user_id != app.tourist_flag){
+            if (this.data.user_id != app.tourist_flag) {
                   wx.cloud.callFunction({
                         name: "userinfo",
                         data: {
                               user_id: this.data.user_id
                         },
-                        success: res=>{
+                        success: res => {
                               // console.log(res);
                               that.setData({
                                     avatar: res.result.data[0].avatar
@@ -57,7 +59,7 @@ Page({
                         page: this.data.currentPage,
                         keyword: keyword
                   },
-                  success: res=>{
+                  success: res => {
                         var list = res.result.list
                         var listLength = res.result.list.length
                         // console.log(res);
@@ -86,7 +88,7 @@ Page({
             });
       },
 
-      onLoad: function() {
+      onLoad: function () {
             wx.showLoading({
                   mask: true
             })
@@ -94,50 +96,50 @@ Page({
             this.setData({
                   user_id: app.tourist_flag
             })
-            
+
             //////////////////////////////////////////////新用户注册////////////////////////////////////////////
             wx.login({
-                  success (res) {
-                    if (res.code) {
-                      //发起网络请求
-                      wx.cloud.callFunction({
-                            name: 'get_openid',
-                            data: {
-                                  code: res.code
-                            },
-                            success: res=>{
-                              //     console.log(res);
+                  success(res) {
+                        if (res.code) {
+                              //发起网络请求
                               wx.cloud.callFunction({
-                                    name: 'map_user_id',
+                                    name: 'get_openid',
                                     data: {
-                                          open_id: res.result.openid
+                                          code: res.code
                                     },
-                                    success: int_res=>{
-                                          if (int_res.result.data.length !== 0){
-                                                that.setData({
-                                                      user_id: int_res.result.data[0]._id
-                                                })                                    
-                                          }
-                                          that.showIndexContent()
+                                    success: res => {
+                                          //     console.log(res);
+                                          wx.cloud.callFunction({
+                                                name: 'map_user_id',
+                                                data: {
+                                                      open_id: res.result.openid
+                                                },
+                                                success: int_res => {
+                                                      if (int_res.result.data.length !== 0) {
+                                                            that.setData({
+                                                                  user_id: int_res.result.data[0]._id
+                                                            })
+                                                      }
+                                                      that.showIndexContent()
+                                                },
+                                                fail: console.log
+                                          })
                                     },
-                                    fail: console.log
+                                    fail: err => {
+                                          console.log('登录失败！');
+                                          console.log(err);
+                                    }
                               })
-                            },
-                            fail: err=>{
-                                  console.log('登录失败！');
-                                  console.log(err);
-                            }
-                      })
-                    } else {
-                      console.log('登录失败！' + res.errMsg)
-                    }
+                        } else {
+                              console.log('登录失败！' + res.errMsg)
+                        }
                   }
-                })
+            })
             ////////////////////////////////////////////////////////////////////////////////////////////////
       },
 
       onShow: function () {
-            
+
       },
 
       /**
@@ -148,7 +150,7 @@ Page({
             var host = e.currentTarget.dataset.host;
             // console.log(e);
             wx.navigateTo({
-                  url: '../personal/personal?user='+user_id+'&curUser='+this.data.user_id
+                  url: '../personal/personal?user=' + user_id + '&curUser=' + this.data.user_id
             })
       },
 
@@ -157,8 +159,9 @@ Page({
        */
       toDetail: function (e) {
             var topic_id = e.currentTarget.id;
+            var topicuser_id = e.currentTarget.dataset.topicuser
             wx.navigateTo({
-                  url: '../topic/topic?topic='+topic_id+'&user='+this.data.user_id,
+                  url: '../topic/topic?topic=' + topic_id + '&user=' + this.data.user_id + '&topicuser=' + topicuser_id,
                   success: (res) => {
                         console.log(res)
                   },
@@ -173,21 +176,20 @@ Page({
        */
       toPersonalAll: function () {
             var that = this;
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   wx.navigateTo({
-                        url: '../personalAll/personalAll?user='+this.data.user_id,
+                        url: '../personalAll/personalAll?user=' + this.data.user_id,
                   })
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能查看个人信息，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
@@ -201,25 +203,23 @@ Page({
             wx.showLoading({
                   mask: true
             })
-            if (this.data.user_id === app.tourist_flag){
+            if (this.data.user_id === app.tourist_flag) {
                   wx.hideLoading()
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
-            }
-
-            else{
+            } else {
                   wx.hideLoading()
                   wx.navigateTo({
-                        url: '../editTopic/editTopic?user='+this.data.user_id+'&mode='+e.currentTarget.dataset.mode,
+                        url: '../editTopic/editTopic?user=' + this.data.user_id + '&mode=' + e.currentTarget.dataset.mode,
                   })
             }
       },
@@ -237,7 +237,7 @@ Page({
             console.log('index')
       },
 
-      registerOnChange: function(e){
+      registerOnChange: function (e) {
             // console.log(e);
             // this.setData({
             //       resgisterName: e.detail.value
@@ -246,7 +246,7 @@ Page({
             // console.log(this.registerName);
       },
 
-      register: function(e){
+      register: function (e) {
             var that = this;
             // console.log('注册!');
             this.setData({
@@ -262,19 +262,19 @@ Page({
                         open_id: that.data.currentOpenid,
                         name: that.registerName
                   },
-                  success: res=>{
+                  success: res => {
                         wx.showToast({
-                          title: '注册成功',
-                          duration: 1500,
-                          complete: res=>{
-                                that.onLoad();
-                        }
+                              title: '注册成功',
+                              duration: 1500,
+                              complete: res => {
+                                    that.onLoad();
+                              }
                         })
                   },
-                  fail: err=>{
+                  fail: err => {
                         wx.showToast({
-                          title: '注册失败',
-                          icon: 'none'
+                              title: '注册失败',
+                              icon: 'none'
                         })
                         console.log(err);
                         that.onLoad();
@@ -282,49 +282,47 @@ Page({
             })
       },
 
-      addTopicLike: function(e){
+      addTopicLike: function (e) {
             // console.log(this.data.user_id, app.tourist_flag)
 
             var that = this;
 
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   var idx = e.target.dataset.idx;
-                  var icon_field_name = 'feed['+idx+']liked';
-                  var likenum_field_name = 'feed['+idx+']like_num';
+                  var icon_field_name = 'feed[' + idx + ']liked';
+                  var likenum_field_name = 'feed[' + idx + ']like_num';
                   var like_num = this.data.feed[idx].like_num;
-                  if (this.data.feed[idx].liked){
+                  if (this.data.feed[idx].liked) {
                         wx.showToast({
-                        title: '您已经点过赞啦！',
-                        icon: 'none'
+                              title: '您已经点过赞啦！',
+                              icon: 'none'
                         });
-                  }
-                  else {
+                  } else {
                         app.utils.data.addTopicLike(e.currentTarget.id, this.data.user_id,
-                        ()=>{
-                              that.setData({
-                                    [icon_field_name]: true,
-                                    [likenum_field_name]: like_num+1
+                              () => {
+                                    that.setData({
+                                          [icon_field_name]: true,
+                                          [likenum_field_name]: like_num + 1
+                                    })
                               })
-                        })
                   }
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
 
             }
       },
 
-      useTourist: function(){
+      useTourist: function () {
             this.setData({
                   user_id: app.tourist_flag,
                   registerModal: true
@@ -350,14 +348,14 @@ Page({
             })
       },
 
-      search: function(e){
+      search: function (e) {
             var keyword = e.detail.value
-            if (keyword == ''){
+            if (keyword == '') {
                   keyword = null
             }
             wx.showLoading({
-              title: '搜索中',
-              mask: true
+                  title: '搜索中',
+                  mask: true
             })
             // 发起搜索时，将当前页数重置为0
             this.setData({
@@ -367,7 +365,7 @@ Page({
             this.showIndexContent(keyword)
       },
 
-      loadMore: function(e) {
+      loadMore: function (e) {
             var that = this
             wx.showLoading({
                   mask: true
@@ -382,14 +380,14 @@ Page({
                         page: this.data.currentPage,
                         keyword: that.data.keyword
                   },
-                  success: res=>{
+                  success: res => {
                         var list = res.result.list
                         var listLength = res.result.list.length
                         if (listLength === 0) {
                               wx.showToast({
-                                title: '暂无更多内容',
-                                icon: 'none',
-                                mask: true
+                                    title: '暂无更多内容',
+                                    icon: 'none',
+                                    mask: true
                               })
                               return
                         }
@@ -432,5 +430,74 @@ Page({
                   currentPage: 0
             })
             this.onLoad()
+      },
+
+      /**
+       * 更多操作
+       */
+      moreOperation: function (e) {
+            var that = this
+            // 话题id
+            var topicid = e.currentTarget.dataset.topicid
+            // 话题所属的用户id
+            var userid = e.currentTarget.dataset.userid
+            // 当前用户的id
+            var currid = this.data.user_id
+            var itemList = ['查看详情']
+            if (userid === currid) {
+                  itemList.push('删除')
+            }
+            console.log(itemList)
+            wx.showActionSheet({
+                  itemList: itemList,
+                  success: res => {
+                        var tapIndex = res.tapIndex
+                        // 查看详情
+                        if (tapIndex === 0) {
+                              wx.navigateTo({
+                                url: '../topic/topic?topic=' + topicid + '&user=' + currid + '&topicuser=' + userid
+                              })
+                        } else if (tapIndex === 1){ // 删除
+                              wx.showLoading({
+                                title: '正在删除',
+                                mask: true
+                              })
+                              wx.cloud.callFunction({
+                                    name: 'remove_topic',
+                                    data: {
+                                          user_id: currid,
+                                          topic_id: topicid
+                                    },
+                                    success: res => {
+                                          console.log('done')
+                                    },
+                                    fail: err => {
+                                          console.log(err)
+                                    },
+                                    complete: res => {
+                                          wx.hideLoading()
+                                          wx.showToast({
+                                            mask: true,
+                                            duration: 500
+                                          })
+                                          that.onLoad()
+                                    }
+                              })
+                        }
+                  }
+            })
+      },
+
+      /**
+       * 点击评论按钮
+       */
+      comment: function (e) {
+            var topic_id = e.currentTarget.dataset.topicid
+            var user_id = this.data.user_id
+            var topicuser_id = e.currentTarget.dataset.topicuser
+            var commentFocus = 'true'
+            wx.navigateTo({
+              url: '../topic/topic?topic=' + topic_id + '&user=' + user_id + '&comment=' + commentFocus + '&topicuser=' + topicuser_id
+            })
       }
 })

@@ -40,32 +40,14 @@ Page({
 
       },
       //事件处理函数
-      bindItemTap: function() {
+      bindItemTap: function () {
             wx.navigateTo({
                   url: '../answer/answer'
             })
       },
 
-      onLoad: function(options) {
-            // console.log('onLoad')
-            // console.log(options)
+      onLoad: function (options) {
             var that = this;
-            //调用应用实例的方法获取全局数据
-            // app.getUserInfo(function(userInfo){
-            //   //更新数据
-            //   that.setData({
-            //     userInfo:userInfo
-            //   })
-            // })
-            // var topic_data = util.topicDetail();
-            // this.setData({
-            //   mainuser: topic_data.mainuser,
-            //   topic_content: topic_data.topic_content,
-            //   topic_time: topic_data.topic_time,
-            //   // comments: topic_data.comments,             
-            //   like_num: topic_data.like_num,
-            //   comment_num: topic_data.comment_num
-            // });
             wx.showLoading({
                   mask: true
             })
@@ -74,6 +56,7 @@ Page({
             this.setData({
                   topic_id: options.topic,
                   user_id: options.user,
+                  topicuser_id: options.topicuser,
                   currentTime: currTime
             })
 
@@ -95,7 +78,7 @@ Page({
                         that.setData(
                               topic
                         );
-                        console.log(that.data.pictures)
+                        // console.log(that.data.pictures)
                         var picturesArr = util.objToArray(that.data.pictures)
                         wx.cloud.getTempFileURL({
                               fileList: picturesArr,
@@ -109,7 +92,7 @@ Page({
                   fail: err => {
                         console.log(err);
                   },
-                  complete: function(com) {
+                  complete: function (com) {
                         var currTime = that.data.currentTime
                         var thisTime = that.data.thisTime
                         // return undefined if over 24 hours
@@ -132,7 +115,7 @@ Page({
                         // console.log(mergeReplies(res.result.list));
 
                         var coms = res.result.list
-                        
+
                         var len = coms.length
                         var comment_times = []
                         for (let i = 0; i < len; i++) {
@@ -159,15 +142,24 @@ Page({
                   },
                   complete: res => {
                         wx.hideLoading()
+                        if (options.comment === 'true') {
+                              that.setData({
+                                    commentFocus: true
+                              })
+                        }
                   }
             });
       },
 
-      tapName: function(event) {
-            console.log(event);
+      onShow: function () {
+            this.onLoad({
+                  topic: this.data.topic_id,
+                  user: this.data.user_id,
+                  topicuser: this.data.main_user_id
+            })
       },
 
-      toMoreReplies: function(e) {
+      toMoreReplies: function (e) {
             wx.navigateTo({
                   url: '../comment/comment?comment=' + e.currentTarget.id + '&user=' + this.data.user_id
             });
@@ -176,7 +168,7 @@ Page({
       /**
        * bind:Back
        */
-      back: function() {
+      back: function () {
             wx.navigateBack({
                   delta: 1
             })
@@ -185,7 +177,7 @@ Page({
       /**
        * bind:Index
        */
-      index: function() {
+      index: function () {
             wx.redirectTo({
                   url: '../index/index',
             })
@@ -226,7 +218,7 @@ Page({
       sendComment: function () {
             var that = this
 
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   var content = this.data.comment_content
                   if (content.length === 0) {
                         wx.showToast({
@@ -238,7 +230,7 @@ Page({
                   var topic_id = this.data.topic_id
                   var user_id = this.data.user_id
                   wx.showLoading({})
-                  app.utils.data.addComment(topic_id, user_id, content, ()=>{
+                  app.utils.data.addComment(topic_id, user_id, content, () => {
                         wx.hideLoading()
                         that.setData({
                               comment_content: ''
@@ -248,17 +240,16 @@ Page({
                               user: user_id
                         })
                   })
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
@@ -274,20 +265,25 @@ Page({
             var selectUser = e.currentTarget.dataset.userid
             // 点击的评论的id
             var selectComment = e.currentTarget.dataset.commentid
+            // 当前用户的id
+            var currUser = this.data.user_id
+            // 选中的下标
             var selectIdx = e.currentTarget.dataset.idx;
+            var itemList = ['赞', '回复']
+            if (selectUser === currUser) {
+                  itemList.push('删除')
+            }
             wx.showActionSheet({
-                  itemList: ['赞', '回复', '举报'],
-                  success: res=>{
-                        console.log(res)
+                  itemList: itemList,
+                  success: res => {
                         var index = res.tapIndex
-                        if (index == 0){
-                              if (that.data.comments[selectIdx].liked){
+                        if (index == 0) {
+                              if (that.data.comments[selectIdx].liked) {
                                     wx.showToast({
-                                      title: '您已经点过赞啦！',
-                                      icon: 'none'
+                                          title: '您已经点过赞啦！',
+                                          icon: 'none'
                                     })
-                              }
-                              else {   
+                              } else {
                                     // 为了适配点击图标点赞的方法，此处需要利用数据构造一个
                                     // dummy 事件对象传递到方法中
                                     that.addCommentLike({
@@ -299,14 +295,7 @@ Page({
                                           }
                                     })
                               }
-                        }
-                        else if (index === 2) {
-                              wx.showToast({
-                                    title: '开发中',
-                                    icon: 'none'
-                              })
-                        }
-                        else if (index === 1) {
+                        } else if (index === 1) {
                               // 弹出回复框
                               that.setData({
                                     reply: false,
@@ -315,6 +304,32 @@ Page({
                                     selectComment: selectComment,
                                     // 隐藏评论框
                                     commentShow: 'none'
+                              })
+                        } else if (index === 2) {
+                              wx.showLoading({
+                                    title: '正在删除',
+                                    icon: 'none',
+                                    mask: true
+                              })
+                              // 删除这条comment
+                              wx.cloud.callFunction({
+                                    name: 'remove_comment',
+                                    data: {
+                                          comment_id: selectComment
+                                    },
+                                    success: res => {
+
+                                    },
+                                    fail: err => {
+
+                                    },
+                                    complete: res => {
+                                          wx.hideLoading()
+                                          that.onLoad({
+                                                topic: that.data.topic_id,
+                                                user: that.data.user_id
+                                          })
+                                    }
                               })
                         }
                   }
@@ -329,6 +344,15 @@ Page({
             this.setData({
                   reply: false,
                   replyUp: up + 'px'
+            })
+      },
+
+      /**
+       * 点评论图标
+       */
+      insideComment: function () {
+            this.setData({
+                  commentFocus: true
             })
       },
 
@@ -358,13 +382,13 @@ Page({
       sendReply: function (e) {
             var that = this
 
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   var comment_id = this.data.selectComment
                   var replier_id = this.data.user_id
                   var repliee_id = this.data.replyee
                   var content = this.data.reply_content
                   wx.showLoading({})
-                  app.utils.data.addReply(comment_id, replier_id, repliee_id, content, ()=>{
+                  app.utils.data.addReply(comment_id, replier_id, repliee_id, content, () => {
                         wx.hideLoading()
                         that.endReply()
                         that.setData({
@@ -375,17 +399,16 @@ Page({
                               user: that.data.user_id
                         })
                   })
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
@@ -397,7 +420,7 @@ Page({
       getReplier: function (e) {
             var user_id = e.currentTarget.dataset.replierid
             var curr_id = this.data.user_id
-            console.log(user_id, curr_id)
+            // console.log(user_id, curr_id)
             app.utils.router.toPersonal(curr_id, user_id)
       },
 
@@ -407,7 +430,7 @@ Page({
       getRepliee: function (e) {
             var user_id = e.currentTarget.dataset.replyeeid
             var curr_id = this.data.user_id
-            console.log(user_id, curr_id)
+            // console.log(user_id, curr_id)
             app.utils.router.toPersonal(curr_id, user_id)
       },
 
@@ -415,13 +438,59 @@ Page({
        * 点击他人的reply
        */
       clickReply: function (e) {
+            var that = this
             // 要回复的reply的replyer，其变成这条reply的replyee
             var replyee_id = e.currentTarget.dataset.replyeeid
-            this.setData({
-                  replyeeTwo: replyee_id,
-                  replyTwo: false,
-                  ifFocusTwo: true
-            })
+            // 当前用户的id
+            var curr_id = this.data.user_id
+            // 当前reply的id
+            var reply_id = e.currentTarget.dataset.replyid
+            if (curr_id === replyee_id) {
+                  wx.showActionSheet({
+                        itemList: ['回复', '删除'],
+                        success: res => {
+                              var tapIndex = res.tapIndex
+                              if (tapIndex === 0) { // 回复
+                                    that.setData({
+                                          replyeeTwo: replyee_id,
+                                          replyTwo: false,
+                                          ifFocusTwo: true
+                                    })
+                              } else if (tapIndex === 1) {
+                                    wx.showLoading({
+                                          title: '正在删除',
+                                          icon: 'none',
+                                          mask: true
+                                    })
+                                    wx.cloud.callFunction({
+                                          name: 'remove_reply',
+                                          data: {
+                                                reply_id: reply_id
+                                          },
+                                          success: res => {
+
+                                          },
+                                          fail: {
+
+                                          },
+                                          complete: res => {
+                                                wx.hideLoading()
+                                                that.onLoad({
+                                                      topic: that.data.topic_id,
+                                                      user: that.data.user_id
+                                                })
+                                          }
+                                    })
+                              }
+                        }
+                  })
+            } else {
+                  this.setData({
+                        replyeeTwo: replyee_id,
+                        replyTwo: false,
+                        ifFocusTwo: true
+                  })
+            }
       },
 
       /**
@@ -431,7 +500,7 @@ Page({
             // 点击的reply所属的comment的id
             var comment_id = e.currentTarget.dataset.commentid
             this.setData({
-                  selectReply: comment_id 
+                  selectReply: comment_id
             })
       },
 
@@ -473,7 +542,7 @@ Page({
       sendReplyTwo: function () {
             var that = this
 
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   var comment_id = this.data.selectReply
                   var replier_id = this.data.user_id
                   var repliee_id = this.data.replyeeTwo
@@ -490,108 +559,102 @@ Page({
                               user: that.data.user_id
                         })
                   })
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行回复，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
       },
 
-      addTopicLike: function(){
+      addTopicLike: function () {
             var that = this;
 
-            if (this.data.user_id !== app.tourist_flag){
-                  if (this.data.liked){
+            if (this.data.user_id !== app.tourist_flag) {
+                  if (this.data.liked) {
                         wx.showToast({
-                          title: '您已经点过赞啦！',
-                          icon: "none"
+                              title: '您已经点过赞啦！',
+                              icon: "none"
                         })
-                  }
-                  else {
+                  } else {
                         app.utils.data.addTopicLike(this.data.topic_id, this.data.user_id,
-                              ()=>{
+                              () => {
                                     that.setData({
                                           liked: true,
-                                          like_num: that.data.like_num+1
+                                          like_num: that.data.like_num + 1
                                     })
                               })
                   }
-            }
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
       },
 
-      addCommentLike: function(e){
+      addCommentLike: function (e) {
             // console.log(e);
             var that = this;
 
-            if (this.data.user_id !== app.tourist_flag){
+            if (this.data.user_id !== app.tourist_flag) {
                   var idx = e.currentTarget.dataset.idx;
                   var comment_id = e.currentTarget.id;
                   var like_num = this.data.comments[idx].comment_like_num;
-      
-                  var comment_liked_field = 'comments['+idx+'].comment_liked';
-                  var comment_likenum_field = 'comments['+idx+'].comment_like_num';
-      
-                  if (this.data.comments[idx].comment_liked){
+
+                  var comment_liked_field = 'comments[' + idx + '].comment_liked';
+                  var comment_likenum_field = 'comments[' + idx + '].comment_like_num';
+
+                  if (this.data.comments[idx].comment_liked) {
                         wx.showToast({
-                          title: '您已经点过赞啦！',
-                          icon: "none"
+                              title: '您已经点过赞啦！',
+                              icon: "none"
                         })
-                  }
-                  else {
+                  } else {
                         app.utils.data.addCommentLike(comment_id, this.data.user_id,
-                              ()=>{
+                              () => {
                                     that.setData({
                                           [comment_liked_field]: true,
-                                          [comment_likenum_field]: like_num+1
+                                          [comment_likenum_field]: like_num + 1
                                     })
                               })
                   }
-            }
-
-            else {
+            } else {
                   wx.showModal({
                         title: '注册',
                         content: '您现在使用的是游客模式，不能进行点赞，要注册吗？',
-                        success (res) {
-                          if (res.confirm) {
-                              that.setData({
-                                    hideModal: false
-                              })
-                          }
+                        success(res) {
+                              if (res.confirm) {
+                                    that.setData({
+                                          hideModal: false
+                                    })
+                              }
                         }
                   })
             }
       },
 
-            /**
+      /**
        * 预览照片
        */
       previewImg: function (e) {
             var picUrl = e.currentTarget.dataset.url
             var pictures = this.data.pictures
-            var picUrls = [] 
+            var picUrls = []
             for (var i in pictures) {
                   picUrls.push(pictures[i].tempFileURL)
             }
@@ -601,22 +664,65 @@ Page({
             })
       },
 
-      // 测试用接口
-      removeTopic: function(){
-            var that = this
-            wx.cloud.callFunction({
-                  name: 'remove_topic',
-                  data: {
-                        topic_id: that.data.topic_id
-                  },
-                  success: res=>{
-                        wx.navigateTo({
-                              url: '../index/index?user='+that.data.user_id,
-                        })
-                  },
-                  fail: err=>{
-                        console.log(err)
-                  }
-            })
+      /**
+       * 删除操作
+       */
+      moreOperation: function () {
+            var topicid = this.data.topic_id
+            var topicuser_id = this.data.topicuser_id
+            var curruser_id = this.data.user_id
+            // 如果是自己的动态
+            if (topicuser_id === curruser_id) {
+                  wx.showActionSheet({
+                        itemList: ['删除'],
+                        success: res => {
+                              var tapIndex = res.tapIndex
+                              if (tapIndex === 0) {
+                                    // 删除话题
+                                    wx.showLoading({
+                                          title: '正在删除',
+                                          mask: true
+                                    })
+                                    wx.cloud.callFunction({
+                                          name: 'remove_topic',
+                                          data: {
+                                                user_id: curruser_id,
+                                                topic_id: topicid
+                                          },
+                                          success: res => {
+                                                console.log('done')
+                                          },
+                                          fail: err => {
+                                                console.log(err)
+                                          },
+                                          complete: res => {
+                                                wx.hideLoading()
+                                                wx.showToast({
+                                                      mask: true,
+                                                      duration: 500
+                                                })
+                                                wx.redirectTo({
+                                                      url: '../index/index',
+                                                })
+                                          }
+                                    })
+                              }
+                        }
+                  })
+            } else { // 如果是别人的动态
+                  wx.showActionSheet({
+                        itemList: ['举报'],
+                        success: res => {
+                              if (res.tapIndex === 0) {
+                                    wx.showToast({
+                                          title: '谢谢您的反馈！我们将审核该话题！',
+                                          icon: 'none',
+                                          mask: true,
+                                          duration: 1000
+                                    })
+                              }
+                        }
+                  })
+            }
       }
 })

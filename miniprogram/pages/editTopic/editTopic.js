@@ -56,7 +56,6 @@ Page({
             this.setData({
                   placeholder: display
             })
-            console.log(options.mode)
             if (options.mode === 'camera') {
                   this.chooseImg()
             }
@@ -207,6 +206,9 @@ Page({
                         icon: 'none'
                   })
             } else {
+                  wx.showLoading({
+                    mask: true
+                  })
                   if (this.data.pictures.length === 0) {
                         var data = this.data
                         app.utils.data.addTopic(data.user_id, data.contents, data.fileIDs, () => {

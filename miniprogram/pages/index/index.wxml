@@ -17,7 +17,7 @@
       </view> -->
 		</view>
 
-		<block wx:for="{{feed}}" wx:for-index="idx" wx:for-item="item" data-idx="{{idx}}">
+		<block wx:for="{{feed}}" wx:for-index="idx" wx:key="idx" wx:for-item="item" data-idx="{{idx}}">
 			<view class="feed-item">
 				<view class="feed-item-box">
 					<view class="feed-source">
@@ -30,12 +30,12 @@
 						<!-- <image class="item-more" mode="aspectFit" src="../../assets/images/more.png"></image> -->
 					</view>
 					<view class="feed-content">
-						<view class="index-content" id="{{item._id}}" bindtap="toDetail">
+						<view class="index-content" id="{{item._id}}" data-topicuser="{{item.mainuser_id}}" bindtap="toDetail">
 							<text>{{item.content}}</text>
 						</view>
 						<block wx:if="{{item.pictures.length !== 0}}">
 							<scroll-view class='box-sv' scroll-x>
-								<block wx:for="{{item.pictures}}" wx:key="{{index}}" wx:for-item="picItem">
+								<block wx:for="{{item.pictures}}" wx:key="index" wx:for-item="picItem">
 									<image class="choosed-img" src='{{picItem.tempFileURL}}' catchtap='previewImg' mode="aspectFill" data-url='{{picItem.tempFileURL}}' data-picindex="{{idx}}"></image>
 								</block>
 							</scroll-view>
@@ -44,11 +44,10 @@
 					<view class="feed-display">
 						<image src="{{item.liked ? liked_url : like_url}}" bindtap="addLike" id="{{item._id}}" data-idx="{{idx}}" bindtap="addTopicLike"></image>
 						<text>{{item.like_num}}</text>
-						<image src="{{comment_url}}"></image>
+						<image src="{{comment_url}}" catchtap="comment" data-topicid="{{item._id}}" data-topicuser="{{item.mainuser_id}}"></image>
 						<text>{{item.comment_num}}</text>
-						<image class="float-right" src="{{more_url}}"></image>
+						<image class="float-right" src="{{more_url}}" data-topicid="{{item._id}}" data-userid="{{item.mainuser_id}}" catchtap="moreOperation"></image>
 					</view>
-
 
 				</view>
 			</view>

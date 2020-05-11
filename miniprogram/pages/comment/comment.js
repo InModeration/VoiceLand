@@ -35,8 +35,10 @@ Page({
        * 生命周期函数--监听页面加载
        */
       onLoad: function(options) {
+            wx.showLoading({
+              mask: true
+            })
             var that = this;
-
             // 获取本地时间
             var currTime = app.utils.time.getLocalTime()
 
@@ -102,6 +104,9 @@ Page({
                   },
                   fail: err => {
                         console.log(err);
+                  },
+                  complete: res => {
+                        wx.hideLoading()
                   }
             })
       },
@@ -180,9 +185,18 @@ Page({
             var that = this
             // 点击的对象的id
             var replyeeId = e.currentTarget.dataset.replyeeid
+            // 当前用户的id
+            var curr_id = this.data.user_id
+            // comment的id
+            var comment_id = this.data.comment_id
             // console.log(e)
+            var itemList = ['赞', '回复']
+            // 如果comment是自己的
+            if (curr_id === replyeeId) {
+                  itemList.push('删除')
+            }
             wx.showActionSheet({
-                  itemList: ['赞', '回复', '举报'],
+                  itemList: itemList,
                   success: res => {
                         if (res.tapIndex === 0){
                               if (that.data.liked){
@@ -196,9 +210,29 @@ Page({
                               }
                         }
                         else if (res.tapIndex === 2) {
-                              wx.showToast({
-                                    title: '开发中',
-                                    icon: 'none'
+                              wx.showLoading({
+                                title: '正在删除',
+                                icon: 'none',
+                                mask: true
+                              })
+                              // 进行删除comment
+                              wx.cloud.callFunction({
+                                    name: 'remove_comment',
+                                    data: {
+                                          comment_id: comment_id
+                                    },
+                                    success: res => {
+                                          
+                                    },
+                                    fail: err => {
+
+                                    },
+                                    complete: res => {
+                                          wx.hideLoading()
+                                          wx.navigateBack({
+                                                delta: 1
+                                          })
+                                    }
                               })
                         } else if (res.tapIndex === 1) {
                               that.setData({
@@ -216,11 +250,18 @@ Page({
             // 点击的对象的id
             var replyeeId = e.currentTarget.dataset.replyeeid
             var replyIdx = e.currentTarget.dataset.idx
+            // 回复的id
             var replyId = e.currentTarget.dataset.replyid
             var flag = e.currentTarget.dataset.isComment
+            // 当前用户的id
+            var user_id = this.data.user_id
             // console.log(e)
+            var itemList = ['赞', '回复']
+            if (user_id === replyeeId) {
+                  itemList.push('删除')
+            }
             wx.showActionSheet({
-                  itemList: ['赞', '回复', '举报'],
+                  itemList: itemList,
                   success: res => {
                         if (res.tapIndex === 0){
                               if (flag == 'true'){
@@ -256,9 +297,30 @@ Page({
                               }
                         }
                         else if (res.tapIndex === 2) {
-                              wx.showToast({
-                                    title: '开发中',
-                                    icon: 'none'
+                              // 删除
+                              wx.showLoading({
+                                title: '删除中',
+                                icon: 'none',
+                                mask: true
+                              })
+                              wx.cloud.callFunction({
+                                    name: 'remove_reply',
+                                    data: {
+                                          reply_id:replyId
+                                    },
+                                    success: res => {
+
+                                    },
+                                    fail: err => {
+
+                                    },
+                                    complete: res => {
+                                          wx.hideLoading()
+                                          that.onLoad({
+                                                comment: that.data.comment_id,
+                                                user: that.data.user_id
+                                          })
+                                    }
                               })
                         } else if (res.tapIndex === 1) {
                               that.setData({
