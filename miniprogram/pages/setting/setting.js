@@ -126,5 +126,23 @@ Page({
         wx.redirectTo({
               url: '../index/index',
         })
+  },
+
+  /**
+   * 前往about页面
+   */
+  toAbout: function () {
+    wx.navigateTo({
+      url: '../about/about',
+    })
+  },
+
+  /**
+   * 前往我关心的
+   */
+  toConcern: function () {
+    wx.navigateTo({
+      url: '../concern/concern?user='+this.data.user_id+'&direction=to'
+    })
   }
 })

@@ -1,0 +1,29 @@
+<!--miniprogram/pages/about/about.wxml-->
+<view>
+      <navbar page-name="关于VoiceLand" bind:Back="back" bind:Index="index"></navbar>
+      <view class="content">
+            <image src="{{old}}"></image>
+            <text space="nbsp">小岛 热闹却恬静</text>
+            <image src="{{work}}"></image>
+            <text space="nbsp">沉湎于希望 为五斗米折腰</text>
+            <image src="{{watch}}"></image>
+            <text space="nbsp">孤单不是孤独 即使身处人群 可能非常孤独</text>
+            <image src="{{play}}"></image>
+            <text space="nbsp">一生至少该有一次 不求曾经拥有 只求遇见</text>
+            <image src="{{walk}}"></image>
+            <text space="nbsp">生活是一段憧憬 美好生活是责任</text>
+            <image src="{{sport}}" style="height: 170rpx"></image>
+            <text space="nbsp">不要在别人的眼光里丢了自己</text>
+            <image src="{{bachelor}}" style="height: 285rpx"></image>
+            <text space="nbsp" style="margin-bottom: 10rpx">悲世者叹世界复杂 生活无趣</text>
+            <text space="nbsp">朝阳夕日 叶落花开 溪淌鱼游 甚是平凡</text>
+            <image src="{{express}}"></image>
+            <text space="nbsp" style="margin-bottom: 10rpx">落日瑰丽 流云飘渺 浩瀚星辰</text>
+            <text space="nbsp">世界从不平凡 生活从不平淡</text>
+            <image src="{{gift}}" style="height: 200rpx"></image>
+            <text style="margin-bottom: 10rpx">别人眼里的幸福不会是你自己的幸福</text>
+            <text> 埋在自己心里不愿说出的害羞的满足才是自己真正的幸福</text>
+            <image src="{{new}}"></image>
+            <text>VoiceLand</text>
+      </view>
+</view>

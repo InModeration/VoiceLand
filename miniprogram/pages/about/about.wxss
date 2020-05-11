@@ -1,0 +1,18 @@
+/* miniprogram/pages/about/about.wxss */
+
+.content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+}
+
+.content image {
+      height: 150rpx;
+      width: 150rpx;
+      margin: 30rpx auto;
+}
+
+.content text {
+      margin-bottom: 70rpx;
+}

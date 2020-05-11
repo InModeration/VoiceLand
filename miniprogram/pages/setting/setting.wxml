@@ -13,7 +13,7 @@
                   <image class="setting-userinfo-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
 
-            <view class="setting-line">
+            <view class="setting-line" bindtap="toConcern">
                   <text class="setting-line-label" selectable="false" space="false" decode="false">我关心的</text>
                   <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
@@ -28,7 +28,7 @@
                   <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
 
-            <view class="setting-line">
+            <view class="setting-line" catchtap="toAbout">
                   <text class="setting-line-label" selectable="false" space="false" decode="false">关于 VoiceLand</text>
                   <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
