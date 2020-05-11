@@ -372,5 +372,24 @@ Page({
                         })
                   }
             });
+      },
+
+      // 测试接口用
+      removeTopic: function(e){
+            // console.log(this.data.topics)
+            var that = this
+            wx.cloud.callFunction({
+                  name: 'remove_topic',
+                  data: {
+                        topic_id: this.data.topics[0]._id
+                  },
+                  success: res=>{
+                        console.log(res)
+                        // that.onLoad()
+                  },
+                  fail: err=>{
+                        console.log(err)
+                  }
+            })
       }
 })

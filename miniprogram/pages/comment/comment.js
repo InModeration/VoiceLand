@@ -416,5 +416,24 @@ Page({
                         }
                   })
             }
+      },
+
+      removeComment: function(e){
+            var that = this
+            wx.cloud.callFunction({
+                  name: 'remove_comment',
+                  data: {
+                        comment_id: this.data.comment_id
+                  },
+                  success: res=>{
+                        // console.log(res)
+                        wx.navigateTo({
+                          url: '../index/index?user='+that.data.user_id,
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err)
+                  }
+            })
       }
 })

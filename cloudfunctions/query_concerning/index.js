@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
   })
   .unwind({
     path: '$concern_id',
-    preserveNullAndEmptyArrays: true
+    preserveNullAndEmptyArrays: false
   })
   .lookup({
     from: "user",

@@ -599,5 +599,24 @@ Page({
                   current: picUrl,
                   urls: picUrls
             })
+      },
+
+      // 测试用接口
+      removeTopic: function(){
+            var that = this
+            wx.cloud.callFunction({
+                  name: 'remove_topic',
+                  data: {
+                        topic_id: that.data.topic_id
+                  },
+                  success: res=>{
+                        wx.navigateTo({
+                              url: '../index/index?user='+that.data.user_id,
+                        })
+                  },
+                  fail: err=>{
+                        console.log(err)
+                  }
+            })
       }
 })
