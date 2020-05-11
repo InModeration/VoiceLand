@@ -361,7 +361,8 @@ Page({
             })
             // 发起搜索时，将当前页数重置为0
             this.setData({
-                  currentPage: 0
+                  currentPage: 0,
+                  keyword: keyword
             })
             this.showIndexContent(keyword)
       },
@@ -379,7 +380,7 @@ Page({
                   data: {
                         user_id: this.data.user_id,
                         page: this.data.currentPage,
-                        keyword: null
+                        keyword: that.data.keyword
                   },
                   success: res=>{
                         var list = res.result.list
