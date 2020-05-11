@@ -33,3 +33,4 @@
         </view>
   </scroll-view>
 </view>
+<text class="noOne" style="display: {{noOneDisplay}}">{{noOneText}}</text>

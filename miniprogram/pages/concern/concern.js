@@ -10,7 +10,9 @@ Page({
       isShowView: true,
       hidden: '',
       height: '',
-      touched: []   // 拉出按钮的窗口
+      touched: [],   // 拉出按钮的窗口
+      noOneText: '凄凄惨惨戚戚，空空如也空空~',
+      noOneDisplay: 'none'
   },
 
   bindfocus: function() {
@@ -35,6 +37,7 @@ Page({
 
 
   onLoad: function(options) {
+        var that = this
         var user_id = options.user;
         var direc = options.direction;
         var title = (direc==='to' ? '我关心谁' : '谁关心我');
@@ -56,7 +59,12 @@ Page({
                   user_id: user_id
             },
             success: res=>{
-                  console.log(res)
+                  if (res.result.list.length === 0) {
+                        that.setData({
+                              noOneDisplay: ''
+                        })
+                        return
+                  }
                   that.setData({
                         users: res.result.list
                   })
@@ -78,7 +86,12 @@ Page({
                       user_id: user_id
                 },
                 success: res=>{
-                  console.log(res)
+                  if (res.result.data.length === 0) {
+                        that.setData({
+                              noOneDisplay: ''
+                        })
+                        return
+                  }
                   that.setData({
                         users: res.result.data
                   })

@@ -385,7 +385,6 @@ Page({
                         var list = res.result.list
                         var listLength = res.result.list.length
                         if (listLength === 0) {
-                              console.log(listLength)
                               wx.showToast({
                                 title: '暂无更多内容',
                                 icon: 'none',
@@ -397,7 +396,6 @@ Page({
                         for (var i in list) {
                               feed.push(list[i])
                         }
-                        console.log(feed)
                         that.setData({
                               feed: feed,
                               feed_length: this.data.feed_length + listLength
