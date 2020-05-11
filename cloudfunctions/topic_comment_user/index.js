@@ -27,11 +27,12 @@ exports.main = async (event, context) => {
       comment_time: '$time',
       comment_content: '$content',
       comment_id: '$_id',
-      main_user_id: 1
+      main_user_id: 1,
+      _id: 0
     })
     .lookup({
       from: "reply",
-      localField: "_id",
+      localField: "comment_id",
       foreignField: "comment_id",
       as: "replies"
     })
@@ -41,6 +42,9 @@ exports.main = async (event, context) => {
     })
     .replaceRoot({
       newRoot: $.mergeObjects([ '$replies', '$$ROOT'])
+    })
+    .addFields({
+      reply_id: '$_id'
     })
     .project({
       replies: 0
@@ -70,7 +74,8 @@ exports.main = async (event, context) => {
       likes: 1,
       replier_id: 1,
       repliee_id: 1,
-      time: 1
+      time: 1,
+      reply_id: 1
     })    // 查找replier
     .lookup({
       from: "user",
@@ -98,6 +103,7 @@ exports.main = async (event, context) => {
       replier_id: 1,
       repliee_id: 1,
       time: $.ifNull(['$time', NOT_EXIST_TAG]),
+      reply_id: 1
     })
     .lookup({
       from: "user",
@@ -123,6 +129,7 @@ exports.main = async (event, context) => {
         comment_likes: '$comment_likes'
       },
       replies: $.push({
+        reply_id: '$reply_id',
         replier: '$replier',
         replier_id: '$replier_id',
         repliee: '$repliee',
