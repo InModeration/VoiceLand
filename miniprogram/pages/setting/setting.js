@@ -30,21 +30,21 @@ Page({
       data: {
         user_id: this.data.user_id
       },
-      success: res=>{
+      success: res => {
         var data = res.result.data[0];
         that.setData({
           name: data.name,
           avatar: data.avatar
         })
       },
-      fail: err=>{
+      fail: err => {
         console.log(err);
       },
       complete: res => {
         wx.hideLoading()
       }
     })
-    
+
     // var user = util.getUserInfo();
     // this.setData({
     //   username: user.username,
@@ -105,27 +105,27 @@ Page({
    * 跳转至编辑个人信息页面
    */
   toEdit: function () {
-        wx.navigateTo({
-              url: '../editinfo/editinfo?user='+this.data.user_id,
-        })
+    wx.navigateTo({
+      url: '../editinfo/editinfo?user=' + this.data.user_id,
+    })
   },
 
   /**
    * bind:Back
    */
   back: function () {
-        wx.navigateBack({
-              delta: 1
-        })
+    wx.navigateBack({
+      delta: 1
+    })
   },
 
   /**
    * bind:Index
    */
   index: function () {
-        wx.redirectTo({
-              url: '../index/index',
-        })
+    wx.redirectTo({
+      url: '../index/index',
+    })
   },
 
   /**
@@ -142,7 +142,23 @@ Page({
    */
   toConcern: function () {
     wx.navigateTo({
-      url: '../concern/concern?user='+this.data.user_id+'&direction=to'
+      url: '../concern/concern?user=' + this.data.user_id + '&direction=to'
+    })
+  },
+
+  /**
+   * 意见反馈
+   */
+  advice: function () {
+    wx.showToast({
+      title: '添加管理员进行反馈',
+      icon: 'none',
+      success: res => {
+        wx.previewImage({
+          current: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/wechat1.JPG?sign=b24e2404b1992ce3fce37274e5d13d2c&t=1589178823',
+          urls: ['https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/wechat1.JPG?sign=b24e2404b1992ce3fce37274e5d13d2c&t=1589178823']
+        })
+      }
     })
   }
 })

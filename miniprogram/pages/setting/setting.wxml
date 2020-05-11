@@ -23,7 +23,7 @@
                   <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>
 
-            <view class="setting-line">
+            <view class="setting-line" catchtap="advice">
                   <text class="setting-line-label" selectable="false" space="false" decode="false">意见反馈</text>
                   <image class="setting-line-set" src="{{set_url}}" mode="aspectFit" bindTap="" />
             </view>

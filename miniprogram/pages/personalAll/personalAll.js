@@ -190,5 +190,26 @@ Page({
             wx.navigateTo({
               url: '../concern/concern?user='+this.data.user_id+'&direction='+direc,
             })
+      },
+      
+      cusService : function () {
+            wx.showToast({
+              title: 'dbq! 这是会员专属',
+              icon: 'none',
+              mask: true
+            })
+      },
+
+      applyVip: function () {
+            wx.showToast({
+              title: '详细询问管理员',
+              icon: 'none',
+              success: res => {
+                  wx.previewImage({
+                        current: 'https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/wechat1.JPG?sign=b24e2404b1992ce3fce37274e5d13d2c&t=1589178823',
+                        urls: ['https://766f-voice-land-qcrwm-1301811369.tcb.qcloud.la/assets/image/icon/wechat1.JPG?sign=b24e2404b1992ce3fce37274e5d13d2c&t=1589178823']
+                  })
+              }
+            })
       }
 })

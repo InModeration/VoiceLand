@@ -35,13 +35,13 @@
             </view>
 
             <view class="function-box">
-                  <view class="function-item">
+                  <view class="function-item" catchtap="applyVip">
                         <image class="icon" src="{{vip}}"></image>
                         <text>会员中心</text>
                         <image class="navigate" src="{{navigate}}"></image>
                   </view>
                   <view class="line"></view>
-                  <view class="function-item">
+                  <view class="function-item" catchtap="cusService">
                         <image class="icon" src="{{service}}"></image>
                         <text>专属客服</text>
                         <image class="navigate" src="{{navigate}}"></image>
